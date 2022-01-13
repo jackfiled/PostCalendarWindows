@@ -6,6 +6,10 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="邮历" Height="450" Width="800"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        Background="{DynamicResource MaterialDesignPaper}"
         WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
@@ -24,7 +28,7 @@
         </materialDesign:ColorZone>
         <Grid HorizontalAlignment="Stretch" Grid.Row="1" Background="{StaticResource PrimaryHueMidBrush}">
             <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                <StackPanel x:Name="Menu" Margin="10"/>
+                <ListView x:Name="ItemMenuList" Margin="10" Foreground="White" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="SelectionChanged"/>
             </ScrollViewer>
         </Grid>
         

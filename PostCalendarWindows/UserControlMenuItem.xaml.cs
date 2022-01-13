@@ -8,19 +8,14 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class UserControlMenuItem : UserControl
     {
-        MainWindow _context;
-        public UserControlMenuItem(ItemMenu itemMenu, MainWindow context)
+        public ItemMenu _item;
+        public UserControlMenuItem(ItemMenu itemMenu)
         {
             InitializeComponent();
 
-            _context = context;
-
             this.DataContext = itemMenu;
-        }
-
-        private void ListViewMenu_Selected(object sender, SelectedCellsChangedEventArgs e)
-        {
-            _context.SwitchScreen(((ItemMenu)((ListView)sender).SelectedItem).Screen);
+            _item = itemMenu;
         }
     }
+
 }

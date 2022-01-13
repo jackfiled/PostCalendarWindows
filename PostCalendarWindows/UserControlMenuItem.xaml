@@ -8,6 +8,6 @@
              mc:Ignorable="d" >
     <Grid>
         <materialDesign:PackIcon Kind="{Binding Icon}" Width="15" Height="15" Margin="10 16" Foreground="White"/>
-        <ListBoxItem x:Name="ListViewItemMenu" Content="{Binding Header}" Padding="37 14" FontSize="15" Foreground="White"/>
+        <Label Content="{Binding Header}" Padding="37 14" FontSize="15" Foreground="White"/>
     </Grid>
 </UserControl>

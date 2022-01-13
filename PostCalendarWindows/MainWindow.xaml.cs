@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.ViewModel;
+using PostCalendarWindows.Scene;
 
 namespace PostCalendarWindows
 {
@@ -14,16 +15,22 @@ namespace PostCalendarWindows
         {
             InitializeComponent();
 
-            var calendar_item = new ItemMenu("日历", PackIconKind.Schedule);
-            var ddl_item = new ItemMenu("DDL", PackIconKind.ScaleBalance);
+            var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, new UserControlCalendar());
+            var ddl_item = new ItemMenu("DDL", PackIconKind.ScaleBalance, new UserContorlDDL());
 
-            Menu.Children.Add(new UserControlMenuItem(calendar_item, this));
-            Menu.Children.Add(new UserControlMenuItem(ddl_item, this));
+            ItemMenuList.Items.Add(new UserControlMenuItem(calendar_item));
+            ItemMenuList.Items.Add(new UserControlMenuItem(ddl_item));
         }
 
-        internal void SwitchScreen(object sender)
+        public void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var screen = ((UserControl)sender);
+            UserControlMenuItem selected_item = (UserControlMenuItem)((ListView)sender).SelectedItem;
+            SwitchScreen(selected_item._item.Screen);
+        }
+
+        private void SwitchScreen(object sender)
+        {
+            var screen = (UserControl)sender;
             if (screen != null)
             {
                 StackPanelMain.Children.Clear();
