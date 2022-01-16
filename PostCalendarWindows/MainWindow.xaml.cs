@@ -2,7 +2,8 @@
 using System.Windows.Controls;
 using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.ViewModel;
-using PostCalendarWindows.Scene;
+using PostCalendarWindows.Calendar;
+using PostCalendarWindows.DDL;
 
 namespace PostCalendarWindows
 {
@@ -14,8 +15,9 @@ namespace PostCalendarWindows
         public MainWindow()
         {
             InitializeComponent();
-
+            
             var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, new UserControlCalendar());
+            // 这里在初始化日历控件时，传入的参数是滚动日历的高度
             var ddl_item = new ItemMenu("DDL", PackIconKind.ScaleBalance, new UserContorlDDL());
 
             ItemMenuList.Items.Add(new UserControlMenuItem(calendar_item));
