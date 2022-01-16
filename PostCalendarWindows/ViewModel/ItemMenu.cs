@@ -9,7 +9,7 @@ namespace PostCalendarWindows.ViewModel
         public string Header { get; private set; }
         public PackIconKind Icon { get; private set; }
         public UserControl Screen { get; private set; }
-        public ItemMenu(string header, PackIconKind icon, UserControl screen = null)
+        public ItemMenu(string header, PackIconKind icon, UserControl screen)
         {
             Header = header;
             Icon = icon;
