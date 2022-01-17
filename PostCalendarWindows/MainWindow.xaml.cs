@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.ViewModel;
 using PostCalendarWindows.Calendar;
@@ -15,10 +16,20 @@ namespace PostCalendarWindows
         public MainWindow()
         {
             InitializeComponent();
-            
-            var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, new UserControlCalendar());
-            // 这里在初始化日历控件时，传入的参数是滚动日历的高度
-            var ddl_item = new ItemMenu("DDL", PackIconKind.ScaleBalance, new UserContorlDDL());
+            var calendar = new UserControlCalendar();
+            var ddl = new UserContorlDDL();
+
+            //在这里手动设置高度绑定到StackPanelMain
+            var calendarBindingObj = new Binding("ActualHeight");
+            calendarBindingObj.Source = StackPanelMain;
+            BindingOperations.SetBinding(calendar, UserControlCalendar.HeightProperty, calendarBindingObj);
+
+            var ddlBindingObj = new Binding("ActualHeight");
+            calendarBindingObj.Source = StackPanelMain;
+            BindingOperations.SetBinding(ddl, UserContorlDDL.HeightProperty, ddlBindingObj);
+
+            var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, calendar);
+            var ddl_item = new ItemMenu("DDL", PackIconKind.ScaleBalance, ddl);
 
             ItemMenuList.Items.Add(new UserControlMenuItem(calendar_item));
             ItemMenuList.Items.Add(new UserControlMenuItem(ddl_item));

@@ -10,7 +10,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         Background="{DynamicResource MaterialDesignPaper}"
-        WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -32,7 +32,7 @@
             </ScrollViewer>
         </Grid>
         
-        <StackPanel x:Name="StackPanelMain" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
+        <StackPanel x:Name="StackPanelMain" Grid.Row="1" Grid.Column="1">
 
         </StackPanel>
 
