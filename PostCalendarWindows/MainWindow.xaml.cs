@@ -3,8 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.ViewModel;
-using PostCalendarWindows.Calendar;
-using PostCalendarWindows.DDL;
 
 namespace PostCalendarWindows
 {
@@ -25,7 +23,7 @@ namespace PostCalendarWindows
             BindingOperations.SetBinding(calendar, UserControlCalendar.HeightProperty, calendarBindingObj);
 
             var ddlBindingObj = new Binding("ActualHeight");
-            calendarBindingObj.Source = StackPanelMain;
+            ddlBindingObj.Source = StackPanelMain;
             BindingOperations.SetBinding(ddl, UserContorlDDL.HeightProperty, ddlBindingObj);
 
             var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, calendar);
