@@ -24,6 +24,13 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
+                <Border Grid.Column="0" BorderBrush="SteelBlue" BorderThickness="0,0,1,0"/>
+                <Border Grid.Column="2" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
+                <Border Grid.Column="3" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
+                <Border Grid.Column="4" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
+                <Border Grid.Column="5" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
+                <Border Grid.Column="6" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
+                <Border Grid.Column="7" BorderBrush="SteelBlue" BorderThickness="1,0,1,0"/>
 
                 <TextBlock Grid.Column="0" TextAlignment="Center">时间</TextBlock>
                 <TextBlock Grid.Column="1" TextAlignment="Center">星期一</TextBlock>
@@ -36,65 +43,95 @@
             </Grid>
         </materialDesign:ColorZone>
 
-        <StackPanel Height="{Binding Path=Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}">
-            <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Stretch"
-                      Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}">
-                <Grid Grid.Row="1" Grid.Column="0" Width="80" HorizontalAlignment="Left" Height="1200">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
+        <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Stretch"
+                      Height="{Binding Path=Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Grid.Row="0" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="1" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="2" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="3" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="4" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="5" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="6" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="7" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="8" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="9" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="10" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="11" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="12" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="13" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="14" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="15" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="16" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="17" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="18" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="19" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="20" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="21" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="22" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="23" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="24" BorderBrush="Gray" BorderThickness="1,1,1,1"/>
 
-                    <TextBlock Grid.Row="0" TextWrapping="WrapWithOverflow">0:00-1:00</TextBlock>
-                    <TextBlock Grid.Row="1" TextWrapping="WrapWithOverflow">1:00-2:00</TextBlock>
-                    <TextBlock Grid.Row="2" TextWrapping="WrapWithOverflow">2:00-3:00</TextBlock>
-                    <TextBlock Grid.Row="3" TextWrapping="WrapWithOverflow">3:00-4:00</TextBlock>
-                    <TextBlock Grid.Row="4" TextWrapping="WrapWithOverflow">4:00-5:00</TextBlock>
-                    <TextBlock Grid.Row="5" TextWrapping="WrapWithOverflow">5:00-6:00</TextBlock>
-                    <TextBlock Grid.Row="6" TextWrapping="WrapWithOverflow">6:00-7:00</TextBlock>
-                    <TextBlock Grid.Row="7" TextWrapping="WrapWithOverflow">7:00-8:00</TextBlock>
-                    <TextBlock Grid.Row="8" TextWrapping="WrapWithOverflow">8:00-9:00</TextBlock>
-                    <TextBlock Grid.Row="9" TextWrapping="WrapWithOverflow">9:00-10:00</TextBlock>
-                    <TextBlock Grid.Row="10" TextWrapping="WrapWithOverflow">10:00-11:00</TextBlock>
-                    <TextBlock Grid.Row="11" TextWrapping="WrapWithOverflow">11:00-12:00</TextBlock>
-                    <TextBlock Grid.Row="12" TextWrapping="WrapWithOverflow">12:00-13:00</TextBlock>
-                    <TextBlock Grid.Row="13" TextWrapping="WrapWithOverflow">13:00-14:00</TextBlock>
-                    <TextBlock Grid.Row="14" TextWrapping="WrapWithOverflow">14:00-15:00</TextBlock>
-                    <TextBlock Grid.Row="15" TextWrapping="WrapWithOverflow">15:00-16:00</TextBlock>
-                    <TextBlock Grid.Row="16" TextWrapping="WrapWithOverflow">16:00-17:00</TextBlock>
-                    <TextBlock Grid.Row="17" TextWrapping="WrapWithOverflow">17:00-18:00</TextBlock>
-                    <TextBlock Grid.Row="18" TextWrapping="WrapWithOverflow">18:00-19:00</TextBlock>
-                    <TextBlock Grid.Row="19" TextWrapping="WrapWithOverflow">19:00-20:00</TextBlock>
-                    <TextBlock Grid.Row="20" TextWrapping="WrapWithOverflow">20:00-21:00</TextBlock>
-                    <TextBlock Grid.Row="21" TextWrapping="WrapWithOverflow">21:00-22:00</TextBlock>
-                    <TextBlock Grid.Row="22" TextWrapping="WrapWithOverflow">22:00-23:00</TextBlock>
-                    <TextBlock Grid.Row="23" TextWrapping="WrapWithOverflow">23:00-24:00</TextBlock>
-                </Grid>
-            </ScrollViewer>
-        </StackPanel>
-       
-        
+
+
+                <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="WrapWithOverflow">0:00-1:00</TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="WrapWithOverflow">1:00-2:00</TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="WrapWithOverflow">2:00-3:00</TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0" TextWrapping="WrapWithOverflow">3:00-4:00</TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="0" TextWrapping="WrapWithOverflow">4:00-5:00</TextBlock>
+                <TextBlock Grid.Row="5" Grid.Column="0" TextWrapping="WrapWithOverflow">5:00-6:00</TextBlock>
+                <TextBlock Grid.Row="6" Grid.Column="0" TextWrapping="WrapWithOverflow">6:00-7:00</TextBlock>
+                <TextBlock Grid.Row="7" Grid.Column="0" TextWrapping="WrapWithOverflow">7:00-8:00</TextBlock>
+                <TextBlock Grid.Row="8" Grid.Column="0" TextWrapping="WrapWithOverflow">8:00-9:00</TextBlock>
+                <TextBlock Grid.Row="9" Grid.Column="0" TextWrapping="WrapWithOverflow">9:00-10:00</TextBlock>
+                <TextBlock Grid.Row="10" Grid.Column="0" TextWrapping="WrapWithOverflow">10:00-11:00</TextBlock>
+                <TextBlock Grid.Row="11" Grid.Column="0" TextWrapping="WrapWithOverflow">11:00-12:00</TextBlock>
+                <TextBlock Grid.Row="12" Grid.Column="0" TextWrapping="WrapWithOverflow">12:00-13:00</TextBlock>
+                <TextBlock Grid.Row="13" Grid.Column="0" TextWrapping="WrapWithOverflow">13:00-14:00</TextBlock>
+                <TextBlock Grid.Row="14" Grid.Column="0" TextWrapping="WrapWithOverflow">14:00-15:00</TextBlock>
+                <TextBlock Grid.Row="15" Grid.Column="0" TextWrapping="WrapWithOverflow">15:00-16:00</TextBlock>
+                <TextBlock Grid.Row="16" Grid.Column="0" TextWrapping="WrapWithOverflow">16:00-17:00</TextBlock>
+                <TextBlock Grid.Row="17" Grid.Column="0" TextWrapping="WrapWithOverflow">17:00-18:00</TextBlock>
+                <TextBlock Grid.Row="18" Grid.Column="0" TextWrapping="WrapWithOverflow">18:00-19:00</TextBlock>
+                <TextBlock Grid.Row="19" Grid.Column="0" TextWrapping="WrapWithOverflow">19:00-20:00</TextBlock>
+                <TextBlock Grid.Row="20" Grid.Column="0" TextWrapping="WrapWithOverflow">20:00-21:00</TextBlock>
+                <TextBlock Grid.Row="21" Grid.Column="0" TextWrapping="WrapWithOverflow">21:00-22:00</TextBlock>
+                <TextBlock Grid.Row="22" Grid.Column="0" TextWrapping="WrapWithOverflow">22:00-23:00</TextBlock>
+                <TextBlock Grid.Row="23" Grid.Column="0" TextWrapping="WrapWithOverflow">23:00-24:00</TextBlock>
+
+            </Grid>
+            
+        </ScrollViewer>
+
     </StackPanel>
 </UserControl>
