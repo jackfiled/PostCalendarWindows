@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PostCalendarWindows.Calendar;
+using PostCalendarWindows.ViewModel;
 
 namespace PostCalendarWindows
 {
@@ -22,6 +24,9 @@ namespace PostCalendarWindows
     {
         public UserControlCalendar()
         {
+            DateTime dt = DateTime.Now;
+            ColumnTimeData ctd = new ColumnTimeData(dt.Year, dt.Month, dt.Day, dt.DayOfWeek);
+            this.DataContext = ctd;
             InitializeComponent();
         }
     }
