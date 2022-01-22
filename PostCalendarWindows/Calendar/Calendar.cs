@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
+//这个命名空间都是和进程操作有关
 using System.Diagnostics;
+//这个COM组件可以调用excel所有的功能
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace PostCalendarWindows.Calendar
 {
     public class Calendar
     {
+        public List<Curriculum> events = new List<Curriculum>();
+
+
         public Calendar()
         {
 
@@ -57,10 +58,10 @@ namespace PostCalendarWindows.Calendar
             }
 
             app.Quit();
-            app = null;
 
             //貌似除了直接杀掉，没有其他的办法可以干掉这个打开的excel
             //这真是愚蠢
+            //难道微软连这个简单的事情都没办法做好吗？
             Process[] pros = Process.GetProcessesByName("excel");
             foreach(Process proc in pros)
             {
@@ -73,6 +74,103 @@ namespace PostCalendarWindows.Calendar
             dt.Rows.RemoveAt(0);
             dt.Rows.RemoveAt(dt.Rows.Count - 1);
             return dt;
+        }
+
+        void Analyse_excel_data(DataTable dt)
+        {
+            //北邮作息时间表
+            int[] class_start_array = { 800, 850, 950, 1040, 1130, 1300, 1350, 1445, 1540, 1635, 1725, 1830, 1920, 2010 };
+
+            string? last_curriculum_name = null;
+            string name;
+            string teacher;
+            string place;
+            int start_week, end_week;
+
+            System.Text.RegularExpressions.Regex pattern = new System.Text.RegularExpressions.Regex(@"\d+");
+            System.Text.RegularExpressions.MatchCollection match_result1;
+            System.Text.RegularExpressions.MatchCollection match_result2;
+
+            foreach(DataColumn col in dt.Columns)
+            {
+                foreach(DataRow dr in dt.Rows)
+                {
+                    string? cell = dr[col].ToString();
+                    //首先判断单元格里有信息
+                    if(cell!=null && cell.Length != 1)
+                    {
+                        string[] result = cell.Split('\n');
+                        //这里只处理这两种情况，避免一些不必要的麻烦
+                        //没有被处理的单元格引发错误吧
+                        if(result.Length == 6 || result.Length == 7)
+                        {
+                            name = result[1];
+                            if(name == last_curriculum_name)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                last_curriculum_name = name;
+                                //分别匹配两种情况
+                                if(result.Length == 6)
+                                {
+                                    match_result1 = pattern.Matches(result[3]);
+                                    match_result2 = pattern.Matches(result[5]);
+                                    teacher = result[2];
+                                    place = result[4];
+                                }
+                                else
+                                {
+                                    match_result1 = pattern.Matches(result[4]);
+                                    match_result2 = pattern.Matches(result[6]);
+                                    teacher = result[3];
+                                    place = result[5];
+                                }
+                                //处理有的课只上一周的问题
+                                if(match_result1.Count == 1)
+                                {
+                                    start_week = int.Parse(match_result1[0].Value);
+                                    end_week = start_week;
+                                }
+                                else
+                                {
+                                    start_week = int.Parse(match_result1[0].Value);
+                                    end_week = int.Parse(match_result1[1].Value);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public class Curriculum
+    //存储课程信息的类
+    {
+        public struct LastLength
+        {
+            public int start;
+            public int end;
+        }
+
+        public string name;
+        public string details;
+        public int begin_time;
+        public int end_time;
+        public int length;
+        public LastLength last_week;
+
+        Curriculum(string event_name, string event_details, int begin, int end, int start_week, int end_week)
+        {
+            name = event_name;
+            details = event_details;
+            begin_time = begin;
+            end_time = end;
+            length = end - begin;
+            last_week.start = start_week;
+            last_week.end = end_week;
         }
     }
 }
