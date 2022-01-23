@@ -6,10 +6,10 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" >
 
-    <StackPanel Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}">
+    <StackPanel>
         
         <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="0" Height="60">
-            <Grid>
+            <Grid x:Name="reference">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="*"/>
@@ -60,8 +60,7 @@
             </Grid>
         </materialDesign:ColorZone>
 
-        <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Stretch"
-                      Height="{Binding Path=Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UIElement}}">
+        <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
@@ -119,8 +118,6 @@
                 <Border Grid.Column="0" Grid.Row="23" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
                 <Border Grid.Column="0" Grid.Row="24" BorderBrush="Gray" BorderThickness="1,1,1,1"/>
 
-
-
                 <TextBlock Grid.Row="0" Grid.Column="0" TextWrapping="WrapWithOverflow">0:00-1:00</TextBlock>
                 <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="WrapWithOverflow">1:00-2:00</TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="WrapWithOverflow">2:00-3:00</TextBlock>
@@ -146,6 +143,8 @@
                 <TextBlock Grid.Row="22" Grid.Column="0" TextWrapping="WrapWithOverflow">22:00-23:00</TextBlock>
                 <TextBlock Grid.Row="23" Grid.Column="0" TextWrapping="WrapWithOverflow">23:00-24:00</TextBlock>
 
+
+                <Canvas Grid.Column="1" Grid.Row="0" Grid.RowSpan="24" x:Name="canva"/>
             </Grid>
             
         </ScrollViewer>

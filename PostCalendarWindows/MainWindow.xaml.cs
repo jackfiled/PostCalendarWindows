@@ -20,11 +20,11 @@ namespace PostCalendarWindows
             //在这里手动设置高度绑定到StackPanelMain
             var calendarBindingObj = new Binding("ActualHeight");
             calendarBindingObj.Source = StackPanelMain;
-            BindingOperations.SetBinding(calendar, UserControlCalendar.HeightProperty, calendarBindingObj);
+            calendar.SetBinding(HeightProperty, calendarBindingObj);
 
             var ddlBindingObj = new Binding("ActualHeight");
             ddlBindingObj.Source = StackPanelMain;
-            BindingOperations.SetBinding(ddl, UserContorlDDL.HeightProperty, ddlBindingObj);
+            ddl.SetBinding(HeightProperty, ddlBindingObj);
 
             var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, calendar);
             var ddl_item = new ItemMenu("DDL", PackIconKind.ScaleBalance, ddl);

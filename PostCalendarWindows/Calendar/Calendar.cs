@@ -205,6 +205,7 @@ namespace PostCalendarWindows.Calendar
         }
     }
 
+    //这个转化器是转换滚动条高度的转换器
     public class CalendarHeightConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
