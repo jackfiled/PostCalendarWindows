@@ -20,9 +20,10 @@ namespace PostCalendarWindows.Calendar
     /// </summary>
     public partial class UserControlCalendarItem : UserControl
     {
-        public UserControlCalendarItem()
+        public UserControlCalendarItem(double height)
         {
             InitializeComponent();
+            background.Height = height;
         }
     }
 }

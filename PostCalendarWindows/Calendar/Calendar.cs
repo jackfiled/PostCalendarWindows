@@ -183,4 +183,46 @@ namespace PostCalendarWindows.Calendar
             end_week = _end_week;
         }
     }
+
+    public class CalendarItemWidthConverter : System.Windows.Data.IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        {
+            double _value = (double)value;
+            if(_value > 80)
+            {
+                return (_value - 80) / 7;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        {
+            return null;
+        }
+    }
+
+    public class CalendarHeightConverter : System.Windows.Data.IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        {
+            double _value = (double)value;
+            if(_value > 60)
+            {
+                return _value - 60;
+            }
+            else
+            {
+                return _value;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        {
+            return null;
+        }
+    }
 }
