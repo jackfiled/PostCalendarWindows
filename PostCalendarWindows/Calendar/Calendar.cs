@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 //这个命名空间都是和进程操作有关
 using System.Diagnostics;
@@ -9,7 +10,7 @@ namespace PostCalendarWindows.Calendar
 {
     public class Calendar
     {
-        public List<Curriculum> events = new List<Curriculum>();
+        public List<Curriculum> currs = new List<Curriculum>();
 
 
         public Calendar()
@@ -79,17 +80,20 @@ namespace PostCalendarWindows.Calendar
         void Analyse_excel_data(DataTable dt)
         {
             //北邮作息时间表
-            int[] class_start_array = { 800, 850, 950, 1040, 1130, 1300, 1350, 1445, 1540, 1635, 1725, 1830, 1920, 2010 };
+            TimeOnly[] class_start_time = {new TimeOnly(8,0), new TimeOnly(8, 50), new TimeOnly(9, 50), new TimeOnly(10, 40), 
+            new TimeOnly(11, 30), new TimeOnly(13, 0), new TimeOnly(13, 50), new TimeOnly(14,45), new TimeOnly(15,40), new TimeOnly(16,35),
+            new TimeOnly(17, 25), new TimeOnly(18, 30), new TimeOnly(19, 20), new TimeOnly(20,10)};
 
             string? last_curriculum_name = null;
-            string name;
-            string teacher;
-            string place;
+            string name, teacher, place;
             int start_week, end_week;
+            TimeOnly start_time, end_time;
+
 
             System.Text.RegularExpressions.Regex pattern = new System.Text.RegularExpressions.Regex(@"\d+");
             System.Text.RegularExpressions.MatchCollection match_result1;
             System.Text.RegularExpressions.MatchCollection match_result2;
+            List<int> class_array = new List<int>();
 
             foreach(DataColumn col in dt.Columns)
             {
@@ -138,6 +142,15 @@ namespace PostCalendarWindows.Calendar
                                     start_week = int.Parse(match_result1[0].Value);
                                     end_week = int.Parse(match_result1[1].Value);
                                 }
+                                //处理上课的节数
+                                foreach(System.Text.RegularExpressions.Match m in match_result2)
+                                {
+                                    class_array.Add(int.Parse(m.Value));
+                                }
+                                start_time = class_start_time[class_array[0] - 1];
+                                end_time = class_start_time[class_array[class_array.Count - 1] - 1].AddMinutes(45);
+                                Curriculum c = new Curriculum(name, teacher, place, start_time, end_time, start_week, end_week);
+                                currs.Add(c);
                             }
                         }
                     }
@@ -151,26 +164,23 @@ namespace PostCalendarWindows.Calendar
     {
         public struct LastLength
         {
-            public int start;
-            public int end;
+            public TimeOnly start_time;
+            public TimeOnly end_time;
         }
 
-        public string name;
-        public string details;
-        public int begin_time;
-        public int end_time;
-        public int length;
-        public LastLength last_week;
+        public string name, teacher, place;
+        public int start_week, end_week;
+        public LastLength last_time;
 
-        Curriculum(string event_name, string event_details, int begin, int end, int start_week, int end_week)
+        public Curriculum(string event_name, string _teacher, string _place, TimeOnly start, TimeOnly end, int _start_week, int _end_week)
         {
             name = event_name;
-            details = event_details;
-            begin_time = begin;
-            end_time = end;
-            length = end - begin;
-            last_week.start = start_week;
-            last_week.end = end_week;
+            teacher = _teacher;
+            place = _place;
+            last_time.start_time = start;
+            last_time.end_time = end;
+            start_week = _start_week;
+            end_week = _end_week;
         }
     }
 }
