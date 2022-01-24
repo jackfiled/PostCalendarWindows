@@ -38,13 +38,15 @@ namespace PostCalendarWindows
             ColumnTimeData ctd = new ColumnTimeData(dt.Year, dt.Month, dt.Day, dt.DayOfWeek);
             this.DataContext = ctd;
 
-            UserControlCalendarItem testItem = new UserControlCalendarItem(50);
+            CalendarItem item = new CalendarItem("高等数学", "N109", 100);
+            UserControlCalendarItem testItem = new UserControlCalendarItem(item);
             var calendarItemBindingObj = new Binding("ActualWidth");
             calendarItemBindingObj.Source = reference;
             calendarItemBindingObj.Converter = new CalendarItemWidthConverter();
             testItem.SetBinding(WidthProperty, calendarItemBindingObj);
 
-            canva.Children.Add(testItem);
+            
+            
         }
     }
 }

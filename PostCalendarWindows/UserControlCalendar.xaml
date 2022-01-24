@@ -91,6 +91,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" Grid.Row="0" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
                 <Border Grid.Column="0" Grid.Row="1" BorderBrush="Gray" BorderThickness="1,1,1,0"/>
@@ -143,8 +149,14 @@
                 <TextBlock Grid.Row="22" Grid.Column="0" TextWrapping="WrapWithOverflow">22:00-23:00</TextBlock>
                 <TextBlock Grid.Row="23" Grid.Column="0" TextWrapping="WrapWithOverflow">23:00-24:00</TextBlock>
 
-
-                <Canvas Grid.Column="1" Grid.Row="0" Grid.RowSpan="24" x:Name="canva"/>
+                <Canvas Grid.Column="1" Grid.RowSpan="24" x:Name="SunCanva"/>
+                <Canvas Grid.Column="2" Grid.RowSpan="24" x:Name="MonCanva"/>
+                <Canvas Grid.Column="3" Grid.RowSpan="24" x:Name="TuesCanva"/>
+                <Canvas Grid.Column="4" Grid.RowSpan="24" x:Name="WedCanva"/>
+                <Canvas Grid.Column="5" Grid.RowSpan="24" x:Name="ThuCanva"/>
+                <Canvas Grid.Column="6" Grid.RowSpan="24" x:Name="FriCanva"/>
+                <Canvas Grid.Column="7" Grid.RowSpan="24" x:Name="SatCanva"/>
+                
             </Grid>
             
         </ScrollViewer>
