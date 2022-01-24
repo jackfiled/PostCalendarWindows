@@ -25,8 +25,7 @@
             <Grid>
                 <materialDesign:PopupBox PopupMode="Click" PlacementMode="BottomAndAlignRightEdges" HorizontalAlignment="Right" Margin="10">
                     <materialDesign:PopupBox.PopupContent>
-                        <ListView x:Name="PopupList" SelectionChanged="PopupList_SelectionChanged">
-                        </ListView>
+                        <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="打开Excel表格" Click="openExcelClick"></Button>
                     </materialDesign:PopupBox.PopupContent>
                 </materialDesign:PopupBox>
             </Grid>

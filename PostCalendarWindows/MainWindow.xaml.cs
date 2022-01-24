@@ -11,32 +11,32 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class MainWindow : Window
     {
+        Calendar.Calendar calendar = new Calendar.Calendar();
+
         public MainWindow()
         {
             InitializeComponent();
-            var calendar = new UserControlCalendar();
-            var ddl = new UserContorlDDL();
+            var calendarUserControl = new UserControlCalendar();
+            var ddlUserControl = new UserContorlDDL();
 
             //显示相关的页面
             //在这里手动设置高度绑定到StackPanelMain
             var calendarBindingObj = new Binding("ActualHeight");
             calendarBindingObj.Source = StackPanelMain;
-            calendar.SetBinding(HeightProperty, calendarBindingObj);
+            calendarUserControl.SetBinding(HeightProperty, calendarBindingObj);
 
             var ddlBindingObj = new Binding("ActualHeight");
             ddlBindingObj.Source = StackPanelMain;
-            ddl.SetBinding(HeightProperty, ddlBindingObj);
+            ddlUserControl.SetBinding(HeightProperty, ddlBindingObj);
 
-            var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, calendar);
-            var ddl_item = new ItemMenu("DDL", PackIconKind.ScaleBalance, ddl);
+            var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, calendarUserControl);
+            var ddl_item = new ItemMenu("DDL", PackIconKind.ScaleBalance, ddlUserControl);
 
             ItemMenuList.Items.Add(new UserControlMenuItem(calendar_item));
             ItemMenuList.Items.Add(new UserControlMenuItem(ddl_item));
 
-            var excelOpen = new ExcelOpenItem("解析excel表格");
-            PopupList.Items.Add(new UserControlPopupItem(excelOpen));
-
             //日历的相关交互逻辑
+            
 
         }
 
@@ -56,10 +56,19 @@ namespace PostCalendarWindows
             }
         }
 
-        private void PopupList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //点击加载excel表格按钮的方法
+        private void openExcelClick(object sender, RoutedEventArgs e)
         {
-            UserControlPopupItem slected_item = (UserControlPopupItem)(sender as ListView).SelectedItem;
-            slected_item.item.isClicked();
+            string? filePath = null;
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Excel File(xls)|*.xls";
+
+            var result = openFileDialog.ShowDialog();
+
+            if(result == true)
+            {
+                filePath = openFileDialog.FileName;
+            }
         }
     }
 }
