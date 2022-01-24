@@ -17,6 +17,7 @@ namespace PostCalendarWindows
             var calendar = new UserControlCalendar();
             var ddl = new UserContorlDDL();
 
+            //显示相关的页面
             //在这里手动设置高度绑定到StackPanelMain
             var calendarBindingObj = new Binding("ActualHeight");
             calendarBindingObj.Source = StackPanelMain;
@@ -31,6 +32,12 @@ namespace PostCalendarWindows
 
             ItemMenuList.Items.Add(new UserControlMenuItem(calendar_item));
             ItemMenuList.Items.Add(new UserControlMenuItem(ddl_item));
+
+            var excelOpen = new ExcelOpenItem("解析excel表格");
+            PopupList.Items.Add(new UserControlPopupItem(excelOpen));
+
+            //日历的相关交互逻辑
+
         }
 
         public void SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -47,6 +54,12 @@ namespace PostCalendarWindows
                 StackPanelMain.Children.Clear();
                 StackPanelMain.Children.Add(screen);
             }
+        }
+
+        private void PopupList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UserControlPopupItem slected_item = (UserControlPopupItem)(sender as ListView).SelectedItem;
+            slected_item.item.isClicked();
         }
     }
 }

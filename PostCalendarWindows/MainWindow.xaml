@@ -23,7 +23,12 @@
 
         <materialDesign:ColorZone Mode="PrimaryMid" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
             <Grid>
-                <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" HorizontalAlignment="Right" Margin="10"/>
+                <materialDesign:PopupBox PopupMode="Click" PlacementMode="BottomAndAlignRightEdges" HorizontalAlignment="Right" Margin="10">
+                    <materialDesign:PopupBox.PopupContent>
+                        <ListView x:Name="PopupList" SelectionChanged="PopupList_SelectionChanged">
+                        </ListView>
+                    </materialDesign:PopupBox.PopupContent>
+                </materialDesign:PopupBox>
             </Grid>
         </materialDesign:ColorZone>
         <Grid HorizontalAlignment="Stretch" Grid.Row="1" Background="{StaticResource PrimaryHueMidBrush}">
