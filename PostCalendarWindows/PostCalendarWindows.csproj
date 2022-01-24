@@ -20,12 +20,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="linq2db.SQLite" Version="3.6.0" />
     <PackageReference Include="MaterialDesignColors" Version="2.0.4" />
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="DDL\" />
+    <Folder Include="DataModel\" />
   </ItemGroup>
 
 </Project>

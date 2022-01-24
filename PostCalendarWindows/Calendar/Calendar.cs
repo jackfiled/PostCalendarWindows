@@ -10,13 +10,26 @@ namespace PostCalendarWindows.Calendar
 {
     public class Calendar
     {
-        public List<Curriculum> currs = new List<Curriculum>();
+        public List<Event> events = new List<Event>();
+        
+        private List<Curriculum> currs = new List<Curriculum>();
 
 
         public Calendar()
         {
 
         }
+
+        public void addCurriculumFromExcel(string path)
+        {
+            DataTable dt = readExecl(path);
+            Analyse_excel_data(dt);
+            foreach(Curriculum cur in currs)
+            {
+                events.Add(new Event(cur.name, cur.place, cur.dayOfWeek, cur.last_time.start_time, cur.last_time.end_time));
+            }
+        }
+
 
         static DataTable readExecl(string path)
         {
@@ -98,13 +111,14 @@ namespace PostCalendarWindows.Calendar
 
             foreach(DataColumn col in dt.Columns)
             {
-                if(col.Ordinal > 6)
+                //这里已经把星期处理成星期日为0
+                if(col.Ordinal >= 6)
                 {
                     dayOfWeek = 0;
                 }
                 else
                 {
-                    dayOfWeek = col.Ordinal + 1;
+                    dayOfWeek = col.Ordinal;
                 }
                 foreach(DataRow dr in dt.Rows)
                 {
@@ -160,6 +174,7 @@ namespace PostCalendarWindows.Calendar
                                 end_time = class_start_time[class_array[class_array.Count - 1] - 1].AddMinutes(45);
                                 Curriculum c = new Curriculum(name, teacher, place, start_time, end_time, start_week, end_week, dayOfWeek);
                                 currs.Add(c);
+                                class_array.Clear();
                             }
                         }
                     }
@@ -169,7 +184,7 @@ namespace PostCalendarWindows.Calendar
     }
 
     //存储课程信息的类
-    public class Curriculum
+    class Curriculum
     {
         public struct LastLength
         {
@@ -191,6 +206,26 @@ namespace PostCalendarWindows.Calendar
             start_week = _start_week;
             end_week = _end_week;
             dayOfWeek = _dayOfWeek;
+        }
+    }
+
+    //日历类向显示部分传递数据的类
+    public class Event
+    {
+        public string name;
+        public string place;
+        public int dayOfWeek;
+        public double begin_length, length;
+
+        public Event(string _name, string _place, int _dayOfWeek, TimeOnly begin_time, TimeOnly end_time)
+        {
+            name = _name;
+            place = _place;
+            dayOfWeek = _dayOfWeek;
+            TimeSpan length_span = end_time - begin_time;
+            length = length_span.TotalHours * 50;
+            TimeSpan begin_span = begin_time - new TimeOnly(0, 0);
+            begin_length = begin_span.TotalHours * 50;
         }
     }
 

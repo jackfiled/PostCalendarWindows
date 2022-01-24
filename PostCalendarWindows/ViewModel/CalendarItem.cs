@@ -10,9 +10,9 @@ namespace PostCalendarWindows.ViewModel
     {
         public string name { get; private set; }
         public string place { get; private set; }
-        public int height { get; private set; }
+        public double height { get; private set; }
 
-        public CalendarItem(string _name, string _place, int _height)
+        public CalendarItem(string _name, string _place, double _height)
         {
             name = _name;
             place = _place;

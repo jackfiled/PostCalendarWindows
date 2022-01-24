@@ -12,12 +12,12 @@ namespace PostCalendarWindows
     public partial class MainWindow : Window
     {
         Calendar.Calendar calendar = new Calendar.Calendar();
+        UserControlCalendar calendarUserControl = new UserControlCalendar();
+        UserContorlDDL ddlUserControl = new UserContorlDDL();
 
         public MainWindow()
         {
             InitializeComponent();
-            var calendarUserControl = new UserControlCalendar();
-            var ddlUserControl = new UserContorlDDL();
 
             //显示相关的页面
             //在这里手动设置高度绑定到StackPanelMain
@@ -35,9 +35,8 @@ namespace PostCalendarWindows
             ItemMenuList.Items.Add(new UserControlMenuItem(calendar_item));
             ItemMenuList.Items.Add(new UserControlMenuItem(ddl_item));
 
-            //日历的相关交互逻辑
-            
-
+            //展示目前日历事件列表中的事件
+            calendarUserControl.displayCanva(calendar.events);
         }
 
         public void SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -59,7 +58,6 @@ namespace PostCalendarWindows
         //点击加载excel表格按钮的方法
         private void openExcelClick(object sender, RoutedEventArgs e)
         {
-            string? filePath = null;
             var openFileDialog = new Microsoft.Win32.OpenFileDialog();
             openFileDialog.Filter = "Excel File(xls)|*.xls";
 
@@ -67,7 +65,10 @@ namespace PostCalendarWindows
 
             if(result == true)
             {
-                filePath = openFileDialog.FileName;
+                calendar.addCurriculumFromExcel(openFileDialog.FileName);
+                calendarUserControl.clearCanva();
+                calendarUserControl.displayCanva(calendar.events);
+
             }
         }
     }
