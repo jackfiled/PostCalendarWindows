@@ -77,6 +77,7 @@ namespace PostCalendarWindows.Calendar
             return dt;
         }
 
+        //解析读取到的excel数据的方法
         void Analyse_excel_data(DataTable dt)
         {
             //北邮作息时间表
@@ -86,7 +87,7 @@ namespace PostCalendarWindows.Calendar
 
             string? last_curriculum_name = null;
             string name, teacher, place;
-            int start_week, end_week;
+            int start_week, end_week, dayOfWeek;
             TimeOnly start_time, end_time;
 
 
@@ -97,6 +98,14 @@ namespace PostCalendarWindows.Calendar
 
             foreach(DataColumn col in dt.Columns)
             {
+                if(col.Ordinal > 6)
+                {
+                    dayOfWeek = 0;
+                }
+                else
+                {
+                    dayOfWeek = col.Ordinal + 1;
+                }
                 foreach(DataRow dr in dt.Rows)
                 {
                     string? cell = dr[col].ToString();
@@ -149,7 +158,7 @@ namespace PostCalendarWindows.Calendar
                                 }
                                 start_time = class_start_time[class_array[0] - 1];
                                 end_time = class_start_time[class_array[class_array.Count - 1] - 1].AddMinutes(45);
-                                Curriculum c = new Curriculum(name, teacher, place, start_time, end_time, start_week, end_week);
+                                Curriculum c = new Curriculum(name, teacher, place, start_time, end_time, start_week, end_week, dayOfWeek);
                                 currs.Add(c);
                             }
                         }
@@ -159,8 +168,8 @@ namespace PostCalendarWindows.Calendar
         }
     }
 
-    public class Curriculum
     //存储课程信息的类
+    public class Curriculum
     {
         public struct LastLength
         {
@@ -169,10 +178,10 @@ namespace PostCalendarWindows.Calendar
         }
 
         public string name, teacher, place;
-        public int start_week, end_week;
+        public int start_week, end_week, dayOfWeek;
         public LastLength last_time;
 
-        public Curriculum(string event_name, string _teacher, string _place, TimeOnly start, TimeOnly end, int _start_week, int _end_week)
+        public Curriculum(string event_name, string _teacher, string _place, TimeOnly start, TimeOnly end, int _start_week, int _end_week, int _dayOfWeek)
         {
             name = event_name;
             teacher = _teacher;
@@ -181,9 +190,12 @@ namespace PostCalendarWindows.Calendar
             last_time.end_time = end;
             start_week = _start_week;
             end_week = _end_week;
+            dayOfWeek = _dayOfWeek;
         }
     }
 
+
+    //转换日历中事件宽度的转换器
     public class CalendarItemWidthConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
@@ -201,11 +213,11 @@ namespace PostCalendarWindows.Calendar
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
         {
-            return null;
+            return value;
         }
     }
 
-    //这个转化器是转换滚动条高度的转换器
+    //转换滚动条高度的转换器
     public class CalendarHeightConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
@@ -223,7 +235,7 @@ namespace PostCalendarWindows.Calendar
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
         {
-            return null;
+            return value;
         }
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PostCalendarWindows.ViewModel;
 
 namespace PostCalendarWindows.Calendar
 {
@@ -20,10 +21,11 @@ namespace PostCalendarWindows.Calendar
     /// </summary>
     public partial class UserControlCalendarItem : UserControl
     {
-        public UserControlCalendarItem(double height)
+        public UserControlCalendarItem(CalendarItem item)
         {
             InitializeComponent();
-            background.Height = height;
+            background.Height = item.height;
+            this.DataContext = item;
         }
     }
 }

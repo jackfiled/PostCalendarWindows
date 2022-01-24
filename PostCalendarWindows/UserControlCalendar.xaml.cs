@@ -45,7 +45,7 @@ namespace PostCalendarWindows
             calendarItemBindingObj.Converter = new CalendarItemWidthConverter();
             testItem.SetBinding(WidthProperty, calendarItemBindingObj);
 
-            
+            SatCanva.Children.Add(testItem);
             
         }
     }

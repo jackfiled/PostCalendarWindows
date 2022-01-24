@@ -60,7 +60,7 @@
             </Grid>
         </materialDesign:ColorZone>
 
-        <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Stretch">
+        <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
