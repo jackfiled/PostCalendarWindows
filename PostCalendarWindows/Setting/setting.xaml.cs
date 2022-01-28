@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MaterialDesignThemes.Wpf;
+using PostCalendarWindows.ViewModel;
 
 namespace PostCalendarWindows.Setting
 {
@@ -22,6 +24,26 @@ namespace PostCalendarWindows.Setting
         public setting()
         {
             InitializeComponent();
+
+            var CalendarSettingItem = new ItemMenu("日历设置", PackIconKind.Settings, new UserControlCalendarSetting());
+            var DDLSettingItem = new ItemMenu("DDL设置", PackIconKind.SettingsApplications, new UserControlDDLSetting());
+            var GeneralSettingItem = new ItemMenu("设置", PackIconKind.SettingsVertical, new UserControlGeneralSetting());
+            
+            SettingItem.Items.Add(new UserControlMenuItem(CalendarSettingItem));
+            SettingItem.Items.Add(new UserControlMenuItem(DDLSettingItem));
+            SettingItem.Items.Add(new UserControlMenuItem(GeneralSettingItem));
+
+
+        }
+
+        private void SettingItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UserControl screen = ((UserControlMenuItem)(sender as ListView).SelectedItem)._item.Screen;
+            if(screen != null)
+            {
+                SettingMain.Children.Clear();
+                SettingMain.Children.Add(screen);
+            }
         }
     }
 }

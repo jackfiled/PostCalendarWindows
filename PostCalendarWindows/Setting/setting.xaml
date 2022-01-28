@@ -9,13 +9,13 @@
         Title="设置">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid HorizontalAlignment="Stretch" Grid.Column="0" Background="{StaticResource PrimaryHueMidBrush}">
             <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                <ListView x:Name="SettingItem" Margin="10" Foreground="White" ScrollViewer.HorizontalScrollBarVisibility="Disabled"/>
+                <ListView x:Name="SettingItem" Margin="10" Foreground="White" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="SettingItem_SelectionChanged"/>
             </ScrollViewer>
         </Grid>
 

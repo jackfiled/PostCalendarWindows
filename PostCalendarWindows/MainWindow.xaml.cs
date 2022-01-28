@@ -3,6 +3,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.ViewModel;
+using PostCalendarWindows.Setting;
+using System.ComponentModel;
 
 namespace PostCalendarWindows
 {
@@ -71,5 +73,13 @@ namespace PostCalendarWindows
 
             }
         }
+
+        //点击设置按钮的方法
+        private void openSettingWindows(object sender, RoutedEventArgs e)
+        {
+            Window settingWindow = new setting();
+            settingWindow.Show();
+        }
+
     }
 }

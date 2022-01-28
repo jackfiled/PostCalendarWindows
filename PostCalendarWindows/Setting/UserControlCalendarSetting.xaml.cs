@@ -20,9 +20,17 @@ namespace PostCalendarWindows.Setting
     /// </summary>
     public partial class UserControlCalendarSetting : UserControl
     {
+        public int teaching_week_count = 19;
         public UserControlCalendarSetting()
         {
             InitializeComponent();
+
+            for(int i = 1; i <= teaching_week_count; i++)
+            {
+                ComboBoxItem item = new ComboBoxItem();
+                item.Content = i;
+                teaching_week_combobox.Items.Add(item);
+            }
         }
     }
 }
