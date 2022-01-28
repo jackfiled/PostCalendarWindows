@@ -15,10 +15,11 @@ namespace PostCalendarWindows.Calendar
         public Database db;
 
         private List<Curriculum> currs = new List<Curriculum>();
-
+        private DateOnly week_first_day;
 
         public Calendar()
         {
+            //初始化数据库
             string database_path = @".\database.db";
             string connection = $"Data Source={database_path}";
             if (!System.IO.File.Exists(database_path))
@@ -35,6 +36,20 @@ namespace PostCalendarWindows.Calendar
             foreach(Curriculum cur in currs)
             {
                 show_items.Add(new ShowItem(cur.name, cur.place, cur.dayOfWeek, cur.last_time.start_time, cur.last_time.end_time));
+            }
+        }
+
+        void getWeekFitstDay()
+        {
+            DateOnly now = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            DayOfWeek day = now.DayOfWeek;
+            if(day == DayOfWeek.Sunday)
+            {
+                week_first_day = now.AddDays(-6);
+            }
+            else
+            {
+                week_first_day = now.AddDays(1 - (int)day);
             }
         }
 

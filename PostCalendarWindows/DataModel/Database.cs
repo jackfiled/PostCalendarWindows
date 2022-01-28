@@ -19,11 +19,11 @@ namespace PostCalendarWindows.DataModel
         [Column]
         public string? details { get; set; }
         [Column, NotNull]
-        public string? Date { get; set; }
+        public string Date { get; set; }
         [Column, NotNull]
-        public string? Begin_time { get; set; }
+        public string Begin_time { get; set; }
         [Column, NotNull]
-        public string? End_time { get; set; }
+        public string End_time { get; set; }
     }
 
     [Table(Name = "DDL")]
@@ -48,6 +48,15 @@ namespace PostCalendarWindows.DataModel
         public string? sql { get; set; }
     }
 
+    [Table(Name = "Const")]
+    public class Const
+    {
+        [Column]
+        public string? semester { get; set; }
+        [Column]
+        public string? start_data { get; set; }
+    }
+
 
     public class Database : LinqToDB.Data.DataConnection
     {
@@ -66,11 +75,16 @@ namespace PostCalendarWindows.DataModel
             {
                 //this.CreateTable<DDL>();
             }
+            if (!tabel_list.Contains("Const"))
+            {
+                this.CreateTable<Const>();
+            }
         }
 
         //数据库中相关表格的定义
         public ITable<SqliteMaster> SqliteMaster => GetTable<SqliteMaster>();
         public ITable<Calendar> Calendar => GetTable<Calendar>();
+        public ITable<Const> Const => GetTable<Const>();
 
         public void LoadDataIntoDb(List<Event> events)
         {
@@ -89,10 +103,10 @@ namespace PostCalendarWindows.DataModel
         }
 
         //从数据库查询这一周的日程
-        public List<Event> LoadDataFromDb(DateOnly Monday)
+        public List<Event> LoadDataFromDb(DateOnly monday)
         {
             List<Event> events = new List<Event>();
-            DateOnly sunday = Monday.AddDays(6);
+            DateOnly sunday = monday.AddDays(6);
 
             foreach(var item in this.Calendar)
             {
@@ -106,10 +120,23 @@ namespace PostCalendarWindows.DataModel
                 events.Add(e);
             }
             var query = from item in events
-                        where item.Date >= Monday && item.Date <= sunday
+                        where item.Date >= monday && item.Date <= sunday
                         select item;
 
             return query.ToList();
+        }
+
+        public DateOnly? getSemesterFirstDay(string semester)
+        {
+            var query = from data in this.Const
+                        where semester == data.semester
+                        select data.start_data;
+            if(query.Count() == 0)
+            {
+                return null;
+            }
+            DateOnly result = DateOnly.Parse(query.ToList()[0]);
+            return result;
         }
     }
 }
