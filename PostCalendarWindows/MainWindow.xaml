@@ -21,11 +21,14 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <materialDesign:ColorZone Mode="PrimaryMid" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+        <materialDesign:ColorZone Mode="PrimaryMid" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">      
             <Grid>
                 <materialDesign:PopupBox PopupMode="Click" PlacementMode="BottomAndAlignRightEdges" HorizontalAlignment="Right" Margin="10">
                     <materialDesign:PopupBox.PopupContent>
-                        <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="打开Excel表格" Click="openExcelClick"></Button>
+                        <StackPanel>
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="打开Excel表格" Click="openExcelClick"></Button>
+                            <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="设置"/>
+                        </StackPanel>
                     </materialDesign:PopupBox.PopupContent>
                 </materialDesign:PopupBox>
             </Grid>
@@ -37,7 +40,7 @@
         </Grid>
         
         <StackPanel x:Name="StackPanelMain" Grid.Row="1" Grid.Column="1">
-
+            
         </StackPanel>
 
     </Grid>

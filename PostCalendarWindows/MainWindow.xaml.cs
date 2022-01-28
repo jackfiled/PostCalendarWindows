@@ -36,7 +36,7 @@ namespace PostCalendarWindows
             ItemMenuList.Items.Add(new UserControlMenuItem(ddl_item));
 
             //展示目前日历事件列表中的事件
-            calendarUserControl.displayCanva(calendar.events);
+            calendarUserControl.displayCanva(calendar.show_items);
         }
 
         public void SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -67,7 +67,7 @@ namespace PostCalendarWindows
             {
                 calendar.addCurriculumFromExcel(openFileDialog.FileName);
                 calendarUserControl.clearCanva();
-                calendarUserControl.displayCanva(calendar.events);
+                calendarUserControl.displayCanva(calendar.show_items);
 
             }
         }
