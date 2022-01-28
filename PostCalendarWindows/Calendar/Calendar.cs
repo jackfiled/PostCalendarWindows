@@ -5,19 +5,27 @@ using System.Data;
 using System.Diagnostics;
 //这个COM组件可以调用excel所有的功能
 using Excel = Microsoft.Office.Interop.Excel;
+using PostCalendarWindows.DataModel;
 
 namespace PostCalendarWindows.Calendar
 {
     public class Calendar
     {
-        public List<Event> events = new List<Event>();
-        
+        public List<ShowItem> show_items = new List<ShowItem>();
+        public Database db;
+
         private List<Curriculum> currs = new List<Curriculum>();
 
 
         public Calendar()
         {
-
+            string database_path = @".\database.db";
+            string connection = $"Data Source={database_path}";
+            if (!System.IO.File.Exists(database_path))
+            {
+                System.IO.File.Create(database_path);
+            }
+            db = new Database(connection);
         }
 
         public void addCurriculumFromExcel(string path)
@@ -26,7 +34,7 @@ namespace PostCalendarWindows.Calendar
             Analyse_excel_data(dt);
             foreach(Curriculum cur in currs)
             {
-                events.Add(new Event(cur.name, cur.place, cur.dayOfWeek, cur.last_time.start_time, cur.last_time.end_time));
+                show_items.Add(new ShowItem(cur.name, cur.place, cur.dayOfWeek, cur.last_time.start_time, cur.last_time.end_time));
             }
         }
 
@@ -183,6 +191,61 @@ namespace PostCalendarWindows.Calendar
         }
     }
 
+    //储存日历中一次事件的类
+    public class Event
+    {
+        public string? Name { get; set; }
+        public string? Place { get; set; }
+        public string? Details { get; set; }
+        public DateOnly Date { get; set; }
+        public TimeOnly Begin_time { get; set; }
+        public TimeOnly End_time { get; set; }
+        public DayOfWeek DayOfWeek
+        {
+            get { return Date.DayOfWeek; }
+        }
+        public TimeSpan Length
+        {
+            get { return End_time - Begin_time; }
+        }
+
+        public string Date_string
+        {
+            get { return Date.ToString(); }
+        }
+
+        public string Begin_time_string
+        {
+            get { return Begin_time.ToString();}
+        }
+
+        public string End_time_string
+        {
+            get { return End_time.ToString();}
+        }
+
+        //程序内部初始化用这个函数
+        public void SetInnar(string _name, string _place, DateOnly _date, TimeOnly _begin_time, TimeOnly _end_time)
+        {
+            Name = _name;
+            Place = _place;
+            Date = _date;
+            Begin_time = _begin_time;
+            End_time = _end_time;
+        }
+
+        //从数据库里初始化用这个
+        public void SetDatabase(string _name, string _place, string _data, string _begin_time, string _end_time)
+        {
+            Name= _name;
+            Place= _place;
+            Date = DateOnly.Parse(_data);
+            Begin_time = TimeOnly.Parse(_begin_time);
+            End_time= TimeOnly.Parse(_end_time);
+        }
+        
+    }
+
     //存储课程信息的类
     class Curriculum
     {
@@ -210,14 +273,14 @@ namespace PostCalendarWindows.Calendar
     }
 
     //日历类向显示部分传递数据的类
-    public class Event
+    public class ShowItem
     {
         public string name;
         public string place;
         public int dayOfWeek;
         public double begin_length, length;
 
-        public Event(string _name, string _place, int _dayOfWeek, TimeOnly begin_time, TimeOnly end_time)
+        public ShowItem(string _name, string _place, int _dayOfWeek, TimeOnly begin_time, TimeOnly end_time)
         {
             name = _name;
             place = _place;

@@ -66,9 +66,9 @@ namespace PostCalendarWindows
         }
 
         //绘制日历类传来的所有组件
-        public void displayCanva(List<Event> event_list)
+        public void displayCanva(List<ShowItem> event_list)
         {
-            foreach(Event e in event_list)
+            foreach(ShowItem e in event_list)
             {
                 var calendarItem = new CalendarItem(e.name, e.place, e.length);
                 var calendarItemUserControl = new UserControlCalendarItem(calendarItem);
