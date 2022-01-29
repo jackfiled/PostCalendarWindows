@@ -103,10 +103,10 @@ namespace PostCalendarWindows.DataModel
         }
 
         //从数据库查询这一周的日程
-        public List<Event> LoadDataFromDb(DateOnly monday)
+        public List<Event> LoadDataFromDb(DateOnly sunday)
         {
             List<Event> events = new List<Event>();
-            DateOnly sunday = monday.AddDays(6);
+            DateOnly monday = sunday.AddDays(6);
 
             foreach(var item in this.Calendar)
             {
@@ -120,7 +120,7 @@ namespace PostCalendarWindows.DataModel
                 events.Add(e);
             }
             var query = from item in events
-                        where item.Date >= monday && item.Date <= sunday
+                        where item.Date >= sunday && item.Date <= monday
                         select item;
 
             return query.ToList();

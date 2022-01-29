@@ -26,6 +26,7 @@ namespace PostCalendarWindows.Calendar
             Refresh();
         }
 
+        //将excel表格中的数据添加进入数据库中
         public void addCurriculumFromExcel(string path)
         {
             List<Event> curr_events = new List<Event>();
@@ -44,7 +45,7 @@ namespace PostCalendarWindows.Calendar
                     e.Details = cur.teacher;
                     e.Begin_time = cur.last_time.start_time;
                     e.End_time = cur.last_time.end_time;
-                    e.Date = semester_first_day.AddDays(7 * week);
+                    e.Date = semester_first_day.AddDays(cur.dayOfWeek + 7 * week);
                     curr_events.Add(e);
                 }
             }
