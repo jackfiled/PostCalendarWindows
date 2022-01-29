@@ -4,7 +4,7 @@ using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.ViewModel;
 using PostCalendarWindows.Setting;
-using System.ComponentModel;
+using PostCalendarWindows.DataModel;
 
 namespace PostCalendarWindows
 {
@@ -13,13 +13,29 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class MainWindow : Window
     {
-        Calendar.Calendar calendar = new Calendar.Calendar();
+        Database db;
+        Calendar.Calendar calendar;
         UserControlCalendar calendarUserControl = new UserControlCalendar();
         UserContorlDDL ddlUserControl = new UserContorlDDL();
+
 
         public MainWindow()
         {
             InitializeComponent();
+
+            //连接到数据库
+            string database_path = @".\database.db";
+            string connection = $"Data Source={database_path}";
+            if (!System.IO.File.Exists(database_path))
+            {
+                System.IO.File.Create(database_path);
+            }
+            db = new Database(connection);
+
+            //将数据库连接赋给相关的管理类
+            calendar = new Calendar.Calendar(db);
+
+
 
             //显示相关的页面
             //在这里手动设置高度绑定到StackPanelMain

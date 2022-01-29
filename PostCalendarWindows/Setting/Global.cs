@@ -10,6 +10,7 @@ namespace PostCalendarWindows.Setting
     public static class CalendarConst
     {
         public static int teaching_week;
+        public static string semester = "2021-2022-2";
 
     }
 

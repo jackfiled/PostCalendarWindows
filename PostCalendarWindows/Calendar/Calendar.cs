@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 //这个COM组件可以调用excel所有的功能
 using Excel = Microsoft.Office.Interop.Excel;
+using LinqToDB;
 using PostCalendarWindows.DataModel;
 
 namespace PostCalendarWindows.Calendar
@@ -12,30 +13,69 @@ namespace PostCalendarWindows.Calendar
     public class Calendar
     {
         public List<ShowItem> show_items = new List<ShowItem>();
+        public List<Event> events = new List<Event>();
         public Database db;
 
-        private List<Curriculum> currs = new List<Curriculum>();
         private DateOnly week_first_day;
 
-        public Calendar()
+        public Calendar(Database _db)
         {
-            //初始化数据库
-            string database_path = @".\database.db";
-            string connection = $"Data Source={database_path}";
-            if (!System.IO.File.Exists(database_path))
-            {
-                System.IO.File.Create(database_path);
-            }
-            db = new Database(connection);
+            db = _db;
+            //获得本周的第一天
+            getWeekFitstDay();
+            events.AddRange(db.LoadDataFromDb(week_first_day));
+            Refresh();
         }
 
         public void addCurriculumFromExcel(string path)
         {
+            List<Event> curr_events = new List<Event>();
+
             DataTable dt = readExecl(path);
-            Analyse_excel_data(dt);
+            List<Curriculum> currs = Analyse_excel_data(dt);
+            DateOnly semester_first_day = (DateOnly)db.getSemesterFirstDay(Setting.CalendarConst.semester);
+            
             foreach(Curriculum cur in currs)
             {
-                show_items.Add(new ShowItem(cur.name, cur.place, cur.dayOfWeek, cur.last_time.start_time, cur.last_time.end_time));
+                for(int week = cur.start_week - 1; week < cur.end_week; week++)
+                {
+                    Event e = new Event();
+                    e.Name = cur.name;
+                    e.Place = cur.place;
+                    e.Details = cur.teacher;
+                    e.Begin_time = cur.last_time.start_time;
+                    e.End_time = cur.last_time.end_time;
+                    e.Date = semester_first_day.AddDays(7 * week);
+                    curr_events.Add(e);
+                }
+            }
+
+            foreach(Event e in curr_events)
+            {
+                //存储在数据库中的对象
+                DataModel.Calendar calendar_item = new DataModel.Calendar();
+                calendar_item.Name = e.Name;
+                calendar_item.Place = e.Place;
+                calendar_item.details = e.Details;
+                calendar_item.Date = e.Date_string;
+                calendar_item.Begin_time = e.Begin_time_string;
+                calendar_item.End_time = e.End_time_string;
+                db.Insert<DataModel.Calendar>(calendar_item);
+            }
+
+
+            events.Clear();
+            events.AddRange(db.LoadDataFromDb(week_first_day));
+            Refresh();
+        }
+
+        //将内部事件列表中的事件重新列入展示列表
+        public void Refresh()
+        {
+            show_items.Clear();
+            foreach (Event e in events)
+            {
+                show_items.Add(new ShowItem(e.Name, e.Place, (int)e.DayOfWeek, e.Begin_time, e.End_time));
             }
         }
 
@@ -52,7 +92,6 @@ namespace PostCalendarWindows.Calendar
                 week_first_day = now.AddDays(1 - (int)day);
             }
         }
-
 
         static DataTable readExecl(string path)
         {
@@ -114,8 +153,9 @@ namespace PostCalendarWindows.Calendar
         }
 
         //解析读取到的excel数据的方法
-        void Analyse_excel_data(DataTable dt)
+        List<Curriculum> Analyse_excel_data(DataTable dt)
         {
+            List<Curriculum> currs = new List<Curriculum>();
             //北邮作息时间表
             TimeOnly[] class_start_time = {new TimeOnly(8,0), new TimeOnly(8, 50), new TimeOnly(9, 50), new TimeOnly(10, 40), 
             new TimeOnly(11, 30), new TimeOnly(13, 0), new TimeOnly(13, 50), new TimeOnly(14,45), new TimeOnly(15,40), new TimeOnly(16,35),
@@ -203,6 +243,7 @@ namespace PostCalendarWindows.Calendar
                     }
                 }
             }
+            return currs;
         }
     }
 
