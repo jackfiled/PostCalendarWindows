@@ -24,10 +24,13 @@ namespace PostCalendarWindows
     {
         private List<Canvas> canva_list = new List<Canvas>();
         private Binding calendarItemWidthBindingObj = new Binding("ActualWidth");
+        private Calendar.Calendar calendar;
+        private ColumnTimeData ctd;
 
-        public UserControlCalendar()
+        public UserControlCalendar(Calendar.Calendar c)
         {
             InitializeComponent();
+            calendar = c;
 
             //这里的代码让我觉得我是傻逼
             canva_list.Add(SunCanva);
@@ -50,9 +53,40 @@ namespace PostCalendarWindows
             calendarItemWidthBindingObj.Converter = new CalendarItemWidthConverter();
 
             //这里显示日历上的日期
-            DateTime dt = DateTime.Now;
-            ColumnTimeData ctd = new ColumnTimeData(dt.Year, dt.Month, dt.Day, dt.DayOfWeek);
-            this.DataContext = ctd;
+            ctd = new ColumnTimeData(calendar.week_first_day);
+
+            var YearBinding = new Binding("Year");
+            var SunBinding = new Binding("Sun");
+            var MonBinding = new Binding("Mon");
+            var TuesBinding = new Binding("Tues");
+            var WedBinding = new Binding("Wed");
+            var ThuBinding = new Binding("Thu");
+            var FriBinding = new Binding("Fri");
+            var SatBinding = new Binding("Sat");
+            YearBinding.Source = ctd;
+            SunBinding.Source = ctd;
+            MonBinding.Source = ctd;
+            TuesBinding.Source = ctd;
+            WedBinding.Source = ctd;
+            ThuBinding.Source = ctd;
+            FriBinding.Source = ctd;
+            SatBinding.Source = ctd;
+            YearBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            SunBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            MonBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            TuesBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            WedBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            ThuBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            FriBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            SatBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            year_text.SetBinding(TextBlock.TextProperty, YearBinding);
+            sun_text.SetBinding(TextBlock.TextProperty, SunBinding);
+            mon_text.SetBinding(TextBlock.TextProperty, MonBinding);
+            tues_text.SetBinding(TextBlock.TextProperty, TuesBinding);
+            wed_text.SetBinding(TextBlock.TextProperty, WedBinding);
+            thu_text.SetBinding(TextBlock.TextProperty, ThuBinding);
+            fri_text.SetBinding(TextBlock.TextProperty, FriBinding);
+            sat_text.SetBinding(TextBlock.TextProperty, SatBinding);
 
         }
 
@@ -77,5 +111,24 @@ namespace PostCalendarWindows
                 Canvas.SetTop(calendarItemUserControl, e.begin_length);
             }
         }
+
+        private void last_week_click(object sender, RoutedEventArgs e)
+        {
+            calendar.week_first_day = calendar.week_first_day.AddDays(-7);
+            ctd.AddDays(-7);
+            calendar.ReQuery();
+            clearCanva();
+            displayCanva(calendar.show_items);
+        }
+
+        private void next_week_click(object sender, RoutedEventArgs e)
+        {
+            calendar.week_first_day = calendar.week_first_day.AddDays(7);
+            ctd.AddDays(7);
+            calendar.ReQuery();
+            clearCanva();
+            displayCanva(calendar.show_items);
+        }
+        
     }
 }

@@ -4,11 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:PostCalendarWindows.DataModel"
              mc:Ignorable="d" >
 
     <StackPanel>
         
-        <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="0" Height="60">
+        <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="0" Height="90">
             <Grid x:Name="reference">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
@@ -21,6 +22,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
@@ -39,23 +41,28 @@
                 <Border Grid.Column="6" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
                 <Border Grid.Column="7" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,0,1,0"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="0" TextAlignment="Center" Text="{Binding Year}"></TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="0" TextAlignment="Center" Text="{Binding Mon}"></TextBlock>
-                <TextBlock Grid.Column="2" Grid.Row="0" TextAlignment="Center" Text="{Binding Tues}"></TextBlock>
-                <TextBlock Grid.Column="3" Grid.Row="0" TextAlignment="Center" Text="{Binding Wed}"></TextBlock>
-                <TextBlock Grid.Column="4" Grid.Row="0" TextAlignment="Center" Text="{Binding Thu}"></TextBlock>
-                <TextBlock Grid.Column="5" Grid.Row="0" TextAlignment="Center" Text="{Binding Fri}"></TextBlock>
-                <TextBlock Grid.Column="6" Grid.Row="0" TextAlignment="Center" Text="{Binding Sat}"></TextBlock>
-                <TextBlock Grid.Column="7" Grid.Row="0" TextAlignment="Center" Text="{Binding Sun}"></TextBlock>
-                
-                <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Center">时间</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Center">星期日</TextBlock>
-                <TextBlock Grid.Column="2" Grid.Row="1" TextAlignment="Center">星期一</TextBlock>
-                <TextBlock Grid.Column="3" Grid.Row="1" TextAlignment="Center">星期二</TextBlock>
-                <TextBlock Grid.Column="4" Grid.Row="1" TextAlignment="Center">星期三</TextBlock>
-                <TextBlock Grid.Column="5" Grid.Row="1" TextAlignment="Center">星期四</TextBlock>
-                <TextBlock Grid.Column="6" Grid.Row="1" TextAlignment="Center">星期五</TextBlock>
-                <TextBlock Grid.Column="7" Grid.Row="1" TextAlignment="Center">星期六</TextBlock>
+                <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource MaterialDesignRaisedDarkButton}" Content="上一周" Click="last_week_click"/>
+                <Button Grid.Column="7" Grid.Row="0" Style="{StaticResource MaterialDesignRaisedDarkButton}" Content="下一周" Click="next_week_click"/>
+
+
+
+                <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Center" x:Name="year_text"></TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Center" x:Name="sun_text"></TextBlock>
+                <TextBlock Grid.Column="2" Grid.Row="1" TextAlignment="Center" x:Name="mon_text"></TextBlock>
+                <TextBlock Grid.Column="3" Grid.Row="1" TextAlignment="Center" x:Name="tues_text"></TextBlock>
+                <TextBlock Grid.Column="4" Grid.Row="1" TextAlignment="Center" x:Name="wed_text"></TextBlock>
+                <TextBlock Grid.Column="5" Grid.Row="1" TextAlignment="Center" x:Name="thu_text"></TextBlock>
+                <TextBlock Grid.Column="6" Grid.Row="1" TextAlignment="Center" x:Name="fri_text"></TextBlock>
+                <TextBlock Grid.Column="7" Grid.Row="1" TextAlignment="Center" x:Name="sat_text"></TextBlock>
+
+                <TextBlock Grid.Column="0" Grid.Row="2" TextAlignment="Center">时间</TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="2" TextAlignment="Center">星期日</TextBlock>
+                <TextBlock Grid.Column="2" Grid.Row="2" TextAlignment="Center">星期一</TextBlock>
+                <TextBlock Grid.Column="3" Grid.Row="2" TextAlignment="Center">星期二</TextBlock>
+                <TextBlock Grid.Column="4" Grid.Row="2" TextAlignment="Center">星期三</TextBlock>
+                <TextBlock Grid.Column="5" Grid.Row="2" TextAlignment="Center">星期四</TextBlock>
+                <TextBlock Grid.Column="6" Grid.Row="2" TextAlignment="Center">星期五</TextBlock>
+                <TextBlock Grid.Column="7" Grid.Row="2" TextAlignment="Center">星期六</TextBlock>
 
             </Grid>
         </materialDesign:ColorZone>

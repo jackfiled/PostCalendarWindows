@@ -15,7 +15,7 @@ namespace PostCalendarWindows
     {
         Database db;
         Calendar.Calendar calendar;
-        UserControlCalendar calendarUserControl = new UserControlCalendar();
+        UserControlCalendar calendarUserControl;
         UserContorlDDL ddlUserControl = new UserContorlDDL();
 
 
@@ -34,7 +34,7 @@ namespace PostCalendarWindows
 
             //将数据库连接赋给相关的管理类
             calendar = new Calendar.Calendar(db);
-
+            calendarUserControl = new UserControlCalendar(calendar);
 
 
             //显示相关的页面

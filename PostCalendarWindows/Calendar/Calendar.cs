@@ -15,8 +15,7 @@ namespace PostCalendarWindows.Calendar
         public List<ShowItem> show_items = new List<ShowItem>();
         public List<Event> events = new List<Event>();
         public Database db;
-
-        private DateOnly week_first_day;
+        public DateOnly week_first_day;
 
         public Calendar(Database _db)
         {
@@ -69,8 +68,15 @@ namespace PostCalendarWindows.Calendar
             Refresh();
         }
 
+        public void ReQuery()
+        {
+            events.Clear();
+            events.AddRange(db.LoadDataFromDb(week_first_day));
+            Refresh();
+        }
+
         //将内部事件列表中的事件重新列入展示列表
-        public void Refresh()
+        void Refresh()
         {
             show_items.Clear();
             foreach (Event e in events)
@@ -83,14 +89,7 @@ namespace PostCalendarWindows.Calendar
         {
             DateOnly now = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             DayOfWeek day = now.DayOfWeek;
-            if(day == DayOfWeek.Sunday)
-            {
-                week_first_day = now.AddDays(-6);
-            }
-            else
-            {
-                week_first_day = now.AddDays(1 - (int)day);
-            }
+            week_first_day = now.AddDays(-(int)day);
         }
 
         static DataTable readExecl(string path)
@@ -377,9 +376,9 @@ namespace PostCalendarWindows.Calendar
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
         {
             double _value = (double)value;
-            if(_value > 60)
+            if(_value > 90)
             {
-                return _value - 60;
+                return _value - 90;
             }
             else
             {
