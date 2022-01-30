@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:local="clr-namespace:PostCalendarWindows.DataModel"
              mc:Ignorable="d" >
 
     <StackPanel>
@@ -26,25 +25,34 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                 </Grid.RowDefinitions>
-                <Border Grid.Column="0" Grid.Row="0" BorderBrush="SteelBlue" BorderThickness="0,0,1,0"/>
-                <Border Grid.Column="2" Grid.Row="0" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
-                <Border Grid.Column="3" Grid.Row="0" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
-                <Border Grid.Column="4" Grid.Row="0" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
-                <Border Grid.Column="5" Grid.Row="0" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
-                <Border Grid.Column="6" Grid.Row="0" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
-                <Border Grid.Column="7" Grid.Row="0" BorderBrush="SteelBlue" BorderThickness="1,0,1,0"/>
-                <Border Grid.Column="0" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="0,0,1,0"/>
-                <Border Grid.Column="2" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
-                <Border Grid.Column="3" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
-                <Border Grid.Column="4" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
-                <Border Grid.Column="5" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
-                <Border Grid.Column="6" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
-                <Border Grid.Column="7" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,0,1,0"/>
+                <Border Grid.Column="0" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="0,1,1,0"/>
+                <Border Grid.Column="1" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="0,1,0,0"/>
+                <Border Grid.Column="2" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,1,0,0"/>
+                <Border Grid.Column="3" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,1,0,0"/>
+                <Border Grid.Column="4" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,1,0,0"/>
+                <Border Grid.Column="5" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,1,0,0"/>
+                <Border Grid.Column="6" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,1,0,0"/>
+                <Border Grid.Column="7" Grid.Row="1" BorderBrush="SteelBlue" BorderThickness="1,1,1,0"/>
+                <Border Grid.Column="0" Grid.Row="2" BorderBrush="SteelBlue" BorderThickness="0,0,1,0"/>
+                <Border Grid.Column="2" Grid.Row="2" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
+                <Border Grid.Column="3" Grid.Row="2" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
+                <Border Grid.Column="4" Grid.Row="2" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
+                <Border Grid.Column="5" Grid.Row="2" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
+                <Border Grid.Column="6" Grid.Row="2" BorderBrush="SteelBlue" BorderThickness="1,0,0,0"/>
+                <Border Grid.Column="7" Grid.Row="2" BorderBrush="SteelBlue" BorderThickness="1,0,1,0"/>
 
-                <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource MaterialDesignRaisedDarkButton}" Content="上一周" Click="last_week_click"/>
-                <Button Grid.Column="7" Grid.Row="0" Style="{StaticResource MaterialDesignRaisedDarkButton}" Content="下一周" Click="next_week_click"/>
-
-
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <materialDesign:PackIcon Kind="ArrowLeftBoldOutline" Width="20" Height="20" Margin="5"/>
+                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Content="上一周" Click="last_week_click" Margin="40, 0, 0,0"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="6">
+                    <materialDesign:PackIcon Kind="Plus" Width="20" Height="20" Margin="5"/>
+                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Content="添加" Margin="40, 0, 0, 0"/>
+                </Grid>
+                <Grid Grid.Column="7" Grid.Row="0">
+                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}" Content="下一周" Click="next_week_click" Margin="0, 0, 40, 0"/>
+                    <materialDesign:PackIcon Kind="ArrowRightBoldOutline" Width="20" Height="20" Margin="5" HorizontalAlignment="Right"/>
+                </Grid>
 
                 <TextBlock Grid.Column="0" Grid.Row="1" TextAlignment="Center" x:Name="year_text"></TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Center" x:Name="sun_text"></TextBlock>
