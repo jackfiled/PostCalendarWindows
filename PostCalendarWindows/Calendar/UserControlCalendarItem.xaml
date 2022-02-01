@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:PostCalendarWindows.Calendar"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">
-    <materialDesign:ColorZone Mode="PrimaryMid" x:Name="background">
+    <materialDesign:ColorZone Mode="PrimaryMid" x:Name="background" BorderBrush="{StaticResource PrimaryHueDarkBrush}" BorderThickness="1" CornerRadius="5">
         <StackPanel>
             <TextBlock Text="{Binding name}" TextWrapping="WrapWithOverflow"/>
             <TextBlock Text="{Binding place}"/>

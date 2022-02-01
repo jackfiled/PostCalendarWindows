@@ -16,7 +16,6 @@ namespace PostCalendarWindows
         Database db;
         Calendar.Calendar calendar;
         UserControlCalendar calendarUserControl;
-        Window settingWindow;
         UserContorlDDL ddlUserControl;
 
 
@@ -37,7 +36,6 @@ namespace PostCalendarWindows
             calendar = new Calendar.Calendar(db);
             calendarUserControl = new UserControlCalendar(calendar);
             ddlUserControl = new UserContorlDDL();
-            settingWindow = new setting(db);
 
 
             //显示相关的页面
@@ -91,12 +89,6 @@ namespace PostCalendarWindows
                 calendarUserControl.displayCanva(calendar.show_items);
 
             }
-        }
-
-        //点击设置按钮的方法
-        private void openSettingWindows(object sender, RoutedEventArgs e)
-        {
-            settingWindow.Show();
         }
 
     }

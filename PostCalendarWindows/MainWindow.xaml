@@ -27,7 +27,6 @@
                     <materialDesign:PopupBox.PopupContent>
                         <StackPanel>
                             <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="打开Excel表格" Click="openExcelClick"></Button>
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="设置" Click="openSettingWindows"/>
                         </StackPanel>
                     </materialDesign:PopupBox.PopupContent>
                 </materialDesign:PopupBox>

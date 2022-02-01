@@ -36,8 +36,11 @@ namespace PostCalendarWindows.Setting
 
         private void semester_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string result = (string)(sender as ComboBoxItem).Content;
-            CalendarConst.selected_semester = result;
+            /*string? result = (string)(sender as ComboBoxItem).Content;
+            if(result != null)
+            {
+                CalendarConst.selected_semester = result;
+            }*/
         }
     }
 }
