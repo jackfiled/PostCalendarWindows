@@ -33,7 +33,7 @@ namespace PostCalendarWindows.Calendar
 
             DataTable dt = readExecl(path);
             List<Curriculum> currs = Analyse_excel_data(dt);
-            DateOnly semester_first_day = (DateOnly)db.getSemesterFirstDay(Setting.CalendarConst.semester);
+            DateOnly semester_first_day = (DateOnly)db.getSemesterFirstDay(Setting.CalendarConst.selected_semester);
             
             foreach(Curriculum cur in currs)
             {

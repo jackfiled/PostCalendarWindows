@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.ViewModel;
+using PostCalendarWindows.DataModel;
 
 namespace PostCalendarWindows.Setting
 {
@@ -21,9 +22,18 @@ namespace PostCalendarWindows.Setting
     /// </summary>
     public partial class setting : Window
     {
-        public setting()
+        Database db;
+
+        public setting(Database _db)
         {
             InitializeComponent();
+
+            //从数据库中查询一些常量数据
+            db = _db;
+            var semester_query = from item in db.CalendarConst
+                                 select item.semester;
+            CalendarConst.semesters = semester_query.ToList();
+
 
             var CalendarSettingItem = new ItemMenu("日历设置", PackIconKind.Settings, new UserControlCalendarSetting());
             var DDLSettingItem = new ItemMenu("DDL设置", PackIconKind.SettingsApplications, new UserControlDDLSetting());
@@ -32,7 +42,6 @@ namespace PostCalendarWindows.Setting
             SettingItem.Items.Add(new UserControlMenuItem(CalendarSettingItem));
             SettingItem.Items.Add(new UserControlMenuItem(DDLSettingItem));
             SettingItem.Items.Add(new UserControlMenuItem(GeneralSettingItem));
-
 
         }
 

@@ -16,7 +16,8 @@ namespace PostCalendarWindows
         Database db;
         Calendar.Calendar calendar;
         UserControlCalendar calendarUserControl;
-        UserContorlDDL ddlUserControl = new UserContorlDDL();
+        Window settingWindow;
+        UserContorlDDL ddlUserControl;
 
 
         public MainWindow()
@@ -35,6 +36,8 @@ namespace PostCalendarWindows
             //将数据库连接赋给相关的管理类
             calendar = new Calendar.Calendar(db);
             calendarUserControl = new UserControlCalendar(calendar);
+            ddlUserControl = new UserContorlDDL();
+            settingWindow = new setting(db);
 
 
             //显示相关的页面
@@ -93,7 +96,6 @@ namespace PostCalendarWindows
         //点击设置按钮的方法
         private void openSettingWindows(object sender, RoutedEventArgs e)
         {
-            Window settingWindow = new setting();
             settingWindow.Show();
         }
 

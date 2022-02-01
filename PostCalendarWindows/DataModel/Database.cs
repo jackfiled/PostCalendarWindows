@@ -48,13 +48,15 @@ namespace PostCalendarWindows.DataModel
         public string? sql { get; set; }
     }
 
-    [Table(Name = "Const")]
-    public class Const
+    [Table(Name = "CalendarConst")]
+    public class CalendarConst
     {
         [Column]
         public string? semester { get; set; }
         [Column]
         public string? start_data { get; set; }
+        [Column]
+        public int teaching_week_number { get; set; }
     }
 
 
@@ -75,16 +77,16 @@ namespace PostCalendarWindows.DataModel
             {
                 //this.CreateTable<DDL>();
             }
-            if (!tabel_list.Contains("Const"))
+            if (!tabel_list.Contains("CalendarConst"))
             {
-                this.CreateTable<Const>();
+                this.CreateTable<CalendarConst>();
             }
         }
 
         //数据库中相关表格的定义
         public ITable<SqliteMaster> SqliteMaster => GetTable<SqliteMaster>();
         public ITable<Calendar> Calendar => GetTable<Calendar>();
-        public ITable<Const> Const => GetTable<Const>();
+        public ITable<CalendarConst> CalendarConst => GetTable<CalendarConst>();
 
         public void LoadDataIntoDb(List<Event> events)
         {
@@ -128,7 +130,7 @@ namespace PostCalendarWindows.DataModel
 
         public DateOnly? getSemesterFirstDay(string semester)
         {
-            var query = from data in this.Const
+            var query = from data in this.CalendarConst
                         where semester == data.semester
                         select data.start_data;
             if(query.Count() == 0)

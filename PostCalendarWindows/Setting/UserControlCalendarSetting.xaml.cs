@@ -20,17 +20,24 @@ namespace PostCalendarWindows.Setting
     /// </summary>
     public partial class UserControlCalendarSetting : UserControl
     {
-        public int teaching_week_count = 19;
         public UserControlCalendarSetting()
         {
             InitializeComponent();
 
-            for(int i = 1; i <= teaching_week_count; i++)
+            //初始化学年度的选项
+            foreach(string start_time in CalendarConst.semesters)
             {
                 ComboBoxItem item = new ComboBoxItem();
-                item.Content = i;
-                teaching_week_combobox.Items.Add(item);
+                item.Content = start_time;
+                semester_combobox.Items.Add(item);
             }
+            semester_combobox.SelectedIndex = CalendarConst.semesters.IndexOf(CalendarConst.selected_semester);
+        }
+
+        private void semester_combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string result = (string)(sender as ComboBoxItem).Content;
+            CalendarConst.selected_semester = result;
         }
     }
 }
