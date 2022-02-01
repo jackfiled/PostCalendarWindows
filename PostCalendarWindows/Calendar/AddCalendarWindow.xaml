@@ -1,0 +1,28 @@
+﻿<Window x:Class="PostCalendarWindows.Calendar.AddCalendarWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PostCalendarWindows.Calendar"
+        xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="添加日程" Height="450" Width="400">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Style="{StaticResource MaterialDesignHeadline4TextBlock}"><Run Language="zh-cn" Text="添加日程"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="68,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" FontSize="18" Height="26"><Run Language="zh-cn" Text="日程名称"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="68,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" FontSize="18" Height="26"><Run Language="zh-cn" Text="地点"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="68,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" FontSize="18" Height="25"><Run Language="zh-cn" Text="日程详情"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="68,214,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" FontSize="18" Height="24"><Run Language="zh-cn" Text="日期"/><LineBreak/><Run Language="zh-cn"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="68,261,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" FontSize="18" Height="21"><Run Language="zh-cn" Text="开始时间"/><LineBreak/><Run Language="zh-cn"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="68,303,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" FontSize="18" Height="25"><Run Language="zh-cn" Text="结束时间"/></TextBlock>
+        <TextBox x:Name="name_input" HorizontalAlignment="Left" Margin="166,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="22"/>
+        <TextBox x:Name="place_input" HorizontalAlignment="Left" Margin="166,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Cursor="IBeam" Height="22"/>
+        <TextBox x:Name="details_input" HorizontalAlignment="Left" Margin="166,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Cursor="IBeam" Height="22"/>
+        <DatePicker x:Name="date_input" HorizontalAlignment="Left" Margin="166,217,0,0" Width="170" Height="22" VerticalAlignment="Top"/>
+        <materialDesign:TimePicker x:Name="start_time_input" HorizontalAlignment="Left" Margin="166,260,0,0" VerticalAlignment="Top" Width="170" Height="22"/>
+        <materialDesign:TimePicker x:Name="end_time_input" HorizontalAlignment="Left" Margin="166,306,0,0" VerticalAlignment="Top" Width="170" Height="22"/>
+        <Button x:Name="confirm_button" Content="确定" HorizontalAlignment="Left" Margin="128,372,0,0" VerticalAlignment="Top" Height="32" Width="62"  Click="confirm_button_Click"/>
+        <Button x:Name="cancel_button" Content="取消" HorizontalAlignment="Left" Margin="251,372,0,0" VerticalAlignment="Top" Click="cancel_button_Click"/>
+
+    </Grid>
+</Window>

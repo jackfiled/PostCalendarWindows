@@ -22,6 +22,8 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class UserControlCalendar : UserControl
     {
+        public AddCalendarWindow addCalendarWin;
+
         private List<Canvas> canva_list = new List<Canvas>();
         private Binding calendarItemWidthBindingObj = new Binding("ActualWidth");
         private Calendar.Calendar calendar;
@@ -31,6 +33,7 @@ namespace PostCalendarWindows
         {
             InitializeComponent();
             calendar = c;
+            addCalendarWin = new AddCalendarWindow(calendar, this);
 
             //这里的代码让我觉得我是傻逼
             canva_list.Add(SunCanva);
@@ -93,7 +96,7 @@ namespace PostCalendarWindows
         //清除全部的画布
         public void clearCanva()
         {
-            foreach(Canvas canva in canva_list)
+            foreach (Canvas canva in canva_list)
             {
                 canva.Children.Clear();
             }
@@ -112,6 +115,7 @@ namespace PostCalendarWindows
             }
         }
 
+
         private void last_week_click(object sender, RoutedEventArgs e)
         {
             calendar.week_first_day = calendar.week_first_day.AddDays(-7);
@@ -128,6 +132,11 @@ namespace PostCalendarWindows
             calendar.ReQuery();
             clearCanva();
             displayCanva(calendar.show_items);
+        }
+
+        private void add_click(object sender, RoutedEventArgs e)
+        {
+            addCalendarWin.Show();
         }
         
     }

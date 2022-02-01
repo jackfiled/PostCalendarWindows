@@ -88,7 +88,7 @@ namespace PostCalendarWindows.DataModel
         public ITable<Calendar> Calendar => GetTable<Calendar>();
         public ITable<CalendarConst> CalendarConst => GetTable<CalendarConst>();
 
-        public void LoadDataIntoDb(List<Event> events)
+        public void LoadDataIntoDb(List<CalendarEvent> events)
         {
             foreach(var e in events)
             {
@@ -105,14 +105,14 @@ namespace PostCalendarWindows.DataModel
         }
 
         //从数据库查询这一周的日程
-        public List<Event> LoadDataFromDb(DateOnly sunday)
+        public List<CalendarEvent> LoadDataFromDb(DateOnly sunday)
         {
-            List<Event> events = new List<Event>();
+            List<CalendarEvent> events = new List<CalendarEvent>();
             DateOnly monday = sunday.AddDays(6);
 
             foreach(var item in this.Calendar)
             {
-                Event e = new Event();
+                CalendarEvent e = new CalendarEvent();
                 e.Name = item.Name;
                 e.Place = item.Place;
                 e.Details = item.details;

@@ -13,7 +13,7 @@ namespace PostCalendarWindows.Calendar
     public class Calendar
     {
         public List<ShowItem> show_items = new List<ShowItem>();
-        public List<Event> events = new List<Event>();
+        public List<CalendarEvent> events = new List<CalendarEvent>();
         public Database db;
         public DateOnly week_first_day;
 
@@ -26,10 +26,26 @@ namespace PostCalendarWindows.Calendar
             Refresh();
         }
 
+        //添加事件,并在添加事件后自动刷新
+        public List<ShowItem> AddEvent(CalendarEvent e)
+        {
+            //存储在数据库中的对象
+            DataModel.Calendar calendar_item = new DataModel.Calendar();
+            calendar_item.Name = e.Name;
+            calendar_item.Place = e.Place;
+            calendar_item.details = e.Details;
+            calendar_item.Date = e.Date_string;
+            calendar_item.Begin_time = e.Begin_time_string;
+            calendar_item.End_time = e.End_time_string;
+            db.Insert<DataModel.Calendar>(calendar_item);
+            ReQuery();
+            return this.show_items;
+        }
+
         //将excel表格中的数据添加进入数据库中
         public void addCurriculumFromExcel(string path)
         {
-            List<Event> curr_events = new List<Event>();
+            List<CalendarEvent> curr_events = new List<CalendarEvent>();
 
             DataTable dt = readExecl(path);
             List<Curriculum> currs = Analyse_excel_data(dt);
@@ -39,7 +55,7 @@ namespace PostCalendarWindows.Calendar
             {
                 for(int week = cur.start_week - 1; week < cur.end_week; week++)
                 {
-                    Event e = new Event();
+                    CalendarEvent e = new CalendarEvent();
                     e.Name = cur.name;
                     e.Place = cur.place;
                     e.Details = cur.teacher;
@@ -50,7 +66,7 @@ namespace PostCalendarWindows.Calendar
                 }
             }
 
-            foreach(Event e in curr_events)
+            foreach(CalendarEvent e in curr_events)
             {
                 //存储在数据库中的对象
                 DataModel.Calendar calendar_item = new DataModel.Calendar();
@@ -80,7 +96,7 @@ namespace PostCalendarWindows.Calendar
         void Refresh()
         {
             show_items.Clear();
-            foreach (Event e in events)
+            foreach (CalendarEvent e in events)
             {
                 show_items.Add(new ShowItem(e.Name, e.Place, (int)e.DayOfWeek, e.Begin_time, e.End_time));
             }
@@ -248,7 +264,7 @@ namespace PostCalendarWindows.Calendar
     }
 
     //储存日历中一次事件的类
-    public class Event
+    public class CalendarEvent
     {
         public string? Name { get; set; }
         public string? Place { get; set; }
@@ -281,10 +297,11 @@ namespace PostCalendarWindows.Calendar
         }
 
         //程序内部初始化用这个函数
-        public void SetInnar(string _name, string _place, DateOnly _date, TimeOnly _begin_time, TimeOnly _end_time)
+        public void SetInnar(string _name, string _place, string _details, DateOnly _date, TimeOnly _begin_time, TimeOnly _end_time)
         {
             Name = _name;
             Place = _place;
+            Details = _details;
             Date = _date;
             Begin_time = _begin_time;
             End_time = _end_time;
