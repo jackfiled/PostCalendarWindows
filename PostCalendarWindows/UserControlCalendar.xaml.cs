@@ -22,10 +22,10 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class UserControlCalendar : UserControl
     {
-        public AddCalendarWindow? addCalendarWin;
-
         private List<Canvas> canva_list = new List<Canvas>();
         private Binding calendarItemWidthBindingObj = new Binding("ActualWidth");
+        private Binding AreaWidthBindingObj = new Binding("ActualWidth");
+        private Binding AreaHeightBindingObj = new Binding("ActualHeight");
         private Calendar.Calendar calendar;
         private ColumnTimeData ctd;
 
@@ -50,9 +50,13 @@ namespace PostCalendarWindows
             ScrollViewerHeightBindingObj.Converter = new CalendarHeightConverter();
             scroll.SetBinding(HeightProperty, ScrollViewerHeightBindingObj);
 
-            //设置宽度的绑定器
+            //设置日历对象宽度的绑定器
             calendarItemWidthBindingObj.Source = reference;
             calendarItemWidthBindingObj.Converter = new CalendarItemWidthConverter();
+
+            //设置展示区域的宽度和高度
+            AreaHeightBindingObj.Source = this;
+            AreaWidthBindingObj.Source = this;
 
             //这里显示日历上的日期
             ctd = new ColumnTimeData(calendar.week_first_day);
@@ -139,10 +143,20 @@ namespace PostCalendarWindows
 
         private void add_click(object sender, RoutedEventArgs e)
         {
-            addCalendarWin = new AddCalendarWindow(calendar, this);
-            addCalendarWin.Owner = App.Current.MainWindow;
-            addCalendarWin.ShowInTaskbar = false;
-            addCalendarWin.ShowDialog();
+            UCAddCalendar uCAddCalendar = new UCAddCalendar();
+
+            uCAddCalendar.SetBinding(WidthProperty, AreaWidthBindingObj);
+            uCAddCalendar.SetBinding(HeightProperty, AreaHeightBindingObj);
+            area.Children.Clear();
+            area.Children.Add(uCAddCalendar);
+        }
+
+        private void calendar_refresh(object sender, RoutedEventArgs e)
+        {
+            area.Children.Clear();
+            calendar.Refresh();
+            clearCanva();
+            displayCanva(calendar.show_items);
         }
     }
 }

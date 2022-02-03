@@ -1,12 +1,13 @@
-﻿<Window x:Class="PostCalendarWindows.Calendar.AddCalendarWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PostCalendarWindows.Calendar"
-        xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d"
-        Title="添加日程" Height="450" Width="400">
+﻿<UserControl x:Class="PostCalendarWindows.Calendar.UCAddCalendar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PostCalendarWindows.Calendar"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:custom ="clr-namespace:PostCalendarWindows.Calendar"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Style="{StaticResource MaterialDesignHeadline4TextBlock}"><Run Language="zh-cn" Text="添加日程"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="68,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" FontSize="18" Height="26"><Run Language="zh-cn" Text="日程名称"/></TextBlock>
@@ -21,8 +22,7 @@
         <DatePicker x:Name="date_input" HorizontalAlignment="Left" Margin="166,217,0,0" Width="170" Height="22" VerticalAlignment="Top"/>
         <materialDesign:TimePicker x:Name="start_time_input" HorizontalAlignment="Left" Margin="166,260,0,0" VerticalAlignment="Top" Width="170" Height="22"/>
         <materialDesign:TimePicker x:Name="end_time_input" HorizontalAlignment="Left" Margin="166,306,0,0" VerticalAlignment="Top" Width="170" Height="22"/>
-        <Button x:Name="confirm_button" Content="确定" HorizontalAlignment="Left" Margin="128,372,0,0" VerticalAlignment="Top" Height="32" Width="62"  Click="confirm_button_Click"/>
-        <Button x:Name="cancel_button" Content="取消" HorizontalAlignment="Left" Margin="251,372,0,0" VerticalAlignment="Top" Click="cancel_button_Click"/>
-
+        <custom:CustomizedButton x:Name="confirm_button" Content="确定" HorizontalAlignment="Left" Margin="128,372,0,0" VerticalAlignment="Top" Height="32" Width="62" Click="confirm_button_Click"/>
+        <custom:CustomizedButton x:Name="cancel_button" Content="取消" HorizontalAlignment="Left" Margin="251,372,0,0" VerticalAlignment="Top"/>
     </Grid>
-</Window>
+</UserControl>
