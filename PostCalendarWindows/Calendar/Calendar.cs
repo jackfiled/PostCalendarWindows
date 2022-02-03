@@ -26,7 +26,11 @@ namespace PostCalendarWindows.Calendar
             Refresh();
         }
 
-        //添加事件,并在添加事件后自动刷新
+        /// <summary>
+        /// 在数据中添加一个事件
+        /// </summary>
+        /// <param name="e">需要添加的事件</param>
+        /// <returns>添加之后需要显示的事件列表</returns>
         public List<ShowItem> AddEvent(CalendarEvent e)
         {
             //存储在数据库中的对象
@@ -38,11 +42,14 @@ namespace PostCalendarWindows.Calendar
             calendar_item.Begin_time = e.Begin_time_string;
             calendar_item.End_time = e.End_time_string;
             db.Insert<DataModel.Calendar>(calendar_item);
-            ReQuery();
+            Refresh();
             return this.show_items;
         }
 
-        //将excel表格中的数据添加进入数据库中
+        /// <summary>
+        /// 将excel表格中的数据添加进入数据库中
+        /// </summary>
+        /// <param name="path">excel文件的位置</param>
         public void addCurriculumFromExcel(string path)
         {
             List<CalendarEvent> curr_events = new List<CalendarEvent>();
@@ -79,22 +86,16 @@ namespace PostCalendarWindows.Calendar
                 db.Insert<DataModel.Calendar>(calendar_item);
             }
 
-
-            events.Clear();
-            events.AddRange(db.LoadDataFromDb(week_first_day));
             Refresh();
         }
 
-        public void ReQuery()
+        /// <summary>
+        /// 重新加载需要显示的数据
+        /// </summary>
+        public void Refresh()
         {
             events.Clear();
             events.AddRange(db.LoadDataFromDb(week_first_day));
-            Refresh();
-        }
-
-        //将内部事件列表中的事件重新列入展示列表
-        void Refresh()
-        {
             show_items.Clear();
             foreach (CalendarEvent e in events)
             {
@@ -263,7 +264,9 @@ namespace PostCalendarWindows.Calendar
         }
     }
 
-    //储存日历中一次事件的类
+    /// <summary>
+    ///储存日历中的一次事件对象
+    /// </summary>
     public class CalendarEvent
     {
         public string? Name { get; set; }
@@ -296,7 +299,15 @@ namespace PostCalendarWindows.Calendar
             get { return End_time.ToString();}
         }
 
-        //程序内部初始化用这个函数
+        /// <summary>
+        /// 在程序内部初始化一次事件
+        /// </summary>
+        /// <param name="_name">事件的名称</param>
+        /// <param name="_place">事件的地点</param>
+        /// <param name="_details">事件的详细信息</param>
+        /// <param name="_date">事件发生的日期</param>
+        /// <param name="_begin_time">事件开始时间</param>
+        /// <param name="_end_time">事件结束时间</param>
         public void SetInnar(string _name, string _place, string _details, DateOnly _date, TimeOnly _begin_time, TimeOnly _end_time)
         {
             Name = _name;
@@ -307,7 +318,14 @@ namespace PostCalendarWindows.Calendar
             End_time = _end_time;
         }
 
-        //从数据库里初始化用这个
+        /// <summary>
+        /// 从数据库中初始化一次事件
+        /// </summary>
+        /// <param name="_name">事件的名称</param>
+        /// <param name="_place">事件的地点</param>
+        /// <param name="_data">事件的开始日期字符串</param>
+        /// <param name="_begin_time">事件的开始时间字符串</param>
+        /// <param name="_end_time">事件的结束时间字符串</param>
         public void SetDatabase(string _name, string _place, string _data, string _begin_time, string _end_time)
         {
             Name= _name;
@@ -319,7 +337,9 @@ namespace PostCalendarWindows.Calendar
         
     }
 
-    //存储课程信息的类
+    /// <summary>
+    /// 内部用于储存从excel表格中读取到的课程数据类
+    /// </summary>
     class Curriculum
     {
         public struct LastLength
@@ -345,7 +365,9 @@ namespace PostCalendarWindows.Calendar
         }
     }
 
-    //日历类向显示部分传递数据的类
+    /// <summary>
+    /// 用于显示的对象类
+    /// </summary>
     public class ShowItem
     {
         public string name;
@@ -366,7 +388,9 @@ namespace PostCalendarWindows.Calendar
     }
 
 
-    //转换日历中事件宽度的转换器
+    /// <summary>
+    ///转换日历中事件宽度的转换器
+    /// </summary>
     public class CalendarItemWidthConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
@@ -388,7 +412,9 @@ namespace PostCalendarWindows.Calendar
         }
     }
 
-    //转换滚动条高度的转换器
+    /// <summary>
+    /// 转换滚动条高度的转换器
+    /// </summary>
     public class CalendarHeightConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)

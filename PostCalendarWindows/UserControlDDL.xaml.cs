@@ -18,9 +18,9 @@ namespace PostCalendarWindows
     /// <summary>
     /// UserContorlDDL.xaml 的交互逻辑
     /// </summary>
-    public partial class UserContorlDDL : UserControl
+    public partial class UserControlDDL : UserControl
     {
-        public UserContorlDDL()
+        public UserControlDDL()
         {
             InitializeComponent();
         }
