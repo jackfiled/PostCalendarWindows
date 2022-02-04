@@ -113,7 +113,7 @@ namespace PostCalendarWindows
         /// <param name="event_list">绘制的事件列表</param>
         public void displayCanva(List<ShowItem> event_list)
         {
-            foreach(ShowItem e in event_list)
+            foreach (ShowItem e in event_list)
             {
                 var calendarItem = new CalendarItem(e.name, e.place, e.length);
                 var calendarItemUserControl = new UserControlCalendarItem(calendarItem);
@@ -154,6 +154,18 @@ namespace PostCalendarWindows
         private void calendar_refresh(object sender, RoutedEventArgs e)
         {
             area.Children.Clear();
+            calendar.Refresh();
+            clearCanva();
+            displayCanva(calendar.show_items);
+        }
+
+        private void calendar_add(object sender, RoutedEventArgs e)
+        {
+            CalendarEvent? _event = e.OriginalSource as CalendarEvent;
+            if(_event != null)
+            {
+                calendar.AddEvent(_event);
+            }
             calendar.Refresh();
             clearCanva();
             displayCanva(calendar.show_items);

@@ -28,9 +28,21 @@ namespace PostCalendarWindows.Calendar
         private void confirm_button_Click(object sender, RoutedEventArgs e)
         {
             CustomizedButton? button = sender as CustomizedButton;
+            CalendarEvent _event = new CalendarEvent();
+
+            _event.SetInnar(name_input.Text, place_input.Text, details_input.Text, DateOnly.Parse(date_input.Text), TimeOnly.Parse(start_time_input.Text), TimeOnly.Parse(end_time_input.Text));
             if(button != null)
             {
-                button.RaiseAddEvent();
+                button.RaiseAddEvent(_event);
+                button.RaiseRefreshEvent();
+            }
+        }
+
+        private void cancel_button_Click(object sender, RoutedEventArgs e)
+        {
+            CustomizedButton? button = sender as CustomizedButton;
+            if( button != null)
+            {
                 button.RaiseRefreshEvent();
             }
         }

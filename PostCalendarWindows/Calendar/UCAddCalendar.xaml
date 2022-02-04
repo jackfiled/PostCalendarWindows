@@ -9,20 +9,42 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Style="{StaticResource MaterialDesignHeadline4TextBlock}"><Run Language="zh-cn" Text="添加日程"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="68,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="93" FontSize="18" Height="26"><Run Language="zh-cn" Text="日程名称"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="68,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" FontSize="18" Height="26"><Run Language="zh-cn" Text="地点"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="68,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" FontSize="18" Height="25"><Run Language="zh-cn" Text="日程详情"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="68,214,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" FontSize="18" Height="24"><Run Language="zh-cn" Text="日期"/><LineBreak/><Run Language="zh-cn"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="68,261,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" FontSize="18" Height="21"><Run Language="zh-cn" Text="开始时间"/><LineBreak/><Run Language="zh-cn"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="68,303,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" FontSize="18" Height="25"><Run Language="zh-cn" Text="结束时间"/></TextBlock>
-        <TextBox x:Name="name_input" HorizontalAlignment="Left" Margin="166,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="22"/>
-        <TextBox x:Name="place_input" HorizontalAlignment="Left" Margin="166,127,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Cursor="IBeam" Height="22"/>
-        <TextBox x:Name="details_input" HorizontalAlignment="Left" Margin="166,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Cursor="IBeam" Height="22"/>
-        <DatePicker x:Name="date_input" HorizontalAlignment="Left" Margin="166,217,0,0" Width="170" Height="22" VerticalAlignment="Top"/>
-        <materialDesign:TimePicker x:Name="start_time_input" HorizontalAlignment="Left" Margin="166,260,0,0" VerticalAlignment="Top" Width="170" Height="22"/>
-        <materialDesign:TimePicker x:Name="end_time_input" HorizontalAlignment="Left" Margin="166,306,0,0" VerticalAlignment="Top" Width="170" Height="22"/>
-        <custom:CustomizedButton x:Name="confirm_button" Content="确定" HorizontalAlignment="Left" Margin="128,372,0,0" VerticalAlignment="Top" Height="32" Width="62" Click="confirm_button_Click"/>
-        <custom:CustomizedButton x:Name="cancel_button" Content="取消" HorizontalAlignment="Left" Margin="251,372,0,0" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:ColorZone Grid.Row="0" Mode="PrimaryMid" Height="90">
+            <Grid>
+                <TextBlock HorizontalAlignment="Left" Margin="21,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center"  Style="{StaticResource MaterialDesignHeadline4TextBlock}"><Run Language="zh-cn" Text="添加日程"/></TextBlock>
+
+            </Grid>
+        </materialDesign:ColorZone>
+
+        <Grid Grid.Row="1">
+            <TextBlock HorizontalAlignment="Left" Margin="30,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="94" FontSize="18" Height="26"><Run Language="zh-cn" Text="日程名称"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="30,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" FontSize="18" Height="26"><Run Language="zh-cn" Text="地点"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="30,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" FontSize="18" Height="25"><Run Language="zh-cn" Text="日程详情"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="30,165,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74" FontSize="18" Height="24"><Run Language="zh-cn" Text="日期"/><LineBreak/><Run Language="zh-cn"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="30,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" FontSize="18" Height="21"><Run Language="zh-cn" Text="开始时间"/><LineBreak/><Run Language="zh-cn"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="30,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="111" FontSize="18" Height="25"><Run Language="zh-cn" Text="结束时间"/></TextBlock>
+            <TextBox x:Name="name_input" HorizontalAlignment="Left" Margin="140,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Height="25"/>
+            <TextBox x:Name="place_input" HorizontalAlignment="Left" Margin="140,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Cursor="IBeam" Height="25"/>
+            <TextBox x:Name="details_input" HorizontalAlignment="Left" Margin="140,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="170" Cursor="IBeam" Height="25"/>
+            <DatePicker x:Name="date_input" HorizontalAlignment="Left" Margin="140,165,0,0" Width="170" Height="25" VerticalAlignment="Top"/>
+            <materialDesign:TimePicker x:Name="start_time_input" HorizontalAlignment="Left" Margin="140,210,0,0" VerticalAlignment="Top" Width="170" Height="25"/>
+            <materialDesign:TimePicker x:Name="end_time_input" HorizontalAlignment="Left" Margin="140,255,0,0" VerticalAlignment="Top" Width="170" Height="25"/>
+            <custom:CustomizedButton x:Name="confirm_button" Content="确定" HorizontalAlignment="Left" Margin="52,316,0,0" VerticalAlignment="Top" Height="34" Width="70" Click="confirm_button_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}"/>
+            <custom:CustomizedButton x:Name="cancel_button" Content="取消" HorizontalAlignment="Left" Margin="209,316,0,0" VerticalAlignment="Top" Height="34" RenderTransformOrigin="0.5,0.5" Width="70" Click="cancel_button_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}">
+                <custom:CustomizedButton.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </custom:CustomizedButton.RenderTransform>
+            </custom:CustomizedButton>
+        </Grid>
     </Grid>
 </UserControl>

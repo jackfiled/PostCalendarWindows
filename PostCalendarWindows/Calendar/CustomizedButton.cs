@@ -40,15 +40,22 @@ namespace PostCalendarWindows.Calendar
             remove { RemoveHandler(ChangeEvent, value); }
         }
 
+        /// <summary>
+        /// 引发日历刷新事件
+        /// </summary>
         public void RaiseRefreshEvent()
         {
             RoutedEventArgs newRefreshArgs = new RoutedEventArgs(RefreshEvent);
             RaiseEvent(newRefreshArgs);
         }
 
-        public void RaiseAddEvent()
+        /// <summary>
+        /// 引发修改日历事件
+        /// </summary>
+        /// <param name="_event">需要修改的日历事件对象</param>
+        public void RaiseAddEvent(CalendarEvent _event)
         {
-            RoutedEventArgs newAddArgs = new RoutedEventArgs(AddEvent);
+            RoutedEventArgs newAddArgs = new RoutedEventArgs(AddEvent, _event);
             RaiseEvent(newAddArgs);
         }
 
