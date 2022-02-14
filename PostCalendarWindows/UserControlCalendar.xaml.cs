@@ -29,10 +29,10 @@ namespace PostCalendarWindows
         private Calendar.Calendar calendar;
         private ColumnTimeData ctd;
 
-        public UserControlCalendar(Calendar.Calendar c)
+        public UserControlCalendar(DataModel.Database database)
         {
             InitializeComponent();
-            calendar = c;
+            calendar = new Calendar.Calendar(database);
 
             //这里的代码让我觉得我是傻逼
             canva_list.Add(SunCanva);
@@ -110,10 +110,9 @@ namespace PostCalendarWindows
         /// <summary>
         /// 绘制日历类传来的所有组件
         /// </summary>
-        /// <param name="event_list">绘制的事件列表</param>
-        public void displayCanva(List<ShowItem> event_list)
+        public void displayCanva()
         {
-            foreach (ShowItem e in event_list)
+            foreach (ShowItem e in calendar.show_items)
             {
                 var calendarItem = new CalendarItem(e.name, e.place, e.length);
                 var calendarItemUserControl = new UserControlCalendarItem(calendarItem);
@@ -129,7 +128,7 @@ namespace PostCalendarWindows
             ctd.AddDays(-7);
             calendar.Refresh();
             clearCanva();
-            displayCanva(calendar.show_items);
+            displayCanva();
         }
 
         private void next_week_click(object sender, RoutedEventArgs e)
@@ -138,7 +137,7 @@ namespace PostCalendarWindows
             ctd.AddDays(7);
             calendar.Refresh();
             clearCanva();
-            displayCanva(calendar.show_items);
+            displayCanva();
         }
 
         private void add_click(object sender, RoutedEventArgs e)
@@ -156,7 +155,7 @@ namespace PostCalendarWindows
             area.Children.Clear();
             calendar.Refresh();
             clearCanva();
-            displayCanva(calendar.show_items);
+            displayCanva();
         }
 
         private void calendar_add(object sender, RoutedEventArgs e)
@@ -168,7 +167,7 @@ namespace PostCalendarWindows
             }
             calendar.Refresh();
             clearCanva();
-            displayCanva(calendar.show_items);
+            displayCanva();
         }
 
         private void open_excel_click(object sender, RoutedEventArgs e)
@@ -182,8 +181,7 @@ namespace PostCalendarWindows
             {
                 calendar.addCurriculumFromExcel(openFileDialog.FileName);
                 clearCanva();
-                displayCanva(calendar.show_items);
-
+                displayCanva();
             }
         }
     }
