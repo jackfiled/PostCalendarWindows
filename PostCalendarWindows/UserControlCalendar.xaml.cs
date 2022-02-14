@@ -170,5 +170,21 @@ namespace PostCalendarWindows
             clearCanva();
             displayCanva(calendar.show_items);
         }
+
+        private void open_excel_click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Excel File(xls)|*.xls";
+
+            var result = openFileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                calendar.addCurriculumFromExcel(openFileDialog.FileName);
+                clearCanva();
+                displayCanva(calendar.show_items);
+
+            }
+        }
     }
 }

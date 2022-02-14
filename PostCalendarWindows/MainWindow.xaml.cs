@@ -73,22 +73,5 @@ namespace PostCalendarWindows
                 StackPanelMain.Children.Add(screen);
             }
         }
-
-        //点击加载excel表格按钮的方法
-        private void openExcelClick(object sender, RoutedEventArgs e)
-        {
-            var openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.Filter = "Excel File(xls)|*.xls";
-
-            var result = openFileDialog.ShowDialog();
-
-            if(result == true)
-            {
-                calendar.addCurriculumFromExcel(openFileDialog.FileName);
-                calendarUserControl.clearCanva();
-                calendarUserControl.displayCanva(calendar.show_items);
-
-            }
-        }
     }
 }

@@ -24,11 +24,6 @@
         <materialDesign:ColorZone Mode="PrimaryMid" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">      
             <Grid>
                 <materialDesign:PopupBox PopupMode="Click" PlacementMode="BottomAndAlignRightEdges" HorizontalAlignment="Right" Margin="10">
-                    <materialDesign:PopupBox.PopupContent>
-                        <StackPanel>
-                            <Button Style="{DynamicResource MaterialDesignFlatButton}" Content="打开Excel表格" Click="openExcelClick"></Button>
-                        </StackPanel>
-                    </materialDesign:PopupBox.PopupContent>
                 </materialDesign:PopupBox>
             </Grid>
         </materialDesign:ColorZone>

@@ -51,12 +51,21 @@
                         <TextBlock Text="上一周" Margin="25, 0, 0, 0"/>
                     </Grid>
                 </Button>
+
+                <Button Grid.Column="5" Grid.Row="0" Click="open_excel_click" Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                    <Grid>
+                        <materialDesign:PackIcon Kind="DownloadBoxOutline" Width="20" Height="20"/>
+                        <TextBlock Text="加载excel课表" Margin="25, 3, 0, 0" FontSize="10"/>
+                    </Grid>
+                </Button>
+                
                 <Button Grid.Column="6" Grid.Row="0" Click="add_click" Style="{StaticResource MaterialDesignRaisedDarkButton}">
                     <Grid>
                         <materialDesign:PackIcon Kind="Plus" Width="20" Height="20"/>
                         <TextBlock Text="添加" Margin="25, 0, 0, 0"/>
                     </Grid>
                 </Button>
+                
                 <Button Grid.Column="7" Grid.Row="0" Click="next_week_click" Style="{StaticResource MaterialDesignRaisedDarkButton}">
                     <Grid HorizontalAlignment="Right">
                         <TextBlock Text="下一周" Margin="0, 0, 25, 0" HorizontalAlignment="Left"/>
