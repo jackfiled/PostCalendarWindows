@@ -21,11 +21,19 @@ namespace PostCalendarWindows.Calendar
     /// </summary>
     public partial class UserControlCalendarItem : UserControl
     {
+        private CalendarItem _item;
         public UserControlCalendarItem(CalendarItem item)
         {
             InitializeComponent();
+
+            _item = item;
             background.Height = item.height;
             this.DataContext = item;
+        }
+
+        private void UserControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+           background.RaiseMoreEvent(_item.id);
         }
     }
 }

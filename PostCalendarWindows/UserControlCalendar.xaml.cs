@@ -113,7 +113,7 @@ namespace PostCalendarWindows
         {
             foreach (ShowItem e in calendar.show_items)
             {
-                var calendarItem = new CalendarItem(e.name, e.place, e.length);
+                var calendarItem = new CalendarItem(e.id, e.name, e.place, e.length);
                 var calendarItemUserControl = new UserControlCalendarItem(calendarItem);
                 calendarItemUserControl.SetBinding(WidthProperty, calendarItemWidthBindingObj);
                 canva_list[e.dayOfWeek].Children.Add(calendarItemUserControl);

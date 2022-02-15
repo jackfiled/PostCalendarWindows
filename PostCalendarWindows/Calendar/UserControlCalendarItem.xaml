@@ -4,13 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PostCalendarWindows.Calendar"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
+             MouseDoubleClick="UserControl_MouseDoubleClick"
              >
-    <materialDesign:ColorZone Mode="PrimaryMid" x:Name="background" BorderBrush="{StaticResource PrimaryHueDarkBrush}" BorderThickness="1" CornerRadius="5">
+    <local:CustomizedColorZone Mode="PrimaryMid" x:Name="background" BorderBrush="{StaticResource PrimaryHueDarkBrush}" BorderThickness="1" CornerRadius="5">
         <StackPanel>
             <TextBlock Text="{Binding name}" TextWrapping="WrapWithOverflow"/>
             <TextBlock Text="{Binding place}"/>
         </StackPanel>
-    </materialDesign:ColorZone>
+    </local:CustomizedColorZone>
 </UserControl>

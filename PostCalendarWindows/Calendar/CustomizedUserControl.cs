@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using MaterialDesignThemes.Wpf;
 
 namespace PostCalendarWindows.Calendar
 {
@@ -63,6 +64,24 @@ namespace PostCalendarWindows.Calendar
         {
             RoutedEventArgs newChangeArgs = new RoutedEventArgs(ChangeEvent); 
             RaiseEvent(newChangeArgs);
+        }
+    }
+
+    public class CustomizedColorZone : ColorZone
+    {
+        public static readonly RoutedEvent MoreEvent = EventManager.RegisterRoutedEvent(
+            "More", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ColorZone));
+
+        public event RoutedEventHandler More
+        {
+            add { AddHandler(MoreEvent, value); }
+            remove { RemoveHandler(MoreEvent, value); }
+        }
+
+        public void RaiseMoreEvent(int id)
+        {
+            RoutedEventArgs moreEventArgs = new RoutedEventArgs(MoreEvent, id);
+            RaiseEvent(moreEventArgs);
         }
     }
 }

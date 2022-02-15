@@ -82,7 +82,7 @@ namespace PostCalendarWindows.Calendar
             show_items.Clear();
             foreach (CalendarEvent e in events)
             {
-                show_items.Add(new ShowItem(e.Name, e.Place, (int)e.DayOfWeek, e.Begin_time, e.End_time));
+                show_items.Add(new ShowItem(e.Id, e.Name, e.Place, (int)e.DayOfWeek, e.Begin_time, e.End_time));
             }
         }
 
@@ -355,13 +355,15 @@ namespace PostCalendarWindows.Calendar
     /// </summary>
     public class ShowItem
     {
+        public int id;
         public string name;
         public string place;
         public int dayOfWeek;
         public double begin_length, length;
 
-        public ShowItem(string _name, string _place, int _dayOfWeek, TimeOnly begin_time, TimeOnly end_time)
+        public ShowItem(int _id, string _name, string _place, int _dayOfWeek, TimeOnly begin_time, TimeOnly end_time)
         {
+            id = _id;
             name = _name;
             place = _place;
             dayOfWeek = _dayOfWeek;
