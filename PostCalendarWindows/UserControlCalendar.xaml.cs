@@ -27,12 +27,14 @@ namespace PostCalendarWindows
         private Binding AreaWidthBindingObj = new Binding("ActualWidth");
         private Binding AreaHeightBindingObj = new Binding("ActualHeight");
         private Calendar.Calendar calendar;
+        private DataModel.Database db;
         private ColumnTimeData ctd;
 
         public UserControlCalendar(DataModel.Database database)
         {
             InitializeComponent();
             calendar = new Calendar.Calendar(database);
+            db = database;
 
             //这里的代码让我觉得我是傻逼
             canva_list.Add(SunCanva);
@@ -167,6 +169,27 @@ namespace PostCalendarWindows
             calendar.Refresh();
             clearCanva();
             displayCanva();
+        }
+
+        /// <summary>
+        /// 双击一个日历展示对象引发事件的处理
+        /// </summary>
+        private void calendar_more(object sender, RoutedEventArgs e)
+        {
+            int? id = e.OriginalSource as int?;
+            if(id != null)
+            {
+                CalendarEvent? _event = db.ReadCalendarItem((int)id);
+                if(_event != null)
+                {
+                    UCCalendarDetail calendarDetail = new UCCalendarDetail(_event);
+                    calendarDetail.SetBinding(WidthProperty, AreaWidthBindingObj);
+                    calendarDetail.SetBinding(HeightProperty, AreaHeightBindingObj);
+
+                    area.Children.Clear();
+                    area.Children.Add(calendarDetail);
+                }
+            }
         }
 
         private void open_excel_click(object sender, RoutedEventArgs e)
