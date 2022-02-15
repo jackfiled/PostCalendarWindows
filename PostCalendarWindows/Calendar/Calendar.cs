@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-//这个命名空间都是和进程操作有关
-using System.Diagnostics;
 //这个COM组件可以调用excel所有的功能
 using Excel = Microsoft.Office.Interop.Excel;
 using PostCalendarWindows.DataModel;
@@ -133,16 +131,8 @@ namespace PostCalendarWindows.Calendar
                 dt.Rows.Add(dr);
             }
 
+            wbs.Close();
             app.Quit();
-
-            //貌似除了直接杀掉，没有其他的办法可以干掉这个打开的excel
-            //这真是愚蠢
-            //难道微软连这个简单的事情都没办法做好吗？
-            Process[] pros = Process.GetProcessesByName("excel");
-            foreach(Process proc in pros)
-            {
-                proc.Kill();
-            }
 
             //将表格开头的两行干掉
             //还有最后一行备注也是
