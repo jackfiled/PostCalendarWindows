@@ -5,7 +5,6 @@ using System.Data;
 using System.Diagnostics;
 //这个COM组件可以调用excel所有的功能
 using Excel = Microsoft.Office.Interop.Excel;
-using LinqToDB;
 using PostCalendarWindows.DataModel;
 
 namespace PostCalendarWindows.Calendar
@@ -33,15 +32,7 @@ namespace PostCalendarWindows.Calendar
         /// <returns>添加之后需要显示的事件列表</returns>
         public List<ShowItem> AddEvent(CalendarEvent e)
         {
-            //存储在数据库中的对象
-            DataModel.Calendar calendar_item = new DataModel.Calendar();
-            calendar_item.Name = e.Name;
-            calendar_item.Place = e.Place;
-            calendar_item.details = e.Details;
-            calendar_item.Date = e.Date_string;
-            calendar_item.Begin_time = e.Begin_time_string;
-            calendar_item.End_time = e.End_time_string;
-            db.Insert<DataModel.Calendar>(calendar_item);
+            db.CreateCalendarItem(e);
             Refresh();
             return this.show_items;
         }
@@ -75,15 +66,7 @@ namespace PostCalendarWindows.Calendar
 
             foreach(CalendarEvent e in curr_events)
             {
-                //存储在数据库中的对象
-                DataModel.Calendar calendar_item = new DataModel.Calendar();
-                calendar_item.Name = e.Name;
-                calendar_item.Place = e.Place;
-                calendar_item.details = e.Details;
-                calendar_item.Date = e.Date_string;
-                calendar_item.Begin_time = e.Begin_time_string;
-                calendar_item.End_time = e.End_time_string;
-                db.Insert<DataModel.Calendar>(calendar_item);
+                db.CreateCalendarItem(e);
             }
 
             Refresh();
@@ -269,9 +252,14 @@ namespace PostCalendarWindows.Calendar
     /// </summary>
     public class CalendarEvent
     {
-        public string? Name { get; set; }
-        public string? Place { get; set; }
-        public string? Details { get; set; }
+        /// <summary>
+        /// 在应用中新建事件时，没有id属性
+        /// 只有事件被写入数据库中之后，才会有id属性
+        /// </summary>
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Place { get; set; }
+        public string Details { get; set; }
         public DateOnly Date { get; set; }
         public TimeOnly Begin_time { get; set; }
         public TimeOnly End_time { get; set; }
@@ -319,22 +307,19 @@ namespace PostCalendarWindows.Calendar
         }
 
         /// <summary>
-        /// 从数据库中初始化一次事件
+        /// 从数据库初始化日历事件对象
         /// </summary>
-        /// <param name="_name">事件的名称</param>
-        /// <param name="_place">事件的地点</param>
-        /// <param name="_data">事件的开始日期字符串</param>
-        /// <param name="_begin_time">事件的开始时间字符串</param>
-        /// <param name="_end_time">事件的结束时间字符串</param>
-        public void SetDatabase(string _name, string _place, string _data, string _begin_time, string _end_time)
+        /// <param name="calendar">数据库中的日历mapping对象</param>
+        public void SetFromDatabase(DataModel.Calendar calendar)
         {
-            Name= _name;
-            Place= _place;
-            Date = DateOnly.Parse(_data);
-            Begin_time = TimeOnly.Parse(_begin_time);
-            End_time= TimeOnly.Parse(_end_time);
+            Id = calendar.Id;
+            Name = calendar.Name;
+            Place = calendar.Place;
+            Details = calendar.details;
+            Date = DateOnly.Parse(calendar.Date);
+            Begin_time = TimeOnly.Parse(calendar.Begin_time);
+            End_time = TimeOnly.Parse(calendar.End_time);
         }
-        
     }
 
     /// <summary>

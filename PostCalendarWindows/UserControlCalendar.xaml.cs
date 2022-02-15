@@ -93,7 +93,6 @@ namespace PostCalendarWindows
             thu_text.SetBinding(TextBlock.TextProperty, ThuBinding);
             fri_text.SetBinding(TextBlock.TextProperty, FriBinding);
             sat_text.SetBinding(TextBlock.TextProperty, SatBinding);
-
         }
 
         /// <summary>
