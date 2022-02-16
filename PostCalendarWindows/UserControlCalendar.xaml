@@ -8,6 +8,8 @@
              mc:Ignorable="d"
              custom:CustomizedButton.Refresh="calendar_refresh"
              custom:CustomizedButton.Add="calendar_add"
+             custom:CustomizedButton.Change="calendar_change"
+             custom:CustomizedButton.Delete="calendar_delete"
              custom:CustomizedColorZone.More="calendar_more"
              >
     <StackPanel>

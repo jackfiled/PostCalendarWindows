@@ -34,8 +34,8 @@
             <materialDesign:TimePicker x:Name="start_time_input" HorizontalAlignment="Left" Margin="140,210,0,0" VerticalAlignment="Top" Width="170" Height="25"/>
             <materialDesign:TimePicker x:Name="end_time_input" HorizontalAlignment="Left" Margin="140,255,0,0" VerticalAlignment="Top" Width="170" Height="25"/>
             <local:CustomizedButton x:Name="confirm_button" Content="修改" HorizontalAlignment="Left" Margin="38,316,0,0" VerticalAlignment="Top" Height="34" Width="70" Click="confirm_button_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}"/>
-            <local:CustomizedButton x:Name="delete_button" Content="删除" HorizontalAlignment="Left" Margin="133,316,0,0" VerticalAlignment="Top" Height="34" Width="70" Style="{StaticResource MaterialDesignFlatDarkBgButton}"/>
-            <local:CustomizedButton x:Name="cancel_button" Content="取消" HorizontalAlignment="Left" Margin="233,316,0,0" VerticalAlignment="Top" Height="34"  Width="70" Click="cancel_button_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}"/>
+            <local:CustomizedButton x:Name="delete_button" Content="删除" HorizontalAlignment="Left" Margin="133,316,0,0" VerticalAlignment="Top" Height="34" Width="70" Click="delete_button_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}"/>
+            <local:CustomizedButton x:Name="cancel_button" Content="取消" HorizontalAlignment="Left" Margin="233,316,0,0" VerticalAlignment="Top" Height="34" Width="70" Click="cancel_button_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}"/>
         </Grid>
     </Grid>
 </UserControl>

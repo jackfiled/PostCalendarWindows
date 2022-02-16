@@ -9,6 +9,7 @@ namespace PostCalendarWindows.ViewModel
 {
     public class CalendarDetail
     {
+        public int Id { get; private set; }
         public string Name { get; set; }
         public string Place { get; set; }
         public string Details { get; set; }
@@ -39,6 +40,7 @@ namespace PostCalendarWindows.ViewModel
 
         public CalendarDetail(CalendarEvent _event)
         {
+            Id = _event.Id;
             Name = _event.Name;
             Place = _event.Place;
             Details = _event.Details;

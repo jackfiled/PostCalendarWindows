@@ -54,7 +54,20 @@ namespace PostCalendarWindows.Calendar
 
         private void confirm_button_Click(object sender, RoutedEventArgs e)
         {
+            CustomizedButton? button = sender as CustomizedButton;
+            CalendarEvent _event = new CalendarEvent();
 
+            if (detailItem.Judge())
+            {
+                _event.SetInnar(detailItem.Name, detailItem.Place, detailItem.Details, detailItem.Date, detailItem.BeginTime, detailItem.EndTime);
+                _event.Id = detailItem.Id;//这里是修改，必须设置id
+
+                if(button != null)
+                {
+                    button.RaiseChangeEvent(_event);
+                    button.RaiseRefreshEvent();
+                }
+            }
         }
 
         private void cancel_button_Click(object sender, RoutedEventArgs e)
@@ -62,6 +75,17 @@ namespace PostCalendarWindows.Calendar
             CustomizedButton? button = sender as CustomizedButton;
             if(button != null)
             {
+                button.RaiseRefreshEvent();
+            }
+        }
+
+        private void delete_button_Click(object sender, RoutedEventArgs e)
+        {
+            CustomizedButton? button = sender as CustomizedButton;
+
+            if(button != null)
+            {
+                button.RaiseDeleteEvent(detailItem.Id);
                 button.RaiseRefreshEvent();
             }
         }

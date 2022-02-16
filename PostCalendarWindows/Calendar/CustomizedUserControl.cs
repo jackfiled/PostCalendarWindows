@@ -41,6 +41,15 @@ namespace PostCalendarWindows.Calendar
             remove { RemoveHandler(ChangeEvent, value); }
         }
 
+        public static readonly RoutedEvent DeleteEvent = EventManager.RegisterRoutedEvent(
+            "Delete", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Button));
+
+        public event RoutedEventHandler Delete
+        {
+            add { AddHandler(DeleteEvent, value); }
+            remove { RemoveHandler (DeleteEvent, value); }
+        }
+
         /// <summary>
         /// 引发日历刷新事件
         /// </summary>
@@ -51,19 +60,33 @@ namespace PostCalendarWindows.Calendar
         }
 
         /// <summary>
-        /// 引发修改日历事件
+        /// 引发添加日历事件
         /// </summary>
-        /// <param name="_event">需要修改的日历事件对象</param>
+        /// <param name="_event">需要添加的日历事件对象</param>
         public void RaiseAddEvent(CalendarEvent _event)
         {
             RoutedEventArgs newAddArgs = new RoutedEventArgs(AddEvent, _event);
             RaiseEvent(newAddArgs);
         }
 
-        public void RaiseChangeEvent()
+        /// <summary>
+        /// 引发修改日历事件
+        /// </summary>
+        /// <param name="e">需要修改的日历对象</param>
+        public void RaiseChangeEvent(CalendarEvent e)
         {
-            RoutedEventArgs newChangeArgs = new RoutedEventArgs(ChangeEvent); 
+            RoutedEventArgs newChangeArgs = new RoutedEventArgs(ChangeEvent, e); 
             RaiseEvent(newChangeArgs);
+        }
+
+        /// <summary>
+        /// 引发删除日历事件
+        /// </summary>
+        /// <param name="id">需要删除的日历对象id</param>
+        public void RaiseDeleteEvent(int id)
+        {
+            RoutedEventArgs newDeleteArgs = new RoutedEventArgs(DeleteEvent, id);
+            RaiseEvent(newDeleteArgs);
         }
     }
 

@@ -123,6 +123,9 @@ namespace PostCalendarWindows
             }
         }
 
+        /// <summary>
+        /// 点击上一周按钮的事件处理
+        /// </summary>
         private void last_week_click(object sender, RoutedEventArgs e)
         {
             calendar.week_first_day = calendar.week_first_day.AddDays(-7);
@@ -132,6 +135,9 @@ namespace PostCalendarWindows
             displayCanva();
         }
 
+        /// <summary>
+        /// 点击下一周按钮的事件处理
+        /// </summary>
         private void next_week_click(object sender, RoutedEventArgs e)
         {
             calendar.week_first_day = calendar.week_first_day.AddDays(7);
@@ -141,6 +147,9 @@ namespace PostCalendarWindows
             displayCanva();
         }
 
+        /// <summary>
+        /// 点击添加按钮的事件处理
+        /// </summary>
         private void add_click(object sender, RoutedEventArgs e)
         {
             UCAddCalendar uCAddCalendar = new UCAddCalendar();
@@ -151,6 +160,9 @@ namespace PostCalendarWindows
             area.Children.Add(uCAddCalendar);
         }
 
+        /// <summary>
+        /// 处理在添加事件，修改事件界面引发的刷新日历事件
+        /// </summary>
         private void calendar_refresh(object sender, RoutedEventArgs e)
         {
             area.Children.Clear();
@@ -159,12 +171,45 @@ namespace PostCalendarWindows
             displayCanva();
         }
 
+        /// <summary>
+        /// 处理添加日历事件
+        /// </summary>
         private void calendar_add(object sender, RoutedEventArgs e)
         {
             CalendarEvent? _event = e.OriginalSource as CalendarEvent;
             if(_event != null)
             {
-                calendar.AddEvent(_event);
+                db.CreateCalendarItem(_event);
+            }
+            calendar.Refresh();
+            clearCanva();
+            displayCanva();
+        }
+
+        /// <summary>
+        /// 处理修改日历事件
+        /// </summary>
+        private void calendar_change(object sender, RoutedEventArgs e)
+        {
+            CalendarEvent? _event = e.OriginalSource as CalendarEvent;
+            if(_event != null)
+            {
+                db.UpdateCalendarItem(_event);
+            }
+            calendar.Refresh();
+            clearCanva();
+            displayCanva();
+        }
+
+        /// <summary>
+        /// 处理删除日历事件
+        /// </summary>
+        private void calendar_delete(object sender, RoutedEventArgs e)
+        {
+            int? id = e.OriginalSource as int?;
+            if(id != null)
+            {
+                _ = db.DeleteCalendarItem((int)id);
             }
             calendar.Refresh();
             clearCanva();

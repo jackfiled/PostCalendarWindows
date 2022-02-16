@@ -24,18 +24,6 @@ namespace PostCalendarWindows.Calendar
         }
 
         /// <summary>
-        /// 在数据中添加一个事件
-        /// </summary>
-        /// <param name="e">需要添加的事件</param>
-        /// <returns>添加之后需要显示的事件列表</returns>
-        public List<ShowItem> AddEvent(CalendarEvent e)
-        {
-            db.CreateCalendarItem(e);
-            Refresh();
-            return this.show_items;
-        }
-
-        /// <summary>
         /// 将excel表格中的数据添加进入数据库中
         /// </summary>
         /// <param name="path">excel文件的位置</param>
