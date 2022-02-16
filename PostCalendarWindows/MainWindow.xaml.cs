@@ -27,7 +27,8 @@ namespace PostCalendarWindows
             string connection = $"Data Source={database_path}";
             if (!System.IO.File.Exists(database_path))
             {
-                System.IO.File.Create(database_path);
+                System.IO.FileStream stream = System.IO.File.Create(database_path);
+                stream.Dispose();
             }
             db = new Database(connection);
 

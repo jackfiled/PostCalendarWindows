@@ -15,7 +15,7 @@
     <StackPanel>
         <StackPanel x:Name="area">
         </StackPanel>
-        <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="0" Height="90">
+        <materialDesign:ColorZone Mode="PrimaryMid" Height="90">
             <Grid x:Name="reference">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
