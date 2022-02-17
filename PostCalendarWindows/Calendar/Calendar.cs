@@ -33,7 +33,7 @@ namespace PostCalendarWindows.Calendar
 
             DataTable dt = readExecl(path);
             List<Curriculum> currs = Analyse_excel_data(dt);
-            DateOnly semester_first_day = (DateOnly)db.getSemesterFirstDay(Setting.CalendarConst.selected_semester);
+            DateOnly semester_first_day = new DateOnly(2022, 2, 27);//这里有大问题
             
             foreach(Curriculum cur in currs)
             {
@@ -225,6 +225,7 @@ namespace PostCalendarWindows.Calendar
         }
     }
 
+#pragma warning disable CS8618
     /// <summary>
     ///储存日历中的一次事件对象
     /// </summary>
@@ -351,7 +352,7 @@ namespace PostCalendarWindows.Calendar
             begin_length = begin_span.TotalHours * 50;
         }
     }
-
+#pragma warning restore CS8618
 
     /// <summary>
     ///转换日历中事件宽度的转换器
