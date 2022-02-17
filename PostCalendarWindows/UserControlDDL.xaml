@@ -4,25 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:PostCalendarWindows.DDL"
              mc:Ignorable="d" >
+
     <StackPanel>
         <StackPanel x:Name="area">
         </StackPanel>
-
-        <materialDesign:ColorZone Mode="PrimaryMid" Height="90">
+        <materialDesign:ColorZone Mode="PrimaryMid" Height="90" local:DDLColumnGrid.Select="Column_Select">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="45"/>
                 </Grid.RowDefinitions>
-                
-                
+
+                <StackPanel x:Name="first_column" Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center"/>
+                <StackPanel x:Name="second_column" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center"/>
             </Grid>
         </materialDesign:ColorZone>
+        
 
         <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch">
-            
+
         </ScrollViewer>
     </StackPanel>
 </UserControl>
