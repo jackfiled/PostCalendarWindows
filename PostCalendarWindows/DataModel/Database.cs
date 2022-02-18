@@ -28,7 +28,7 @@ namespace PostCalendarWindows.DataModel
         public string End_time { get; set; }
 
         /// <summary>
-        /// 作为POCO类，必须有一个接受任何参数的构造函数
+        /// 作为POCO类，必须有一个不接受任何参数的构造函数
         /// </summary>
         public Calendar()
         {
@@ -63,11 +63,11 @@ namespace PostCalendarWindows.DataModel
         [Column]
         public string Details { get; set; }
         [Column, NotNull]
-        public string DateTimeStr { get; set; }
-        [Column, NotNull]
-        public int DDLClassify { get; set; }
+        public string EndDateTimeStr { get; set; }
         [Column, NotNull]
         public int Type { get; set; }
+        [Column, NotNull]
+        public int ActivityType { get; set; }
     }
 
     /// <summary>
@@ -83,12 +83,11 @@ namespace PostCalendarWindows.DataModel
         [Column]
         public string Details { get; set; }
         [Column, NotNull]
-        public string DateStr { get; set; }
+        public string StartDateTimeStr { get; set; }
         [Column, NotNull]
-        public string StartTimeStr { get; set; }
+        public string EndDateTimeStr { get; set; }
         [Column, NotNull]
-        public string EndTimeStr { get; set; }
-
+        public int ActivityType { get; set; }
     }
 
     /// <summary>
@@ -114,20 +113,28 @@ namespace PostCalendarWindows.DataModel
     /// </summary>
     public class Database : LinqToDB.Data.DataConnection
     {
-        //注意，这里的ConnectionPath是在开头带上Data source的字符串
+        /// <summary>
+        /// 数据库连接类的构造函数
+        /// </summary>
+        /// <param name="ConnectionPath">含有Data Source=的连接字符串</param>
         public Database(string ConnectionPath) : base(ProviderName.SQLite, ConnectionPath)
         {
             //在构造函数中处理如果没有创建表的问题
             var tabelQuery = from item in this.SqliteMaster
                              select item.name;
             var tabel_list = tabelQuery.ToList();
+
             if (!tabel_list.Contains("Calendar"))
             {
                 this.CreateTable<Calendar>();
             }
-            if (!tabel_list.Contains("DDL"))
+            if (!tabel_list.Contains("DeadLine"))
             {
-                //this.CreateTable<DDL>();
+                this.CreateTable<DeadLine>();
+            }
+            if (!tabel_list.Contains("DeadLineSpan"))
+            {
+                this.CreateTable<DeadLineSpan>();
             }
         }
 
