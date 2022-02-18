@@ -5,6 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
 
 namespace PostCalendarWindows
 {
@@ -13,5 +16,6 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class App : Application
     {
+        
     }
 }

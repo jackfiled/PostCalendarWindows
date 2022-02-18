@@ -45,7 +45,7 @@ namespace PostCalendarWindows
             activityColumnItems.Add(new DDLColumnItem("全部", PackIconKind.AccountGroupOutline, ColumnType.Activity, ActivityType.All));
             activityColumnItems.Add(new DDLColumnItem("思政", PackIconKind.AccountTie, ColumnType.Activity, ActivityType.Thought));
             activityColumnItems.Add(new DDLColumnItem("文体", PackIconKind.DanceBallroom, ColumnType.Activity, ActivityType.PE));
-            activityColumnItems.Add(new DDLColumnItem("志愿", PackIconKind.YinYang, ColumnType.Activity, ActivityType.Volunteer));
+            activityColumnItems.Add(new DDLColumnItem("志愿", PackIconKind.HandHeart, ColumnType.Activity, ActivityType.Volunteer));
             activityColumnItems.Add(new DDLColumnItem("讲座", PackIconKind.Desk, ColumnType.Activity, ActivityType.Lecture));
             activityColumnItems.Add(new DDLColumnItem("竞赛", PackIconKind.ArmFlex, ColumnType.Activity, ActivityType.Competition));
             activityColumnItems.Add(new DDLColumnItem("评优", PackIconKind.ArrangeBringForward, ColumnType.Activity, ActivityType.Recoginition));
@@ -55,10 +55,9 @@ namespace PostCalendarWindows
             {
                 first_column.Children.Add(new UCDDLColumnItem(item));
             }
-            foreach(var item in ddlColumnItems)
-            {
-                second_column.Children.Add(new UCDDLColumnItem(item));
-            }
+            firstColumnItems[0].isClicked = true;
+            firstColumnItems[0].NotifyIsClickedChanged();
+            RefreshSecondColumn(ddlColumnItems);
         }
 
         private void Column_Select(object sender, RoutedEventArgs e)
@@ -77,6 +76,10 @@ namespace PostCalendarWindows
                             firstColumnItems[1].isClicked = false;
                             firstColumnItems[1].NotifyIsClickedChanged();
                             RefreshSecondColumn(ddlColumnItems);
+                            foreach(var item1 in activityColumnItems)
+                            {
+                                item1.isClicked = false;
+                            }
                         }
                         else
                         {
@@ -85,6 +88,10 @@ namespace PostCalendarWindows
                             firstColumnItems[0].isClicked = false;
                             firstColumnItems[0].NotifyIsClickedChanged();
                             RefreshSecondColumn(activityColumnItems);
+                            foreach(var item1 in ddlColumnItems)
+                            {
+                                item1.isClicked = false;
+                            }
                         }
                         break;
                     case ColumnType.DDL:
@@ -130,6 +137,8 @@ namespace PostCalendarWindows
             {
                 second_column.Children.Add(new UCDDLColumnItem(item));
             }
+            items[0].isClicked = true;
+            items[0].NotifyIsClickedChanged();
         }
     }
 }

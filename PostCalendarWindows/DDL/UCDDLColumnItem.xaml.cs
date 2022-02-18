@@ -63,11 +63,11 @@ namespace PostCalendarWindows.DDL
             bool _value = (bool)value;
             if (_value)
             {
-                return Brushes.RoyalBlue;
+                return Brushes.White;
             }
             else
             {
-                return Brushes.White;
+                return PrimaryColor.Blue;
             }
         }
 
