@@ -16,15 +16,13 @@ namespace PostCalendarWindows.ViewModel
         public event PropertyChangedEventHandler? PropertyChanged;
         public string content { get; private set; }
         public PackIconKind packIconKind { get; private set; }
-        public ColumnType type { get; private set; }
         public object itemType { get; set; }
         public bool isClicked { get; set; }
 
-        public DDLColumnItem(string _content, PackIconKind _kind, ColumnType _type, object _itemType)
+        public DDLColumnItem(string _content, PackIconKind _kind, object _itemType)
         {
             content = _content;
             packIconKind = _kind;
-            type = _type;
             itemType = _itemType;            
             isClicked = false;
         }

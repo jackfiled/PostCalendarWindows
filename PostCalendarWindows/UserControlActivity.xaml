@@ -1,25 +1,24 @@
-﻿<UserControl x:Class="PostCalendarWindows.UserControlDDL"
+﻿<UserControl x:Class="PostCalendarWindows.UserControlActivity"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:PostCalendarWindows.DDL"
-             mc:Ignorable="d" >
-
+             mc:Ignorable="d" 
+             >
     <StackPanel>
-        <StackPanel x:Name="area">
-        </StackPanel>
+        <StackPanel x:Name="area"/>
+
         <materialDesign:ColorZone Mode="PrimaryMid" Height="45">
             <Grid local:DDLColumnGrid.Select="column_item_select">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel x:Name="column_stack_plane" Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center"/>
             </Grid>
         </materialDesign:ColorZone>
-        
 
         <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch">
 

@@ -16,6 +16,7 @@ namespace PostCalendarWindows
         Database db;
         UserControlCalendar calendarUserControl;
         UserControlDDL ddlUserControl;
+        UserControlActivity activityUserControl;
 
 
         public MainWindow()
@@ -35,23 +36,24 @@ namespace PostCalendarWindows
             //将数据库连接赋给相关的管理类
             calendarUserControl = new UserControlCalendar(db);
             ddlUserControl = new UserControlDDL();
+            activityUserControl = new UserControlActivity();
 
+            //在这里手动设置高度绑定到StackPanelMain
+            Binding heightBindingObj = new Binding("ActualHeight");
+            heightBindingObj.Source = StackPanelMain;
+
+            calendarUserControl.SetBinding(HeightProperty, heightBindingObj);
+            ddlUserControl.SetBinding(HeightProperty, heightBindingObj);
+            activityUserControl.SetBinding(HeightProperty, heightBindingObj);
 
             //显示相关的页面
-            //在这里手动设置高度绑定到StackPanelMain
-            var calendarBindingObj = new Binding("ActualHeight");
-            calendarBindingObj.Source = StackPanelMain;
-            calendarUserControl.SetBinding(HeightProperty, calendarBindingObj);
-
-            var ddlBindingObj = new Binding("ActualHeight");
-            ddlBindingObj.Source = StackPanelMain;
-            ddlUserControl.SetBinding(HeightProperty, ddlBindingObj);
-
             var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, calendarUserControl);
-            var ddl_item = new ItemMenu("DDL", PackIconKind.ScaleBalance, ddlUserControl);
+            var ddl_item = new ItemMenu("DDL", PackIconKind.CalendarTextOutline, ddlUserControl);
+            var activity_item = new ItemMenu("活动", PackIconKind.AccountGroupOutline, activityUserControl);
 
             ItemMenuList.Items.Add(new UserControlMenuItem(calendar_item));
             ItemMenuList.Items.Add(new UserControlMenuItem(ddl_item));
+            ItemMenuList.Items.Add(new UserControlMenuItem(activity_item));
 
             //展示目前日历事件列表中的事件
             calendarUserControl.displayCanva();

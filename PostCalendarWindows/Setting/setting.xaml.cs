@@ -30,10 +30,6 @@ namespace PostCalendarWindows.Setting
 
             //从数据库中查询一些常量数据
             db = _db;
-            var semester_query = from item in db.CalendarConst
-                                 select item.semester;
-            CalendarConst.semesters = semester_query.ToList();
-
 
             var CalendarSettingItem = new ItemMenu("日历设置", PackIconKind.Settings, new UserControlCalendarSetting());
             var DDLSettingItem = new ItemMenu("DDL设置", PackIconKind.SettingsApplications, new UserControlDDLSetting());

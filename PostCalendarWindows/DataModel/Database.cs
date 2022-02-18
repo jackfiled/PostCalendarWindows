@@ -50,13 +50,50 @@ namespace PostCalendarWindows.DataModel
         }
     }
 
-    [Table(Name = "DDL")]
-    public class DDL
+    /// <summary>
+    /// 表示一个时间点的DDL存储表
+    /// </summary>
+    [Table(Name ="DeadLine")]
+    public class DeadLine
     {
+        [Column, Identity, PrimaryKey]
+        public int Id { get; set; }
+        [Column, NotNull]
+        public string Name { get; set; }
+        [Column]
+        public string Details { get; set; }
+        [Column, NotNull]
+        public string DateTimeStr { get; set; }
+        [Column, NotNull]
+        public int DDLClassify { get; set; }
+        [Column, NotNull]
+        public int Type { get; set; }
+    }
+
+    /// <summary>
+    /// 表示一个时间段的DDL事件
+    /// </summary>
+    [Table(Name ="DeadLineSpan")]
+    public class DeadLineSpan
+    {
+        [Column, PrimaryKey, Identity]
+        public int Id { get; set; }
+        [Column, NotNull]
+        public string Name { get; set; }
+        [Column]
+        public string Details { get; set; }
+        [Column, NotNull]
+        public string DateStr { get; set; }
+        [Column, NotNull]
+        public string StartTimeStr { get; set; }
+        [Column, NotNull]
+        public string EndTimeStr { get; set; }
 
     }
 
-    //sqlite的系统表，存储了当前已经建立的表的信息
+    /// <summary>
+    /// sqlite的系统表，存储当前已建立的表格的信息
+    /// </summary>
     [Table(Name ="sqlite_master")]
     public class SqliteMaster
     {
@@ -72,18 +109,9 @@ namespace PostCalendarWindows.DataModel
         public string sql { get; set; }
     }
 
-    [Table(Name = "CalendarConst")]
-    public class CalendarConst
-    {
-        [Column]
-        public string semester { get; set; }
-        [Column]
-        public string start_data { get; set; }
-        [Column]
-        public int teaching_week_number { get; set; }
-    }
-
-
+    /// <summary>
+    /// 链接数据库的类
+    /// </summary>
     public class Database : LinqToDB.Data.DataConnection
     {
         //注意，这里的ConnectionPath是在开头带上Data source的字符串
@@ -101,16 +129,11 @@ namespace PostCalendarWindows.DataModel
             {
                 //this.CreateTable<DDL>();
             }
-            if (!tabel_list.Contains("CalendarConst"))
-            {
-                this.CreateTable<CalendarConst>();
-            }
         }
 
         //数据库中相关表格的定义
         public ITable<SqliteMaster> SqliteMaster => GetTable<SqliteMaster>();
         public ITable<Calendar> Calendar => GetTable<Calendar>();
-        public ITable<CalendarConst> CalendarConst => GetTable<CalendarConst>();
 
         /// <summary>
         /// 在数据库中创建一个日历对象
@@ -200,24 +223,6 @@ namespace PostCalendarWindows.DataModel
                         select item;
 
             return query.ToList();
-        }
-
-        /// <summary>
-        /// 获得这个学期教学周的第一天
-        /// </summary>
-        /// <param name="semester">学期的名称</param>
-        /// <returns>教学周的第一天，如果为null则数据库中不存在这个学期</returns>
-        public DateOnly? getSemesterFirstDay(string semester)
-        {
-            var query = from data in this.CalendarConst
-                        where semester == data.semester
-                        select data.start_data;
-            if(query.Count() == 0)
-            {
-                return null;
-            }
-            DateOnly result = DateOnly.Parse(query.ToList()[0]);
-            return result;
         }
     }
 }
