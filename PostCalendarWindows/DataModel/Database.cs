@@ -69,6 +69,20 @@ namespace PostCalendarWindows.DataModel
         public int Type { get; set; }
         [Column, NotNull]
         public int ActivityType { get; set; }
+
+        public DeadLine()
+        {
+
+        }
+
+        public DeadLine(DeadlineEvent _event)
+        {
+            Name = _event.Name;
+            Details = _event.Details;
+            EndDateTimeStr = _event.EndDateTime.ToString();
+            Type = (int)_event.ddlType;
+            ActivityType = (int)_event.activityType;
+        }
     }
 
     /// <summary>
@@ -89,6 +103,20 @@ namespace PostCalendarWindows.DataModel
         public string EndDateTimeStr { get; set; }
         [Column, NotNull]
         public int ActivityType { get; set; }
+
+        public DeadLineSpan()
+        {
+
+        }
+
+        public DeadLineSpan(DeadlineSpanEvent _event)
+        {
+            Name = _event.Name;
+            Details = _event.Details;
+            StartDateTimeStr = _event.StartDateTime.ToString();
+            EndDateTimeStr= _event.EndDateTime.ToString();
+            ActivityType = (int)_event.activityType;
+        }
     }
 
     /// <summary>
@@ -254,6 +282,115 @@ namespace PostCalendarWindows.DataModel
             else
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// 储存一个ddl事件
+        /// </summary>
+        /// <param name="e">需要储存的ddl事件对象，不需要id</param>
+        /// <returns>该ddl事件对象在数据库中存储的id</returns>
+        public int CreateDDLEvent(DeadlineEvent e)
+        {
+            DeadLine item = new DeadLine(e);
+            return this.InsertWithInt32Identity(item);
+        }
+
+        /// <summary>
+        /// 更新数据库中的ddl对象
+        /// </summary>
+        /// <param name="e">需要更新的对象，需要id</param>
+        public void UpdateDDLEvent(DeadlineEvent e)
+        {
+            DeadLine item = new DeadLine(e);
+            item.Id = e.Id;
+            this.Update<DeadLine>(item);
+        }
+
+        /// <summary>
+        /// 删除一个数据库中的ddl对象
+        /// </summary>
+        /// <param name="id">需要删除的ddl对象id</param>
+        /// <returns>若为真测删除成功，反之则查无此id</returns>
+        public bool DeleteDDLEvent(int id)
+        {
+            DeadlineEvent? _event = ReadDDLEvent(id);
+            if(_event != null)
+            {
+                this.DeadLine
+                    .Where(x => x.Id == id)
+                    .Delete();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 在数据库中创建一个ddl时间段对象
+        /// </summary>
+        /// <param name="e">需要创建的ddl时间段对象，这里没有id属性</param>
+        /// <returns>该ddl时间段对象在数据库中存储的id</returns>
+        public int CreateDDLSpanEvent(DeadlineSpanEvent e)
+        {
+            DeadLineSpan item = new DeadLineSpan(e);
+            return this.InsertWithInt32Identity(item);
+        }
+
+        /// <summary>
+        /// 在数据库中读取一个ddl时间段对象
+        /// </summary>
+        /// <param name="id">需要读取的时间段对象的id</param>
+        /// <returns>该ddl时间段对象</returns>
+        public DeadlineSpanEvent? ReadDDLSpanEvent(int id)
+        {
+            DeadlineSpanEvent? _event = new DeadlineSpanEvent();
+
+            var query = from item in this.DeadLineSpan
+                        where item.Id == id
+                        select item;
+            if (query.Count() > 0)
+            {
+                _event.SetFromDatabase(query.First());
+                return _event;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 在数据库中更新一个ddl时间段对象
+        /// </summary>
+        /// <param name="e">需要更新的ddl时间段对象</param>
+        public void UpdateDDLSpanEvent(DeadlineSpanEvent e)
+        {
+            DeadLineSpan item = new DeadLineSpan(e);
+            item.Id = e.Id;
+            this.Update<DeadLineSpan>(item);
+        }
+
+        /// <summary>
+        /// 删除一个数据库中的ddl时间段对象
+        /// </summary>
+        /// <param name="id">需要删除的ddl时间段对象的id</param>
+        /// <returns>若真则已删除，反之未删除</returns>
+        public bool DeleteDDLSpanEvent(int id)
+        {
+            DeadlineSpanEvent? item = ReadDDLSpanEvent(id);
+            if (item != null)
+            {
+                this.DeadLineSpan
+                    .Where(d => d.Id == id)
+                    .Delete();
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
