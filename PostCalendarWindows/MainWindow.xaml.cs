@@ -36,7 +36,7 @@ namespace PostCalendarWindows
             //将数据库连接赋给相关的管理类
             calendarUserControl = new UserControlCalendar(db);
             ddlUserControl = new UserControlDDL(db);
-            activityUserControl = new UserControlActivity();
+            activityUserControl = new UserControlActivity(db);
 
             //在这里手动设置高度绑定到StackPanelMain
             Binding heightBindingObj = new Binding("ActualHeight");

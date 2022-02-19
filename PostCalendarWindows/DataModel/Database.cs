@@ -264,6 +264,17 @@ namespace PostCalendarWindows.DataModel
         }
 
         /// <summary>
+        /// 储存一个ddl事件
+        /// </summary>
+        /// <param name="e">需要储存的ddl事件对象，不需要id</param>
+        /// <returns>该ddl事件对象在数据库中存储的id</returns>
+        public int CreateDDLEvent(DeadlineEvent e)
+        {
+            DeadLine item = new DeadLine(e);
+            return this.InsertWithInt32Identity(item);
+        }
+
+        /// <summary>
         /// 从数据库中读取一个DDL事件
         /// </summary>
         /// <param name="id">需要读取事件的id</param>
@@ -283,17 +294,6 @@ namespace PostCalendarWindows.DataModel
             {
                 return null;
             }
-        }
-
-        /// <summary>
-        /// 储存一个ddl事件
-        /// </summary>
-        /// <param name="e">需要储存的ddl事件对象，不需要id</param>
-        /// <returns>该ddl事件对象在数据库中存储的id</returns>
-        public int CreateDDLEvent(DeadlineEvent e)
-        {
-            DeadLine item = new DeadLine(e);
-            return this.InsertWithInt32Identity(item);
         }
 
         /// <summary>

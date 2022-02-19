@@ -7,14 +7,14 @@ using PostCalendarWindows.DataModel;
 
 namespace PostCalendarWindows.Calendar
 {
-    public class Calendar
+    public class CalendarManager
     {
         public List<ShowItem> show_items = new List<ShowItem>();
         public List<CalendarEvent> events = new List<CalendarEvent>();
         public Database db;
         public DateOnly week_first_day;
 
-        public Calendar(Database _db)
+        public CalendarManager(Database _db)
         {
             db = _db;
             //获得本周的第一天

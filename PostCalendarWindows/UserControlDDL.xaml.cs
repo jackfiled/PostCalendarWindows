@@ -25,13 +25,21 @@ namespace PostCalendarWindows
     public partial class UserControlDDL : UserControl
     {
         public Database database;
+
         private List<DDLColumnItem> columnItems = new List<DDLColumnItem>();
+
+        private Binding ScrollHeightBindingObj = new Binding("Height");
 
         public UserControlDDL(Database db)
         {
             InitializeComponent();
 
             database = db;
+
+            //设置滚动条的高度绑定
+            ScrollHeightBindingObj.Source = this;
+            ScrollHeightBindingObj.Converter = new DDLHeightConverter();
+            scroll.SetBinding(HeightProperty, ScrollHeightBindingObj);
 
             //添加选择栏对象
             columnItems.Add(new DDLColumnItem("全部", PackIconKind.CalendarTextOutline, DDLType.All));

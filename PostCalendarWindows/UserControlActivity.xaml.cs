@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.ViewModel;
 using PostCalendarWindows.DDL;
+using PostCalendarWindows.DataModel;
 
 namespace PostCalendarWindows
 {
@@ -23,11 +24,22 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class UserControlActivity : UserControl
     {
+        public Database database;
+
         private List<DDLColumnItem> columnItems = new List<DDLColumnItem>();
 
-        public UserControlActivity()
+        private Binding ScrollHeightBindingObj = new Binding("Height");
+
+        public UserControlActivity(Database db)
         {
             InitializeComponent();
+
+            database = db;
+
+            //设置滚动条的高度绑定
+            ScrollHeightBindingObj.Source = this;
+            ScrollHeightBindingObj.Converter = new DDLHeightConverter();
+            scroll.SetBinding(HeightProperty, ScrollHeightBindingObj);
 
             columnItems.Add(new DDLColumnItem("全部", PackIconKind.AccountGroupOutline, ActivityType.All));
             columnItems.Add(new DDLColumnItem("思政", PackIconKind.AccountTie, ActivityType.Thought));

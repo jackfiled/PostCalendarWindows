@@ -23,17 +23,18 @@ namespace PostCalendarWindows
     public partial class UserControlCalendar : UserControl
     {
         private List<Canvas> canva_list = new List<Canvas>();
+        private Binding ScrollViewerHeightBindingObj = new Binding("Height");
         private Binding calendarItemWidthBindingObj = new Binding("ActualWidth");
         private Binding AreaWidthBindingObj = new Binding("ActualWidth");
         private Binding AreaHeightBindingObj = new Binding("ActualHeight");
-        private Calendar.Calendar calendar;
+        private Calendar.CalendarManager calendar;
         private DataModel.Database db;
         private ColumnTimeData ctd;
 
         public UserControlCalendar(DataModel.Database database)
         {
             InitializeComponent();
-            calendar = new Calendar.Calendar(database);
+            calendar = new Calendar.CalendarManager(database);
             db = database;
 
             //这里的代码让我觉得我是傻逼
@@ -47,7 +48,6 @@ namespace PostCalendarWindows
 
             //这里设置滚动条的高度与这个界面的高度绑定
             //创建相关的转换器以减去日历上方日期的高度
-            var ScrollViewerHeightBindingObj = new Binding("Height");
             ScrollViewerHeightBindingObj.Source = this;
             ScrollViewerHeightBindingObj.Converter = new CalendarHeightConverter();
             scroll.SetBinding(HeightProperty, ScrollViewerHeightBindingObj);
