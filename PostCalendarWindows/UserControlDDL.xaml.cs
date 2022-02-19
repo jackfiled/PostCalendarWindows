@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.DDL;
 using PostCalendarWindows.ViewModel;
+using PostCalendarWindows.DataModel;
 
 namespace PostCalendarWindows
 {
@@ -23,12 +24,14 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class UserControlDDL : UserControl
     {
-
+        public Database database;
         private List<DDLColumnItem> columnItems = new List<DDLColumnItem>();
 
-        public UserControlDDL()
+        public UserControlDDL(Database db)
         {
             InitializeComponent();
+
+            database = db;
 
             //添加选择栏对象
             columnItems.Add(new DDLColumnItem("全部", PackIconKind.CalendarTextOutline, DDLType.All));

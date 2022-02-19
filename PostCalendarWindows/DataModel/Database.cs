@@ -4,6 +4,7 @@ using System.Linq;
 using LinqToDB;
 using LinqToDB.Mapping;
 using PostCalendarWindows.Calendar;
+using PostCalendarWindows.DDL;
 
 #pragma warning disable CS8618
 
@@ -141,6 +142,8 @@ namespace PostCalendarWindows.DataModel
         //数据库中相关表格的定义
         public ITable<SqliteMaster> SqliteMaster => GetTable<SqliteMaster>();
         public ITable<Calendar> Calendar => GetTable<Calendar>();
+        public ITable<DeadLine> DeadLine => GetTable<DeadLine>();
+        public ITable<DeadLineSpan> DeadLineSpan => GetTable<DeadLineSpan>();
 
         /// <summary>
         /// 在数据库中创建一个日历对象
@@ -230,6 +233,28 @@ namespace PostCalendarWindows.DataModel
                         select item;
 
             return query.ToList();
+        }
+
+        /// <summary>
+        /// 从数据库中读取一个DDL事件
+        /// </summary>
+        /// <param name="id">需要读取事件的id</param>
+        /// <returns>返回该DDL事件</returns>
+        public DeadlineEvent? ReadDDLEvent(int id)
+        {
+            DeadlineEvent _event = new DeadlineEvent();
+            var query = from item in this.DeadLine
+                        where item.Id == id
+                        select item;
+            if(query.Count() > 0)
+            {
+                _event.SetFromDatabase(query.First());
+                return _event;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

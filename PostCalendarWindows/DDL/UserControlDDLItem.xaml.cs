@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PostCalendarWindows.ViewModel;
 
 namespace PostCalendarWindows.DDL
 {
@@ -20,9 +21,23 @@ namespace PostCalendarWindows.DDL
     /// </summary>
     public partial class UserControlDDLItem : UserControl
     {
-        public UserControlDDLItem()
+        private DDLItem _item;
+        private Binding nameBindingObj = new Binding("Name");
+        private Binding timeBindingObj = new Binding("DDLTime");
+        private Binding detailBindingObj = new Binding("Details");
+
+        public UserControlDDLItem(DDLItem item)
         {
             InitializeComponent();
+
+            _item = item;
+
+            nameBindingObj.Source = _item;
+            timeBindingObj.Source = _item;
+            detailBindingObj.Source = _item;
+            name_column.SetBinding(TextBlock.TextProperty, nameBindingObj);
+            ddl_column.SetBinding(TextBlock.TextProperty, timeBindingObj);
+            details_column.SetBinding(TextBlock.TextProperty, detailBindingObj);
         }
     }
 }

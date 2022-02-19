@@ -25,6 +25,7 @@ namespace PostCalendarWindows.DDL
         Competition,
         Recoginition,
         Other,
+        NotActivity,
     }
 
 #pragma warning disable CS8618
