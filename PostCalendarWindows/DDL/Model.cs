@@ -45,7 +45,7 @@ namespace PostCalendarWindows.DDL
             Details= deadline.Details;
             EndDateTime = DateTime.Parse(deadline.EndDateTimeStr);
             ddlType = (DDLType)deadline.Type;
-            activityType = (ActivityType)deadline.Type;
+            activityType = (ActivityType)deadline.ActivityType;
         }
 
         public void SetInner(int id, string name, string details, DateTime endDateTime, DDLType ddlType, ActivityType activityType)

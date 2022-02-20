@@ -382,14 +382,14 @@ namespace PostCalendarWindows.DataModel
             if(type == ActivityType.All)
             {
                 var query = from item in event_lists
-                            where item.activityType != ActivityType.NotActivity && item.EndDateTime < time
+                            where item.activityType != ActivityType.NotActivity && item.EndDateTime < time && item.ddlType == DDLType.NotDDL
                             select item;
                 return query.ToList();
             }
             else
             {
                 var query = from item in event_lists
-                            where item.activityType == type && item.EndDateTime < time
+                            where item.activityType == type && item.EndDateTime < time && item.ddlType == DDLType.NotDDL
                             select item;
                 return query.ToList();
             }

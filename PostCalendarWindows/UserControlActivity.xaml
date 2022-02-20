@@ -21,7 +21,7 @@
         </materialDesign:ColorZone>
 
         <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch">
-
+            <StackPanel x:Name="main_stack_plane"/>
         </ScrollViewer>
     </StackPanel>
 </UserControl>

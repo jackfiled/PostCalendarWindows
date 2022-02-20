@@ -25,6 +25,7 @@ namespace PostCalendarWindows
     public partial class UserControlActivity : UserControl
     {
         public Database database;
+        public DeadlineManager manager;
 
         private List<DDLColumnItem> columnItems = new List<DDLColumnItem>();
 
@@ -35,6 +36,7 @@ namespace PostCalendarWindows
             InitializeComponent();
 
             database = db;
+            manager = new DeadlineManager(database);
 
             //设置滚动条的高度绑定
             ScrollHeightBindingObj.Source = this;
@@ -50,9 +52,12 @@ namespace PostCalendarWindows
             columnItems.Add(new DDLColumnItem("评优", PackIconKind.ArrangeBringForward, ActivityType.Recoginition));
             columnItems.Add(new DDLColumnItem("其他", PackIconKind.AccountGroupOutline, ActivityType.Other));
 
+            //初始化显示的对象们
             RefreshColumn();
             columnItems[0].isClicked = true;
             columnItems[0].NotifyIsClickedChanged();//这里必须调用这个方法，不调用绑定就不会生效，但是在第二次点击时就不用调用这个方法了
+            manager.LoadActivityFromDB(ActivityType.All);
+            Refresh();
         }
 
         /// <summary>
@@ -77,14 +82,29 @@ namespace PostCalendarWindows
                     if(item.itemType == column.itemType)
                     {
                         column.isClicked = true;
+                        column.NotifyIsClickedChanged();
                     }
                     else
                     {
                         column.isClicked = false;
+                        column.NotifyIsClickedChanged();
                     }
+
+                    manager.LoadActivityFromDB((ActivityType)item.itemType);
                 }
             }
+            Refresh();
             RefreshColumn();
+        }
+
+        private void Refresh()
+        {
+            main_stack_plane.Children.Clear();
+            
+            foreach(ActivityItem item in manager.activityItems)
+            {
+                main_stack_plane.Children.Add(new UserControlActivityItem(item));
+            }
         }
     }
 }
