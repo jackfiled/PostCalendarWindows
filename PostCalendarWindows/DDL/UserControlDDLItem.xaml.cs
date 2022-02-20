@@ -34,10 +34,24 @@ namespace PostCalendarWindows.DDL
 
             nameBindingObj.Source = _item;
             timeBindingObj.Source = _item;
+            timeBindingObj.Converter = new TimeConverter();
             detailBindingObj.Source = _item;
             name_column.SetBinding(TextBlock.TextProperty, nameBindingObj);
             ddl_column.SetBinding(TextBlock.TextProperty, timeBindingObj);
             details_column.SetBinding(TextBlock.TextProperty, detailBindingObj);
+        }
+    }
+
+    class TimeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        {
+            return "DDL " + (string)value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        {
+            return value;
         }
     }
 }

@@ -34,6 +34,8 @@ namespace PostCalendarWindows.DDL
             _item = item;
             nameBindingObj.Source = _item;
             startTimeBindingObj.Source = _item;
+            startTimeBindingObj.Converter = new StartTimeStrConverter();
+            endTimeBindingObj.Converter = new EndTimeStrConverter();
             endTimeBindingObj.Source = _item;
             detailsBindingObj.Source = _item;
 
@@ -43,4 +45,46 @@ namespace PostCalendarWindows.DDL
             details_column.SetBinding(TextBlock.TextProperty, detailsBindingObj);
         }
     }
+
+    /// <summary>
+    /// 展示开始时间时加上前缀的转换器
+    /// </summary>
+    class StartTimeStrConverter : IValueConverter 
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        {
+            string str = (string)value;
+            if(str.Length == 0)
+            {
+                return "DDL";
+            }
+            else
+            {
+                return "开始时间 " + str;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        {
+            return value;
+        }
+    }
+
+    /// <summary>
+    /// 展示结束时间时加上前缀的转换器
+    /// </summary>
+    class EndTimeStrConverter : IValueConverter 
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        {
+            return "结束时间 " + (string)value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        {
+            return value;
+        }
+    }
+
+
 }
