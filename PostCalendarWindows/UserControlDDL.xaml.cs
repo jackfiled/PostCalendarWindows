@@ -25,6 +25,7 @@ namespace PostCalendarWindows
     public partial class UserControlDDL : UserControl
     {
         public Database database;
+        public DeadlineManager manager;
 
         private List<DDLColumnItem> columnItems = new List<DDLColumnItem>();
 
@@ -35,6 +36,7 @@ namespace PostCalendarWindows
             InitializeComponent();
 
             database = db;
+            manager = new DeadlineManager(db);
 
             //设置滚动条的高度绑定
             ScrollHeightBindingObj.Source = this;
@@ -46,9 +48,12 @@ namespace PostCalendarWindows
             columnItems.Add(new DDLColumnItem("学习", PackIconKind.BookOpen, DDLType.Study));
             columnItems.Add(new DDLColumnItem("个人", PackIconKind.Account, DDLType.Personal));
 
+            //初始化界面
             RefreshColumn();
             columnItems[0].isClicked = true;
             columnItems[0].NotifyIsClickedChanged();
+            manager.LoadDeadlineFromDB(DDLType.All);
+            Refresh();
         }
 
         /// <summary>
@@ -66,6 +71,7 @@ namespace PostCalendarWindows
         private void column_item_select(object sender, RoutedEventArgs e)
         {
             DDLColumnItem? item = e.OriginalSource as DDLColumnItem;
+
             if(item != null)
             {
                 foreach(DDLColumnItem column in columnItems)
@@ -73,14 +79,31 @@ namespace PostCalendarWindows
                     if(item.itemType == column.itemType)
                     {
                         column.isClicked = true;
+                        column.NotifyIsClickedChanged();
                     }
                     else
                     {
                         column.isClicked = false;
+                        column.NotifyIsClickedChanged();
                     }
                 }
+
+                manager.LoadDeadlineFromDB((DDLType)item.itemType);
             }
             RefreshColumn();
+            Refresh();
+        }
+
+        /// <summary>
+        /// 刷新需要显示的ddl事件
+        /// </summary>
+        private void Refresh()
+        {
+            main_stack_plane.Children.Clear();
+            foreach(var item in manager.ddlShowItems)
+            {
+                main_stack_plane.Children.Add(new UserControlDDLItem(item));
+            }
         }
     }
 }

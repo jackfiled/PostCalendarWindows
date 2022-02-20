@@ -29,7 +29,7 @@ namespace PostCalendarWindows.DDL
     }
 
 #pragma warning disable CS8618
-    public class DeadlineEvent
+    public class DeadlineEvent : IComparable<DeadlineEvent>
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -58,9 +58,20 @@ namespace PostCalendarWindows.DDL
             this.activityType = activityType;
         }
 
+        public int CompareTo(DeadlineEvent? e)
+        {
+            if(e == null)
+            {
+                return 1;
+            }
+            else
+            {
+                return EndDateTime.CompareTo(e.EndDateTime);
+            }
+        }
     }
 
-    public class DeadlineSpanEvent
+    public class DeadlineSpanEvent : IComparable<DeadlineSpanEvent>
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -89,6 +100,17 @@ namespace PostCalendarWindows.DDL
             this.activityType = activityType;
         }
 
+        public int CompareTo(DeadlineSpanEvent? e)
+        {
+            if (e == null)
+            {
+                return 1;
+            }
+            else
+            {
+                return EndDateTime.CompareTo(e.EndDateTime);
+            }
+        }
     }
 #pragma warning restore CS8618
 }

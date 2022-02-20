@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 using LinqToDB;
 using LinqToDB.Mapping;
 using PostCalendarWindows.Calendar;
@@ -329,6 +330,72 @@ namespace PostCalendarWindows.DataModel
         }
 
         /// <summary>
+        /// 从数据库加载ddl时间点对象
+        /// </summary>
+        /// <param name="type">加载的对象ddl类型</param>
+        /// <param name="time">截止时间</param>
+        /// <returns>ddl时间点对象列表</returns>
+        public List<DeadlineEvent> LoadDeadline(DDLType type, DateTime time)
+        {
+            List<DeadlineEvent> event_lists = new List<DeadlineEvent>();
+
+            foreach(var item in this.DeadLine)
+            {
+                DeadlineEvent _event = new DeadlineEvent();
+                _event.SetFromDatabase(item);
+                event_lists.Add(_event);
+            }
+
+            if(type == DDLType.All)
+            {
+                var query = from item in event_lists
+                            where item.ddlType != DDLType.NotDDL && item.EndDateTime < time
+                            select item;
+                return query.ToList();
+            }
+            else
+            {
+                var query = from item in event_lists
+                             where item.ddlType == type && item.EndDateTime < time
+                             select item;
+                return query.ToList();
+            }
+        }
+
+        /// <summary>
+        /// 从数据库加载ddl时间点对象
+        /// </summary>
+        /// <param name="type">加载对象的活动类型</param>
+        /// <param name="time">截止时间</param>
+        /// <returns></returns>
+        public List<DeadlineEvent> LoadDeadline(ActivityType type, DateTime time)
+        {
+            List<DeadlineEvent> event_lists = new List<DeadlineEvent>();
+
+            foreach(var item in this.DeadLine)
+            {
+                DeadlineEvent _event = new DeadlineEvent();
+                _event.SetFromDatabase(item);
+                event_lists.Add(_event);
+            }
+
+            if(type == ActivityType.All)
+            {
+                var query = from item in event_lists
+                            where item.activityType != ActivityType.NotActivity && item.EndDateTime < time
+                            select item;
+                return query.ToList();
+            }
+            else
+            {
+                var query = from item in event_lists
+                            where item.activityType == type && item.EndDateTime < time
+                            select item;
+                return query.ToList();
+            }
+        }
+
+        /// <summary>
         /// 在数据库中创建一个ddl时间段对象
         /// </summary>
         /// <param name="e">需要创建的ddl时间段对象，这里没有id属性</param>
@@ -391,6 +458,33 @@ namespace PostCalendarWindows.DataModel
             else
             {
                 return false;
+            }
+        }
+
+        public List<DeadlineSpanEvent> LoadDeadlineSpan(ActivityType type, DateTime time)
+        {
+            List<DeadlineSpanEvent> event_list = new List<DeadlineSpanEvent>();
+
+            foreach(var item in this.DeadLineSpan)
+            {
+                DeadlineSpanEvent _event = new DeadlineSpanEvent();
+                _event.SetFromDatabase(item);
+                event_list.Add(_event);
+            }
+
+            if (type == ActivityType.All)
+            {
+                var query = from item in event_list
+                            where item.activityType != ActivityType.NotActivity && item.EndDateTime < time
+                            select item;
+                return query.ToList();
+            }
+            else
+            {
+                var query = from item in event_list
+                            where item.activityType == type && item.EndDateTime < time
+                            select item;
+                return query.ToList();
             }
         }
     }

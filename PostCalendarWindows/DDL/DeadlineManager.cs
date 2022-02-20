@@ -4,16 +4,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PostCalendarWindows.DataModel;
+using PostCalendarWindows.ViewModel;
 
 namespace PostCalendarWindows.DDL
 {
     public class DeadlineManager
     {
+        public List<DDLItem> ddlShowItems = new List<DDLItem>();
+
         private Database database;
 
         public DeadlineManager(Database db)
         {
             database = db;
+        }
+
+        public void LoadDeadlineFromDB(DDLType type)
+        {
+            ddlShowItems.Clear();
+             List<DeadlineEvent> events = database.LoadDeadline(type, DateTime.Now.AddDays(60));
+            events.Sort();
+            foreach(DeadlineEvent e in events)
+            {
+                ddlShowItems.Add(new DDLItem(e));
+            }
         }
     }
 

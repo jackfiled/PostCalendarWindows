@@ -29,7 +29,7 @@
             <Button Grid.Column="3" Grid.RowSpan="2" Content="完成" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
 
             <Expander Grid.Row="2" Grid.ColumnSpan="4" Style="{DynamicResource MaterialDesignExpander}" >
-                <TextBlock x:Name="details_column" Foreground="Gray" FontSize="16"/>
+                <TextBlock x:Name="details_column" Foreground="Gray" FontSize="16" TextWrapping="WrapWithOverflow"/>
             </Expander>
         </Grid>
     </materialDesign:Card>
