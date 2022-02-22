@@ -6,11 +6,26 @@ using System.Threading.Tasks;
 
 namespace PostCalendarWindows.DDL
 {
+    public enum ColumnType
+    {
+        DDL = 0,
+        DDLSpan,
+    }
+
     public enum DDLType
     {
         All = 0,
+        /// <summary>
+        /// 学习
+        /// </summary>
         Study,
+        /// <summary>
+        /// 个人
+        /// </summary>
         Personal,
+        /// <summary>
+        /// 其他
+        /// </summary>
         Other,
         NotDDL,
     }
@@ -18,13 +33,37 @@ namespace PostCalendarWindows.DDL
     public enum ActivityType
     {
         All = 0,
+        /// <summary>
+        /// 思政
+        /// </summary>
         Thought,
+        /// <summary>
+        /// 文体
+        /// </summary>
         PE,
+        /// <summary>
+        /// 志愿
+        /// </summary>
         Volunteer,
+        /// <summary>
+        /// 讲座
+        /// </summary>
         Lecture,
+        /// <summary>
+        /// 竞赛
+        /// </summary>
         Competition,
+        /// <summary>
+        /// 评优
+        /// </summary>
         Recoginition,
+        /// <summary>
+        /// 其他
+        /// </summary>
         Other,
+        /// <summary>
+        /// 内部变量
+        /// </summary>
         NotActivity,
     }
 

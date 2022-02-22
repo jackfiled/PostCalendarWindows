@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="PostCalendarWindows.DDL.UserControlDetail"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PostCalendarWindows.DDL"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <materialDesign:ColorZone Mode="PrimaryMid" Height="90">
+            <Grid local:DDLColumnGrid.Select="column_item_select">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="45"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock x:Name="top_column" Grid.Row="0" HorizontalAlignment="Left" Margin="21, 0, 0, 0" Style="{DynamicResource MaterialDesignHeadline4TextBlock}"/>
+                <StackPanel x:Name="column_stack_plane" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center"/>
+            </Grid>
+        </materialDesign:ColorZone>
+
+        <StackPanel x:Name="main_stack_plane">
+            
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -55,7 +55,7 @@ namespace PostCalendarWindows
             //初始化显示的对象们
             RefreshColumn();
             columnItems[0].isClicked = true;
-            columnItems[0].NotifyIsClickedChanged();//这里必须调用这个方法，不调用绑定就不会生效，但是在第二次点击时就不用调用这个方法了
+            columnItems[0].NotifyIsClickedChanged();
             manager.LoadActivityFromDB(ActivityType.All);
             Refresh();
         }
@@ -94,7 +94,6 @@ namespace PostCalendarWindows
                 }
             }
             Refresh();
-            RefreshColumn();
         }
 
         private void Refresh()
