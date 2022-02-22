@@ -30,6 +30,8 @@ namespace PostCalendarWindows
         private List<DDLColumnItem> columnItems = new List<DDLColumnItem>();
 
         private Binding ScrollHeightBindingObj = new Binding("Height");
+        private Binding areaWidthBindingObj = new Binding("ActualWidth");
+        private Binding areaHeightBindingObj = new Binding("ActualHeight");
 
         public UserControlDDL(Database db)
         {
@@ -43,6 +45,10 @@ namespace PostCalendarWindows
             ScrollHeightBindingObj.Converter = new DDLHeightConverter();
             scroll.SetBinding(HeightProperty, ScrollHeightBindingObj);
 
+            //设置展示区域的宽度与高度
+            areaWidthBindingObj.Source= this;
+            areaHeightBindingObj.Source = this;
+
             //添加选择栏对象
             columnItems.Add(new DDLColumnItem("全部", PackIconKind.CalendarTextOutline, DDLType.All));
             columnItems.Add(new DDLColumnItem("学习", PackIconKind.BookOpen, DDLType.Study));
@@ -54,6 +60,12 @@ namespace PostCalendarWindows
             columnItems[0].NotifyIsClickedChanged();
             manager.LoadDeadlineFromDB(DDLType.All);
             Refresh();
+
+            UserControlDetail detail = new UserControlDetail();
+            detail.AddActivity();
+            detail.SetBinding(WidthProperty, areaWidthBindingObj);
+            detail.SetBinding(HeightProperty, areaHeightBindingObj);
+            area.Children.Add(detail);
         }
 
         /// <summary>

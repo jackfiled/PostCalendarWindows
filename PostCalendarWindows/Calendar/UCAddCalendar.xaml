@@ -36,14 +36,6 @@
             <materialDesign:TimePicker x:Name="end_time_input" HorizontalAlignment="Left" Margin="140,255,0,0" VerticalAlignment="Top" Width="170" Height="25"/>
             <custom:CustomizedButton x:Name="confirm_button" Content="确定" HorizontalAlignment="Left" Margin="52,316,0,0" VerticalAlignment="Top" Height="34" Width="70" Click="confirm_button_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}"/>
             <custom:CustomizedButton x:Name="cancel_button" Content="取消" HorizontalAlignment="Left" Margin="209,316,0,0" VerticalAlignment="Top" Height="34" RenderTransformOrigin="0.5,0.5" Width="70" Click="cancel_button_Click" Style="{StaticResource MaterialDesignFlatDarkBgButton}">
-                <custom:CustomizedButton.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleY="1"/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </custom:CustomizedButton.RenderTransform>
             </custom:CustomizedButton>
         </Grid>
     </Grid>
