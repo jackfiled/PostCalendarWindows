@@ -62,7 +62,7 @@ namespace PostCalendarWindows
             Refresh();
 
             UserControlDetail detail = new UserControlDetail();
-            detail.AddActivity();
+            detail.InitAddActivity();
             detail.SetBinding(WidthProperty, areaWidthBindingObj);
             detail.SetBinding(HeightProperty, areaHeightBindingObj);
             area.Children.Add(detail);

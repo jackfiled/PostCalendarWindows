@@ -14,6 +14,7 @@ namespace PostCalendarWindows.ViewModel
     /// </summary>
     public class DDLDetailItem
     {
+        public string TopColumn { get; private set; }
         public string NameColumn { get; private set; }
         public string DetailColumn { get; private set; }
         public string EndTimeColumn { get; private set; }
@@ -34,6 +35,7 @@ namespace PostCalendarWindows.ViewModel
             isDDL = _isDDL;
             if (isDDL)
             {
+                TopColumn = "添加DDL";
                 NameColumn = "DDL名称";
                 DetailColumn = "DDL详情";
                 EndTimeColumn = "DDL时间";
@@ -42,6 +44,7 @@ namespace PostCalendarWindows.ViewModel
             }
             else
             {
+                TopColumn = "添加活动";
                 NameColumn = "活动名称";
                 DetailColumn = "活动详情";
                 EndTimeColumn = "活动时间";

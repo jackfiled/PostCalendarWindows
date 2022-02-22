@@ -71,6 +71,8 @@ namespace PostCalendarWindows.DDL
             {
                 ddl_type_column.Visibility = Visibility.Collapsed;
                 ddl_type_input.Visibility = Visibility.Collapsed;
+                activty_type_column.Margin = new Thickness(30, 245, 0, 0);
+                activity_type_input.Margin = new Thickness(150, 240, 0, 0);
             }
         }
     }

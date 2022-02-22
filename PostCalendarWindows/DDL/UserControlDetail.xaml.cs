@@ -43,30 +43,24 @@ namespace PostCalendarWindows.DDL
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 初始化添加ddl的界面
+        /// </summary>
+        public void InitAddDDL()
+        {
+            detailItem = new DDLDetailItem(true);
+            ucDDLDetail = new UserControlDDLDetail(detailItem);
+
+            main_stack_plane.Children.Add(ucDDLDetail);
+
+            topColumnBindingObj.Source = detailItem;
+            top_column.SetBinding(TextBlock.TextProperty, topColumnBindingObj);
+        }
 
         /// <summary>
-        /// ddl界面所用的构造函数
+        /// 初始化添加活动的界面
         /// </summary>
-        /// <param name="item"></param>
-        public UserControlDetail(DDLDetailItem item)
-        {
-            InitializeComponent();
-
-            top_column.Text = "添加DDL";
-
-            column_stack_plane.Children.Add(new UCDDLColumnItem(ddlColumnItem));
-            ddlColumnItem.isClicked = true;
-            ddlColumnItem.NotifyIsClickedChanged();
-
-            main_stack_plane.Children.Add(new UserControlDDLDetail(item));
-        }
-
-        public void AddDDL()
-        {
-
-        }
-
-        public void AddActivity()
+        public void InitAddActivity()
         {
             IsAddActivity = true;
             detailItem = new DDLDetailItem(false);
@@ -74,11 +68,14 @@ namespace PostCalendarWindows.DDL
             ucDDLDetail = new UserControlDDLDetail(detailItem);
             ucDDLSpanDetail = new UserControlDDLSpanDetail(spanDetailItem);
 
+            //设置默认显示添加ddl时间点事件
+            ddlColumnItem.isClicked = true;
+            ddlColumnItem.NotifyIsClickedChanged();
             column_stack_plane.Children.Add(new UCDDLColumnItem(ddlColumnItem));
             column_stack_plane.Children.Add(new UCDDLColumnItem(ddlSpanColumnItem));
             main_stack_plane.Children.Add(ucDDLDetail);
 
-            topColumnBindingObj.Source = spanDetailItem;
+            topColumnBindingObj.Source = detailItem;
             top_column.SetBinding(TextBlock.TextProperty, topColumnBindingObj);
         }
 
