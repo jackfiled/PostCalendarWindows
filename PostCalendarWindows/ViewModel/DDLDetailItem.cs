@@ -21,6 +21,7 @@ namespace PostCalendarWindows.ViewModel
         public string DDLTypeColumn { get; private set; }
         public string ActivityTypeColumn { get; private set; }
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Detail { get; set; }
         public string EndDateStr { get; set; }
@@ -29,10 +30,25 @@ namespace PostCalendarWindows.ViewModel
         public ActivityType activityType { get; set; }
 
         public bool isDDL;
+        public bool isUpdate;
+        public DateTime EndDateTime
+        {
+            get
+            {
+                DateOnly date = DateOnly.Parse(EndDateStr);
+                TimeOnly time = TimeOnly.Parse(EndTimeStr);
+                return new DateTime(date.Year, date.Month, date.Day, time.Hour, time.Minute, time.Second);
+            }
+        }
 
+        /// <summary>
+        /// 添加新ddl时间点事件时的构造函数
+        /// </summary>
+        /// <param name="_isDDL"></param>
         public DDLDetailItem(bool _isDDL)
         {
             isDDL = _isDDL;
+            isUpdate = false;
             if (isDDL)
             {
                 TopColumn = "添加DDL";
@@ -53,8 +69,14 @@ namespace PostCalendarWindows.ViewModel
             }
         }
 
+        /// <summary>
+        /// 更新ddl时间点事件的构造函数
+        /// </summary>
+        /// <param name="_isDDL">是否为ddl事件</param>
+        /// <param name="_event">需要展示的ddl事件</param>
         public DDLDetailItem(bool _isDDL, DeadlineEvent _event)
         {
+            isUpdate = true;
             if (isDDL)
             {
                 NameColumn = "DDL名称";
@@ -63,6 +85,7 @@ namespace PostCalendarWindows.ViewModel
                 DDLTypeColumn = "DDL分类";
                 ActivityTypeColumn = "非活动";
 
+                Id = _event.Id;
                 Name = _event.Name;
                 Detail = _event.Details;
                 EndDateStr = new DateOnly(_event.EndDateTime.Year, _event.EndDateTime.Month, _event.EndDateTime.Day).ToString();
@@ -78,6 +101,7 @@ namespace PostCalendarWindows.ViewModel
                 DDLTypeColumn = "非DDL";
                 ActivityTypeColumn = "活动分类";
 
+                Id = _event.Id;
                 Name = _event.Name;
                 Detail = _event.Details;
                 EndDateStr = new DateOnly(_event.EndDateTime.Year, _event.EndDateTime.Month, _event.EndDateTime.Day).ToString();

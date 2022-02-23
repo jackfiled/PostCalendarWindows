@@ -12,7 +12,7 @@
         <TextBlock x:Name="detail_column" Margin="30, 155, 0, 0" Width="120" FontSize="18" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBlock x:Name="end_time_column" Margin="30, 200, 0, 0" Width="120" FontSize="18" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBlock x:Name="ddl_type_column" Margin="30, 245, 0, 0" Width="120" FontSize="18" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock x:Name="activty_type_column" Margin="30, 290, 0, 0" Width="120" FontSize="18" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock x:Name="activity_type_column" Margin="30, 290, 0, 0" Width="120" FontSize="18" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         
         <TextBox x:Name="name_input" Margin="150, 105, 0, 0" Width="120" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBox x:Name="detail_input" Margin="150, 150, 0, 0" Width="120" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -36,5 +36,8 @@
             <ComboBoxItem Content="其他"/>
             <ComboBoxItem Content="非活动"/>
         </ComboBox>
+
+        <local:DetailButton x:Name="confirm_button" Content="提交" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Margin="60, 290, 0, 0" Width="60" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Click="confirm_button_Click"/>
+        <local:DetailButton x:Name="cancel_button" Content="取消" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Margin="250, 290, 0, 0" Width="60" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Click="cancel_button_Click"/>
     </Grid>
 </UserControl>

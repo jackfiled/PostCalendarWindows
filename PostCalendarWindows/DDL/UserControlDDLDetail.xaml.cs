@@ -50,7 +50,7 @@ namespace PostCalendarWindows.DDL
             detail_column.SetBinding(TextBlock.TextProperty, detailColumnBindingObj);
             end_time_column.SetBinding(TextBlock.TextProperty, endTimeColumnBindingObj);
             ddl_type_column.SetBinding(TextBlock.TextProperty, ddlTypeColumnBindingObj);
-            activty_type_column.SetBinding(TextBlock.TextProperty, activityTypeColumnBindingObj);
+            activity_type_column.SetBinding(TextBlock.TextProperty, activityTypeColumnBindingObj);
 
             nameBindingObj.Source = _item;
             detailBindingObj.Source = _item;
@@ -64,16 +64,59 @@ namespace PostCalendarWindows.DDL
 
             if (item.isDDL)
             {
-                activty_type_column.Visibility = Visibility.Collapsed;
+                activity_type_column.Visibility = Visibility.Collapsed;
                 activity_type_input.Visibility = Visibility.Collapsed;
+                if (item.isUpdate)
+                {
+                    ddl_type_input.SelectedIndex = (int)item.ddlType;
+                    activity_type_input.SelectedIndex = (int)item.activityType;
+                }
+                else
+                {
+                    activity_type_input.SelectedIndex = (int)ActivityType.NotActivity;
+                }
             }
             else
             {
                 ddl_type_column.Visibility = Visibility.Collapsed;
                 ddl_type_input.Visibility = Visibility.Collapsed;
-                activty_type_column.Margin = new Thickness(30, 245, 0, 0);
+                activity_type_column.Margin = new Thickness(30, 245, 0, 0);
                 activity_type_input.Margin = new Thickness(150, 240, 0, 0);
+                if (item.isUpdate)
+                {
+                    ddl_type_input.SelectedIndex = (int)item.ddlType;
+                    activity_type_input.SelectedIndex = (int)item.activityType;
+                }
+                else
+                {
+                    ddl_type_input.SelectedIndex = (int)DDLType.NotDDL;
+                }
             }
+        }
+
+        private void confirm_button_Click(object sender, RoutedEventArgs e)
+        {
+            DetailButton? button = sender as DetailButton;
+            if (_item.isUpdate)
+            {
+                DeadlineEvent _event = new DeadlineEvent();
+                _event.Id = _item.Id;//由于是更改事件，需要设置事件的id
+                _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, (DDLType)ddl_type_input.SelectedIndex, (ActivityType)activity_type_input.SelectedIndex);
+                button?.RaiseDDLUpdateEvent(_event);
+            }
+            else
+            {
+                DeadlineEvent _event = new DeadlineEvent();
+                _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, (DDLType)ddl_type_input.SelectedIndex, (ActivityType)activity_type_input.SelectedIndex);
+                button?.RaiseDDLAddEvent(_event);
+            }
+            button?.RaiseRefreshEvent();
+        }
+
+        private void cancel_button_Click(object sender, RoutedEventArgs e)
+        {
+            DetailButton? button = sender as DetailButton;
+            button?.RaiseRefreshEvent();
         }
     }
 }

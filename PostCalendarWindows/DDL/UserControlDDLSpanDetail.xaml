@@ -30,6 +30,8 @@
             <ComboBoxItem Content="评优"/>
             <ComboBoxItem Content="其他"/>
         </ComboBox>
-        
+
+        <local:DetailButton x:Name="confirm_button" Content="提交" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Margin="60, 340, 0, 0" Width="60" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Click="confirm_button_Click"/>
+        <local:DetailButton x:Name="cancel_button" Content="取消" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Margin="250, 340, 0, 0" Width="60" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Click="cancel_button_Click"/>
     </Grid>
 </UserControl>

@@ -45,7 +45,7 @@ namespace PostCalendarWindows
             ScrollHeightBindingObj.Converter = new DDLHeightConverter();
             scroll.SetBinding(HeightProperty, ScrollHeightBindingObj);
 
-            //设置展示区域的宽度与高度
+            //设置展示区域的宽度与高度绑定的对象
             areaWidthBindingObj.Source= this;
             areaHeightBindingObj.Source = this;
 
@@ -60,12 +60,6 @@ namespace PostCalendarWindows
             columnItems[0].NotifyIsClickedChanged();
             manager.LoadDeadlineFromDB(DDLType.All);
             Refresh();
-
-            UserControlDetail detail = new UserControlDetail();
-            detail.InitAddActivity();
-            detail.SetBinding(WidthProperty, areaWidthBindingObj);
-            detail.SetBinding(HeightProperty, areaHeightBindingObj);
-            area.Children.Add(detail);
         }
 
         /// <summary>
@@ -77,6 +71,18 @@ namespace PostCalendarWindows
             foreach(DDLColumnItem item in columnItems)
             {
                 column_stack_plane.Children.Add(new UCDDLColumnItem(item));
+            }
+        }
+
+        /// <summary>
+        /// 刷新需要显示的ddl事件
+        /// </summary>
+        private void Refresh()
+        {
+            main_stack_plane.Children.Clear();
+            foreach (var item in manager.ddlShowItems)
+            {
+                main_stack_plane.Children.Add(new UserControlDDLItem(item));
             }
         }
 
@@ -106,16 +112,10 @@ namespace PostCalendarWindows
             Refresh();
         }
 
-        /// <summary>
-        /// 刷新需要显示的ddl事件
-        /// </summary>
-        private void Refresh()
+        private void ddl_refresh(object sender, RoutedEventArgs e)
         {
-            main_stack_plane.Children.Clear();
-            foreach(var item in manager.ddlShowItems)
-            {
-                main_stack_plane.Children.Add(new UserControlDDLItem(item));
-            }
+            area.Children.Clear();
+            Refresh();
         }
     }
 }

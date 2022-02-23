@@ -70,6 +70,37 @@ namespace PostCalendarWindows.DDL
             start_time_input.SetBinding(TextBox.TextProperty, startTimeBindingObj);
             end_date_input.SetBinding(TextBox.TextProperty, endDateBindingObj);
             end_time_input.SetBinding(TextBox.TextProperty, endTimeBindingObj);
+
+            if (spanItem.isUpdate)
+            {
+                activity_type_input.SelectedIndex = (int)spanItem.activityType;
+            }
+        }
+
+        private void confirm_button_Click(object sender, RoutedEventArgs e)
+        {
+            DetailButton? button = sender as DetailButton;
+
+            if (spanItem.isUpdate)
+            {
+                DeadlineSpanEvent _event = new DeadlineSpanEvent();
+                _event.SetInner(spanItem.Name, spanItem.Detail, spanItem.StartDateTime, spanItem.EndDateTime, (ActivityType)activity_type_input.SelectedIndex);
+                _event.Id = spanItem.Id;
+                button?.RaiseDDLSpanUpdateEvent(_event);
+            }
+            else
+            {
+                DeadlineSpanEvent _event = new DeadlineSpanEvent();
+                _event.SetInner(spanItem.Name, spanItem.Detail, spanItem.StartDateTime, spanItem.EndDateTime, (ActivityType)activity_type_input.SelectedIndex);
+                button?.RaiseDDLSpanAddEvent(_event);
+            }
+            button?.RaiseRefreshEvent();
+        }
+
+        private void cancel_button_Click(object sender, RoutedEventArgs e)
+        {
+            DetailButton? button = sender as DetailButton;
+            button?.RaiseRefreshEvent();
         }
     }
 }

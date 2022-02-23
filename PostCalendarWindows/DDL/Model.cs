@@ -77,6 +77,10 @@ namespace PostCalendarWindows.DDL
         public DDLType ddlType { get; set; }
         public ActivityType activityType { get; set; }
 
+        /// <summary>
+        /// 从数据库内部存储对象初始化ddl时间点对象
+        /// </summary>
+        /// <param name="deadline">数据库内部储存ddl时间点的对象</param>
         public void SetFromDatabase(DataModel.DeadLine deadline)
         {
             Id= deadline.Id;
@@ -87,9 +91,16 @@ namespace PostCalendarWindows.DDL
             activityType = (ActivityType)deadline.ActivityType;
         }
 
-        public void SetInner(int id, string name, string details, DateTime endDateTime, DDLType ddlType, ActivityType activityType)
+        /// <summary>
+        /// 程序内部初始化ddl时间点对象
+        /// </summary>
+        /// <param name="name">事件的名称</param>
+        /// <param name="details">事件的详情</param>
+        /// <param name="endDateTime">事件的结束时间</param>
+        /// <param name="ddlType">事件的ddl分类</param>
+        /// <param name="activityType">事件的活动分类</param>
+        public void SetInner(string name, string details, DateTime endDateTime, DDLType ddlType, ActivityType activityType)
         {
-            Id = id;
             Name = name;
             Details = details;
             EndDateTime = endDateTime;
@@ -129,9 +140,8 @@ namespace PostCalendarWindows.DDL
             activityType = (ActivityType)deadline.ActivityType;
         }
 
-        public void SetInner(int id, string name, string details, DateTime startDateTime, DateTime endDateTime, ActivityType activityType)
+        public void SetInner(string name, string details, DateTime startDateTime, DateTime endDateTime, ActivityType activityType)
         {
-            Id = id;
             Name = name;
             Details = details;
             StartDateTime = startDateTime;
