@@ -117,5 +117,67 @@ namespace PostCalendarWindows
             area.Children.Clear();
             Refresh();
         }
+
+        private void ddl_more(object sender, RoutedEventArgs e)
+        {
+            int id = (int)e.OriginalSource;
+            DeadlineEvent? _event = database.ReadDDLEvent(id);
+            if(_event != null)
+            {
+                UserControlDetail detail = new UserControlDetail();
+                detail.InitMoreDDL(_event);
+                detail.SetBinding(HeightProperty, areaHeightBindingObj);
+                detail.SetBinding(WidthProperty, areaWidthBindingObj);
+                area.Children.Add(detail);
+            }
+        }
+
+        private void ddl_finish(object sender, RoutedEventArgs e)
+        {
+            int id = (int)e.OriginalSource;
+            database.DeleteDDLEvent(id);
+        }
+
+        private void ddl_delete(object sender, RoutedEventArgs e)
+        {
+            int id = (int)e.OriginalSource;
+            database.DeleteDDLEvent(id);
+        }
+
+        private void ddl_add(object sender, RoutedEventArgs e)
+        {
+            DeadlineEvent? _event = e.OriginalSource as DeadlineEvent;
+            if(_event != null)
+            {
+                database.CreateDDLEvent(_event);
+            }
+        }
+
+        private void ddl_span_add(object sender, RoutedEventArgs e)
+        {
+            DeadlineSpanEvent? _event = e.OriginalSource as DeadlineSpanEvent;
+            if(_event != null)
+            {
+                database.CreateDDLSpanEvent(_event);
+            }
+        }
+
+        private void ddl_update(object sender, RoutedEventArgs e)
+        {
+            DeadlineEvent? _event = e.OriginalSource as DeadlineEvent;
+            if(_event != null)
+            {
+                database.UpdateDDLEvent(_event);
+            }
+        }
+
+        private void ddl_span_update(object sender, RoutedEventArgs e)
+        {
+            DeadlineSpanEvent? _event = e.OriginalSource as DeadlineSpanEvent;
+            if(_event != null)
+            {
+                database.UpdateDDLSpanEvent(_event);
+            }
+        }
     }
 }

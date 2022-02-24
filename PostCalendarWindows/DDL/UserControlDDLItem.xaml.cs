@@ -40,6 +40,24 @@ namespace PostCalendarWindows.DDL
             ddl_column.SetBinding(TextBlock.TextProperty, timeBindingObj);
             details_column.SetBinding(TextBlock.TextProperty, detailBindingObj);
         }
+
+        private void more_click(object sender, RoutedEventArgs e)
+        {
+            ItemButton? button = sender as ItemButton;
+            button?.RaiseMoreDDLEvent(_item.Id);
+        }
+
+        private void delete_click(object sender, RoutedEventArgs e)
+        {
+            ItemButton? button = sender as ItemButton;
+            button?.RaiseDDLDeleteEvent(_item.Id);
+        }
+
+        private void finish_click(object sender, RoutedEventArgs e)
+        {
+            ItemButton? button = sender as ItemButton;
+            button?.RaiseFinishDDLEvent(_item.Id);
+        }
     }
 
     class TimeConverter : IValueConverter

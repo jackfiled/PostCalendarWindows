@@ -105,5 +105,15 @@ namespace PostCalendarWindows
                 main_stack_plane.Children.Add(new UserControlActivityItem(item));
             }
         }
+
+        private void add_2_calendar(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void add_2_ddl(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

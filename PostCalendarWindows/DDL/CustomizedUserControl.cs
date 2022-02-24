@@ -182,15 +182,27 @@ namespace PostCalendarWindows.DDL
         }
 
         /// <summary>
-        /// 隐藏活动事件
+        /// 隐藏ddl时间点事件
         /// </summary>
-        public static readonly RoutedEvent HideActivityEvent = EventManager.RegisterRoutedEvent(
-            "HideActivity", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Button));
+        public static readonly RoutedEvent HideDDLEvent = EventManager.RegisterRoutedEvent(
+            "HideDDL", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Button));
 
-        public event RoutedEventHandler HideActivity
+        public event RoutedEventHandler HideDDL
         {
-            add { AddHandler(HideActivityEvent, value); }
-            remove { RemoveHandler(HideActivityEvent, value); }
+            add { AddHandler(HideDDLEvent, value); }
+            remove { RemoveHandler(HideDDLEvent, value); }
+        }
+
+        /// <summary>
+        /// 隐藏ddl时间段事件
+        /// </summary>
+        public static readonly RoutedEvent HideDDLSpanEvent = EventManager.RegisterRoutedEvent(
+            "HideDDLSpan", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Button));
+
+        public event RoutedEventHandler HideDDLSpan
+        {
+            add { AddHandler(HideDDLSpanEvent, value); }
+            remove { RemoveHandler(HideDDLSpanEvent, value); }
         }
 
         /// <summary>
@@ -248,13 +260,23 @@ namespace PostCalendarWindows.DDL
         }
 
         /// <summary>
-        /// 引发隐藏活动事件
+        /// 引发隐藏ddl时间点事件
         /// </summary>
         /// <param name="id">要被隐藏的活动的id</param>
-        public void RaiseHideActivityEvent(int id)
+        public void RaiseHideDDLEvent(int id)
         {
-            RoutedEventArgs newHideActivityArgs = new RoutedEventArgs(HideActivityEvent, id);
-            RaiseEvent(newHideActivityArgs);
+            RoutedEventArgs newHideDDLArgs = new RoutedEventArgs(HideDDLEvent, id);
+            RaiseEvent(newHideDDLArgs);
+        }
+
+        /// <summary>
+        /// 引发隐藏ddl时间段事件
+        /// </summary>
+        /// <param name="id">要被隐藏的活动的id</param>
+        public void RaiseHideDDLSpanEvent(int id)
+        {
+            RoutedEventArgs newHideDDLSpanArgs = new RoutedEventArgs(HideDDLSpanEvent, id);
+            RaiseEvent(newHideDDLSpanArgs);
         }
 
         /// <summary>

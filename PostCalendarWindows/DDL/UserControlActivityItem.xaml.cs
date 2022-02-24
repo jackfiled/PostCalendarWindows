@@ -26,6 +26,7 @@ namespace PostCalendarWindows.DDL
         private Binding startTimeBindingObj = new Binding("StartTime");
         private Binding endTimeBindingObj = new Binding("EndTime");
         private Binding detailsBindingObj = new Binding("Details");
+        private Binding addButtonTextBindingObj = new Binding("AddButtonText");
 
         public UserControlActivityItem(ActivityItem item)
         {
@@ -38,11 +39,39 @@ namespace PostCalendarWindows.DDL
             endTimeBindingObj.Converter = new EndTimeStrConverter();
             endTimeBindingObj.Source = _item;
             detailsBindingObj.Source = _item;
+            addButtonTextBindingObj.Source = _item;
 
             name_column.SetBinding(TextBlock.TextProperty, nameBindingObj);
             start_time_column.SetBinding(TextBlock.TextProperty, startTimeBindingObj);
             end_time_column.SetBinding(TextBlock.TextProperty, endTimeBindingObj);
             details_column.SetBinding(TextBlock.TextProperty, detailsBindingObj);
+            add_button.SetBinding(ContentProperty, addButtonTextBindingObj);
+        }
+
+        private void hide_click(object sender, RoutedEventArgs e)
+        {
+            ItemButton? button = sender as ItemButton;
+            if (_item.IsDDL)
+            {
+                button?.RaiseHideDDLEvent(_item.Id);
+            }
+            else
+            {
+                button?.RaiseHideDDLSpanEvent(_item.Id);
+            }
+        }
+
+        private void add_click(object sender, RoutedEventArgs e)
+        {
+            ItemButton? button = sender as ItemButton;
+            if (_item.IsDDL)
+            {
+                button?.RaiseAdd2DDLEvent(_item.Id);
+            }
+            else
+            {
+                button?.RaiseAdd2CalendarEvent(_item.Id);
+            }
         }
     }
 

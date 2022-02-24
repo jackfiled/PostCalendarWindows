@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:PostCalendarWindows.DDL"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             local:ItemButton.Add2Calendar="add_2_calendar"
+             local:ItemButton.Add2DDL="add_2_ddl"
              >
     <StackPanel>
         <StackPanel x:Name="area"/>

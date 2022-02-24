@@ -24,11 +24,11 @@
             
             <TextBlock x:Name="ddl_column" Grid.Row="0" Margin="5" Foreground="Gray"/>
             <TextBlock x:Name="name_column" Grid.Row="1" Margin="10" FontSize="20" FontWeight="Bold"/>
-            <Button Grid.Column="1" Grid.RowSpan="2" Content="删除" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
-            <Button Grid.Column="2" Grid.RowSpan="2" Content="修改" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
-            <Button Grid.Column="3" Grid.RowSpan="2" Content="完成" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
+            <local:ItemButton Grid.Column="1" Grid.RowSpan="2" Content="删除" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Click="delete_click"/>
+            <local:ItemButton Grid.Column="2" Grid.RowSpan="2" Content="修改" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Click="more_click"/>
+            <local:ItemButton Grid.Column="3" Grid.RowSpan="2" Content="完成" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkBgButton}" Click="finish_click"/>
 
-            <Expander Grid.Row="2" Grid.ColumnSpan="4" Style="{DynamicResource MaterialDesignExpander}" >
+            <Expander Grid.Row="2" Grid.ColumnSpan="4" Style="{DynamicResource MaterialDesignExpander}">
                 <TextBlock x:Name="details_column" Foreground="Gray" FontSize="16" TextWrapping="WrapWithOverflow"/>
             </Expander>
         </Grid>

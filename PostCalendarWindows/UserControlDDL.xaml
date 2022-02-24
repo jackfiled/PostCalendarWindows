@@ -6,7 +6,15 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:PostCalendarWindows.DDL"
              mc:Ignorable="d" 
-             local:DetailButton.RefreshDDL="ddl_refresh">
+             local:DetailButton.RefreshDDL="ddl_refresh"
+             local:DetailButton.AddDDL="ddl_add"
+             local:DetailButton.AddDDLSpan="ddl_span_add"
+             local:DetailButton.UpdateDDL="ddl_update"
+             local:DetailButton.UpdateDDLSpan="ddl_span_add"
+             local:ItemButton.MoreDDL="ddl_more"
+             local:ItemButton.DeleteDDL="ddl_delete"
+             local:ItemButton.FinishDDL="ddl_finish"
+             >
     <StackPanel>
         <StackPanel x:Name="area">
         </StackPanel>

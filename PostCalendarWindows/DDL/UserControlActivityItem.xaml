@@ -19,19 +19,17 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="150"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock x:Name="start_time_column" Grid.Row="0" Margin="5" Foreground="Gray"/>
             <TextBlock x:Name="end_time_column" Grid.Row="1" Margin="5" Foreground="Gray"/>
             <TextBlock x:Name="name_column" Grid.Row="2" Margin="10" FontSize="20" FontWeight="Bold"/>
 
-            <Button Grid.Column="1" Grid.RowSpan="3" Content="删除" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
-            <Button Grid.Column="2" Grid.RowSpan="3" Content="修改" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
-            <Button Grid.Column="3" Grid.RowSpan="3" Content="完成" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkBgButton}"/>
+            <local:ItemButton Grid.Column="1" Grid.RowSpan="3" Content="隐藏" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkButton}" Click="hide_click"/>
+            <local:ItemButton x:Name="add_button" Grid.Column="2" Grid.RowSpan="3" Margin="10" Style="{DynamicResource MaterialDesignFlatDarkButton}" Click="add_click"/>
 
-            <Expander Grid.Row="3" Grid.ColumnSpan="4" Style="{DynamicResource MaterialDesignExpander}">
+            <Expander Grid.Row="3" Grid.ColumnSpan="3" Style="{DynamicResource MaterialDesignExpander}">
                 <TextBlock x:Name="details_column" Foreground="Gray" FontSize="16" TextWrapping="WrapWithOverflow"/>
             </Expander>
         </Grid>
