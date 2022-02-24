@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.DDL;
 using PostCalendarWindows.ViewModel;
 
@@ -59,8 +60,8 @@ namespace PostCalendarWindows.DDL
 
             name_input.SetBinding(TextBox.TextProperty, nameBindingObj);
             detail_input.SetBinding(TextBox.TextProperty, detailBindingObj);
-            end_date_input.SetBinding(TextBox.TextProperty, endDateBindingObj);
-            end_time_input.SetBinding(TextBox.TextProperty, endTimeBindingObj);
+            end_date_input.SetBinding(DatePicker.TextProperty, endDateBindingObj);
+            end_time_input.SetBinding(TimePicker.TextProperty, endTimeBindingObj);
 
             if (item.isDDL)
             {

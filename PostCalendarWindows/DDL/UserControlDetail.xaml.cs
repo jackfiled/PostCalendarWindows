@@ -57,6 +57,22 @@ namespace PostCalendarWindows.DDL
             top_column.SetBinding(TextBlock.TextProperty, topColumnBindingObj);
         }
 
+
+        /// <summary>
+        /// 初始化查看ddl事件详情的界面
+        /// </summary>
+        /// <param name="_event"></param>
+        public void InitMoreDDL(DeadlineEvent _event)
+        {
+            detailItem = new DDLDetailItem(true, _event);
+            ucDDLDetail= new UserControlDDLDetail(detailItem);
+
+            main_stack_plane.Children.Add(ucDDLDetail);
+
+            topColumnBindingObj.Source= detailItem;
+            top_column.SetBinding(TextBlock.TextProperty, topColumnBindingObj);
+        }
+
         /// <summary>
         /// 初始化添加活动的界面
         /// </summary>
@@ -76,6 +92,28 @@ namespace PostCalendarWindows.DDL
             main_stack_plane.Children.Add(ucDDLDetail);
 
             topColumnBindingObj.Source = detailItem;
+            top_column.SetBinding(TextBlock.TextProperty, topColumnBindingObj);
+        }
+
+        public void InitMoreActivity(DeadlineEvent _event)
+        {
+            detailItem = new DDLDetailItem(false, _event);
+            ucDDLDetail = new UserControlDDLDetail(detailItem);
+
+            main_stack_plane.Children.Add(ucDDLDetail);
+
+            topColumnBindingObj.Source = detailItem;
+            top_column.SetBinding(TextBlock.TextProperty, topColumnBindingObj);
+        }
+
+        public void InitMoreActivity(DeadlineSpanEvent _event)
+        {
+            spanDetailItem = new DDLSpanDetailItem(_event);
+            ucDDLSpanDetail= new UserControlDDLSpanDetail(spanDetailItem);
+
+            main_stack_plane.Children.Add(ucDDLSpanDetail);
+
+            topColumnBindingObj.Source = spanDetailItem;
             top_column.SetBinding(TextBlock.TextProperty, topColumnBindingObj);
         }
 

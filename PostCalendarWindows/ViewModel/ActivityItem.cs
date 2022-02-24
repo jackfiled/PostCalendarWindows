@@ -21,6 +21,12 @@ namespace PostCalendarWindows.ViewModel
             }
         }
         public string Details { get ; private set; }
+        public string AddButtonText { get; private set; }
+
+        /// <summary>
+        /// 表示是否为ddl时间点对象
+        /// </summary>
+        public bool IsDDL;
 
         /// <summary>
         /// 活动界面的vm类，从ddl时间点对象初始化，StartTime属性设置为空
@@ -28,11 +34,13 @@ namespace PostCalendarWindows.ViewModel
         /// <param name="_event">ddl时间点对象</param>
         public ActivityItem(DeadlineEvent _event)
         {
+            IsDDL = true;
             Id = _event.Id;
             Name = _event.Name;
             StartTime = "";
             time = _event.EndDateTime;
             Details = _event.Details;
+            AddButtonText = "添加到个人ddl";
         }
 
         /// <summary>
@@ -41,11 +49,13 @@ namespace PostCalendarWindows.ViewModel
         /// <param name="_event">ddl时间段对象</param>
         public ActivityItem(DeadlineSpanEvent _event)
         {
+            IsDDL=false;
             Id= _event.Id;
             Name= _event.Name;
             Details = _event.Details;
             StartTime = _event.StartDateTime.ToString();
             time = _event.EndDateTime;
+            AddButtonText = "添加到个人日历";
         }
 
         public int CompareTo(ActivityItem? item)

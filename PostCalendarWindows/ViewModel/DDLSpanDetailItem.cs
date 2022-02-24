@@ -11,6 +11,7 @@ namespace PostCalendarWindows.ViewModel
 {
     public class DDLSpanDetailItem
     {
+        public string TopColumn { get; private set; }
         public string NameColumn { get; private set; }
         public string DetailColumn { get; private set; }
         public string StartTimeColumn { get; private set; }
@@ -56,6 +57,7 @@ namespace PostCalendarWindows.ViewModel
         {
             isUpdate = false;
 
+            TopColumn = "添加活动";
             NameColumn = "活动名称";
             DetailColumn = "活动详情";
             StartTimeColumn = "活动开始时间";
@@ -67,6 +69,7 @@ namespace PostCalendarWindows.ViewModel
         {
             isUpdate = true;
 
+            TopColumn = "活动详情";
             NameColumn = "活动名称";
             DetailColumn = "活动详情";
             StartTimeColumn = "活动开始时间";

@@ -76,9 +76,11 @@ namespace PostCalendarWindows.ViewModel
         /// <param name="_event">需要展示的ddl事件</param>
         public DDLDetailItem(bool _isDDL, DeadlineEvent _event)
         {
+            isDDL= _isDDL;
             isUpdate = true;
             if (isDDL)
             {
+                TopColumn = "DDL详情";
                 NameColumn = "DDL名称";
                 DetailColumn = "DDL详情";
                 EndTimeColumn = "DDL时间";
@@ -95,6 +97,7 @@ namespace PostCalendarWindows.ViewModel
             }
             else
             {
+                TopColumn = "活动详情";
                 NameColumn = "活动名称";
                 DetailColumn = "活动详情";
                 EndTimeColumn = "活动时间";
