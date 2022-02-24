@@ -28,6 +28,7 @@ namespace PostCalendarWindows
         public DeadlineManager manager;
 
         private List<DDLColumnItem> columnItems = new List<DDLColumnItem>();
+        private ActivityType select_type;
 
         private Binding ScrollHeightBindingObj = new Binding("Height");
 
@@ -55,8 +56,8 @@ namespace PostCalendarWindows
             //初始化显示的对象们
             RefreshColumn();
             columnItems[0].isClicked = true;
+            select_type = ActivityType.All;
             columnItems[0].NotifyIsClickedChanged();
-            manager.LoadActivityFromDB(ActivityType.All);
             Refresh();
         }
 
@@ -66,6 +67,7 @@ namespace PostCalendarWindows
         private void RefreshColumn()
         {
             column_stack_plane.Children.Clear();
+            manager.LoadActivityFromDB(select_type);
             foreach(DDLColumnItem item in columnItems)
             {
                 column_stack_plane.Children.Add(new UCDDLColumnItem(item));
@@ -89,8 +91,6 @@ namespace PostCalendarWindows
                         column.isClicked = false;
                         column.NotifyIsClickedChanged();
                     }
-
-                    manager.LoadActivityFromDB((ActivityType)item.itemType);
                 }
             }
             Refresh();

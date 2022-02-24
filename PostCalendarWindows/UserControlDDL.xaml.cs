@@ -28,6 +28,7 @@ namespace PostCalendarWindows
         public DeadlineManager manager;
 
         private List<DDLColumnItem> columnItems = new List<DDLColumnItem>();
+        private DDLType selected_type;
 
         private Binding ScrollHeightBindingObj = new Binding("Height");
         private Binding areaWidthBindingObj = new Binding("ActualWidth");
@@ -57,8 +58,8 @@ namespace PostCalendarWindows
             //初始化界面
             RefreshColumn();
             columnItems[0].isClicked = true;
+            selected_type = DDLType.All;
             columnItems[0].NotifyIsClickedChanged();
-            manager.LoadDeadlineFromDB(DDLType.All);
             Refresh();
         }
 
@@ -80,6 +81,7 @@ namespace PostCalendarWindows
         private void Refresh()
         {
             main_stack_plane.Children.Clear();
+            manager.LoadDeadlineFromDB(selected_type);
             foreach (var item in manager.ddlShowItems)
             {
                 main_stack_plane.Children.Add(new UserControlDDLItem(item));
@@ -96,6 +98,7 @@ namespace PostCalendarWindows
                 {
                     if(item.itemType == column.itemType)
                     {
+                        selected_type = (DDLType)column.itemType;
                         column.isClicked = true;
                         column.NotifyIsClickedChanged();
                     }
@@ -105,8 +108,6 @@ namespace PostCalendarWindows
                         column.NotifyIsClickedChanged();
                     }
                 }
-
-                manager.LoadDeadlineFromDB((DDLType)item.itemType);
             }
             RefreshColumn();
             Refresh();
