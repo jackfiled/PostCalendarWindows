@@ -113,6 +113,15 @@ namespace PostCalendarWindows
             Refresh();
         }
 
+        private void add_click(object sender, RoutedEventArgs e)
+        {
+            UserControlDetail addDetail = new UserControlDetail();
+            addDetail.InitAddDDL();
+            addDetail.SetBinding(WidthProperty, areaWidthBindingObj);
+            addDetail.SetBinding(HeightProperty, areaHeightBindingObj);
+            area.Children.Add(addDetail);
+        }
+
         private void ddl_refresh(object sender, RoutedEventArgs e)
         {
             area.Children.Clear();

@@ -27,10 +27,15 @@
                 <StackPanel x:Name="column_stack_plane" Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center"/>
             </Grid>
         </materialDesign:ColorZone>
-        
 
-        <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch">
-            <StackPanel x:Name="main_stack_plane"/>
-        </ScrollViewer>
+        <Grid>
+            <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch">
+                <StackPanel x:Name="main_stack_plane"/>
+            </ScrollViewer>
+
+            <Button Width="35" Height="35" Margin="0,0,100,100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Style="{DynamicResource MaterialDesignFloatingActionDarkButton}" Click="add_click">
+                <materialDesign:PackIcon Kind="Plus" Width="25" Height="25"/>
+            </Button>
+        </Grid>
     </StackPanel>
 </UserControl>

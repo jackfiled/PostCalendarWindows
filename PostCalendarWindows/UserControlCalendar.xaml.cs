@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MaterialDesignThemes.Wpf;
 using PostCalendarWindows.Calendar;
 using PostCalendarWindows.ViewModel;
 
@@ -27,6 +28,7 @@ namespace PostCalendarWindows
         private Binding calendarItemWidthBindingObj = new Binding("ActualWidth");
         private Binding AreaWidthBindingObj = new Binding("ActualWidth");
         private Binding AreaHeightBindingObj = new Binding("ActualHeight");
+
         private Calendar.CalendarManager calendar;
         private DataModel.Database db;
         private ColumnTimeData ctd;
