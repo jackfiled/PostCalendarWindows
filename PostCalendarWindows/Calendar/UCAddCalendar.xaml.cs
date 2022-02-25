@@ -25,6 +25,17 @@ namespace PostCalendarWindows.Calendar
             InitializeComponent();
         }
 
+        public UCAddCalendar(string _name, string _details, DateOnly _date, TimeOnly _start_time, TimeOnly _end_time)
+        {
+            InitializeComponent();
+
+            name_input.Text = _name;
+            details_input.Text = _details;
+            date_input.Text = _date.ToString();
+            start_time_input.Text = _start_time.ToString();
+            end_time_input.Text = _end_time.ToString();
+        }
+
         private void confirm_button_Click(object sender, RoutedEventArgs e)
         {
             CustomizedButton? button = sender as CustomizedButton;

@@ -31,6 +31,8 @@ namespace PostCalendarWindows
         private ActivityType select_type;
 
         private Binding ScrollHeightBindingObj = new Binding("Height");
+        private Binding areaHeightBindingObj = new Binding("ActualHeight");
+        private Binding areaWidthBindingObj = new Binding("ActualWidth");
 
         public UserControlActivity(Database db)
         {
@@ -43,6 +45,10 @@ namespace PostCalendarWindows
             ScrollHeightBindingObj.Source = this;
             ScrollHeightBindingObj.Converter = new DDLHeightConverter();
             scroll.SetBinding(HeightProperty, ScrollHeightBindingObj);
+
+            //设置显示区域的宽高绑定
+            areaHeightBindingObj.Source = this;
+            areaWidthBindingObj.Source= this;
 
             columnItems.Add(new DDLColumnItem("全部", PackIconKind.AccountGroupOutline, ActivityType.All));
             columnItems.Add(new DDLColumnItem("思政", PackIconKind.AccountTie, ActivityType.Thought));
@@ -83,6 +89,7 @@ namespace PostCalendarWindows
                 {
                     if(item.itemType == column.itemType)
                     {
+                        select_type = (ActivityType)column.itemType;
                         column.isClicked = true;
                         column.NotifyIsClickedChanged();
                     }
@@ -99,7 +106,7 @@ namespace PostCalendarWindows
         private void Refresh()
         {
             main_stack_plane.Children.Clear();
-            
+            manager.LoadActivityFromDB(select_type);
             foreach(ActivityItem item in manager.activityItems)
             {
                 main_stack_plane.Children.Add(new UserControlActivityItem(item));
@@ -108,12 +115,50 @@ namespace PostCalendarWindows
 
         private void add_2_calendar(object sender, RoutedEventArgs e)
         {
+            int id = (int)e.OriginalSource;
+            DeadlineSpanEvent? _event = database.ReadDDLSpanEvent(id);
 
+            if(_event != null)
+            {
+                Calendar.UCAddCalendar? addArea = manager.InitAddCalendarArea(_event);
+                if(addArea != null)
+                {
+                    area.Children.Add(addArea);
+                    addArea.SetBinding(WidthProperty, areaWidthBindingObj);
+                    addArea.SetBinding(HeightProperty, areaHeightBindingObj);
+                }
+            }
         }
 
         private void add_2_ddl(object sender, RoutedEventArgs e)
         {
+            int id = (int)e.OriginalSource;
+            DeadlineEvent? _event = database.ReadDDLEvent(id);
+            if( _event != null)
+            {
+                _event.ddlType = DDLType.Personal;
+                _event.activityType = ActivityType.NotActivity;
+                database.CreateDDLEvent(_event);
+            }
+        }
 
+        private void add_calendar(object sender, RoutedEventArgs e)
+        {
+            Calendar.CalendarEvent? _event = e.OriginalSource as Calendar.CalendarEvent;
+
+            if( _event != null)
+            {
+                database.CreateCalendarItem(_event);
+            }
+
+            area.Children.Clear();
+            Refresh();
+        }
+
+        private void refresh_scene(object sender, RoutedEventArgs e)
+        {
+            area.Children.Clear();
+            Refresh();
         }
     }
 }

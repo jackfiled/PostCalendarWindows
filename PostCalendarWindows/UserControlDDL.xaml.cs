@@ -137,12 +137,16 @@ namespace PostCalendarWindows
         {
             int id = (int)e.OriginalSource;
             database.DeleteDDLEvent(id);
+
+            Refresh();
         }
 
         private void ddl_delete(object sender, RoutedEventArgs e)
         {
             int id = (int)e.OriginalSource;
             database.DeleteDDLEvent(id);
+
+            Refresh();
         }
 
         private void ddl_add(object sender, RoutedEventArgs e)
