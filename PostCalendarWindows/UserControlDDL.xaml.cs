@@ -54,6 +54,7 @@ namespace PostCalendarWindows
             columnItems.Add(new DDLColumnItem("全部", PackIconKind.CalendarTextOutline, DDLType.All));
             columnItems.Add(new DDLColumnItem("学习", PackIconKind.BookOpen, DDLType.Study));
             columnItems.Add(new DDLColumnItem("个人", PackIconKind.Account, DDLType.Personal));
+            columnItems.Add(new DDLColumnItem("其他", PackIconKind.AlertRhombusOutline, DDLType.Other));
 
             //初始化界面
             RefreshColumn();

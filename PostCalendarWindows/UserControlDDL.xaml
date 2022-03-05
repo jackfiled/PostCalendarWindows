@@ -29,7 +29,7 @@
         </materialDesign:ColorZone>
 
         <Grid>
-            <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch">
+            <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch">
                 <StackPanel x:Name="main_stack_plane"/>
             </ScrollViewer>
 
