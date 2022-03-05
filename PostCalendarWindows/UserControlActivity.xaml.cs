@@ -53,7 +53,7 @@ namespace PostCalendarWindows
             columnItems.Add(new DDLColumnItem("全部", PackIconKind.AccountGroupOutline, ActivityType.All));
             columnItems.Add(new DDLColumnItem("思政", PackIconKind.AccountTie, ActivityType.Thought));
             columnItems.Add(new DDLColumnItem("文体", PackIconKind.DanceBallroom, ActivityType.PE));
-            columnItems.Add(new DDLColumnItem("志愿", PackIconKind.YinYang, ActivityType.Volunteer));
+            columnItems.Add(new DDLColumnItem("志愿", PackIconKind.HandHeart, ActivityType.Volunteer));
             columnItems.Add(new DDLColumnItem("讲座", PackIconKind.Desk, ActivityType.Lecture));
             columnItems.Add(new DDLColumnItem("竞赛", PackIconKind.ArmFlex, ActivityType.Competition));
             columnItems.Add(new DDLColumnItem("评优", PackIconKind.ArrangeBringForward, ActivityType.Recoginition));
