@@ -57,6 +57,8 @@ namespace PostCalendarWindows.DDL
             detailBindingObj.Source = _item;
             endDateBindingObj.Source = _item;
             endTimeBindingObj.Source = _item;
+            endDateBindingObj.Mode = BindingMode.TwoWay;
+            endTimeBindingObj.Mode = BindingMode.TwoWay;
 
             name_input.SetBinding(TextBox.TextProperty, nameBindingObj);
             detail_input.SetBinding(TextBox.TextProperty, detailBindingObj);
@@ -69,12 +71,12 @@ namespace PostCalendarWindows.DDL
                 activity_type_input.Visibility = Visibility.Collapsed;
                 if (item.isUpdate)
                 {
-                    ddl_type_input.SelectedIndex = (int)item.ddlType;
-                    activity_type_input.SelectedIndex = (int)item.activityType;
+                    ddl_type_input.SelectedIndex = (int)item.ddlType - 1;
+                    activity_type_input.SelectedIndex = (int)item.activityType - 1;
                 }
                 else
                 {
-                    activity_type_input.SelectedIndex = (int)ActivityType.NotActivity;
+                    activity_type_input.SelectedIndex = (int)ActivityType.NotActivity - 1;
                 }
             }
             else
@@ -102,13 +104,27 @@ namespace PostCalendarWindows.DDL
             {
                 DeadlineEvent _event = new DeadlineEvent();
                 _event.Id = _item.Id;//由于是更改事件，需要设置事件的id
-                _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, (DDLType)ddl_type_input.SelectedIndex, (ActivityType)activity_type_input.SelectedIndex);
+                if (_item.isDDL)
+                {
+                    _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, (DDLType)(ddl_type_input.SelectedIndex + 1), ActivityType.NotActivity);
+                }
+                else
+                {
+                    _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, DDLType.NotDDL, (ActivityType)(activity_type_input.SelectedIndex + 1));
+                }
                 button?.RaiseDDLUpdateEvent(_event);
             }
             else
             {
                 DeadlineEvent _event = new DeadlineEvent();
-                _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, (DDLType)ddl_type_input.SelectedIndex, (ActivityType)activity_type_input.SelectedIndex);
+                if (_item.isDDL)
+                {
+                    _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, (DDLType)(ddl_type_input.SelectedIndex + 1), ActivityType.NotActivity);
+                }
+                else
+                {
+                    _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, DDLType.NotDDL, (ActivityType)(activity_type_input.SelectedIndex + 1));
+                }
                 button?.RaiseDDLAddEvent(_event);
             }
             button?.RaiseRefreshEvent();
