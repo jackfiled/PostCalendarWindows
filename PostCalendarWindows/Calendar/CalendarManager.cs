@@ -8,18 +8,18 @@ using PostCalendarWindows.DataModel;
 namespace PostCalendarWindows.Calendar
 {
     public class CalendarManager
-    {
+    { 
         public List<ShowItem> show_items = new List<ShowItem>();
         public List<CalendarEvent> events = new List<CalendarEvent>();
-        public Database db;
         public DateOnly week_first_day;
 
-        public CalendarManager(Database _db)
+        private readonly CalendarItemContext _context = new CalendarItemContext();
+
+        public CalendarManager()
         {
-            db = _db;
             //获得本周的第一天
             getWeekFitstDay();
-            events.AddRange(db.LoadDataFromDb(week_first_day));
+            events.AddRange(_context.LoadDataFromDb(week_first_day));
             Refresh();
         }
 
@@ -52,9 +52,10 @@ namespace PostCalendarWindows.Calendar
 
             foreach(CalendarEvent e in curr_events)
             {
-                db.CreateCalendarItem(e);
+                _context.CreateCalendarItem(e);
             }
-
+            _context.SaveChanges();
+            
             Refresh();
         }
 
@@ -64,12 +65,20 @@ namespace PostCalendarWindows.Calendar
         public void Refresh()
         {
             events.Clear();
-            events.AddRange(db.LoadDataFromDb(week_first_day));
+            events.AddRange(_context.LoadDataFromDb(week_first_day));
             show_items.Clear();
             foreach (CalendarEvent e in events)
             {
                 show_items.Add(new ShowItem(e.Id, e.Name, e.Place, (int)e.DayOfWeek, e.Begin_time, e.End_time));
             }
+        }
+
+        /// <summary>
+        /// 销毁对象
+        /// </summary>
+        public void Dispose()
+        {
+            _context.Dispose();
         }
 
         void getWeekFitstDay()
@@ -289,15 +298,26 @@ namespace PostCalendarWindows.Calendar
         /// 从数据库初始化日历事件对象
         /// </summary>
         /// <param name="calendar">数据库中的日历mapping对象</param>
-        public void SetFromDatabase(DataModel.Calendar calendar)
+        public void SetFromDatabase(DataModel.CalendarItem calendar)
         {
             Id = calendar.Id;
             Name = calendar.Name;
             Place = calendar.Place;
-            Details = calendar.details;
-            Date = DateOnly.Parse(calendar.Date);
-            Begin_time = TimeOnly.Parse(calendar.Begin_time);
-            End_time = TimeOnly.Parse(calendar.End_time);
+            Details = calendar.Detail;
+
+            // 处理时间的转换
+            DateTime beginDateTime = DateTime.Parse(calendar.BeginDataString);
+            DateTime endDateTime = DateTime.Parse(calendar.EndDataString);
+
+            Date = new DateOnly(beginDateTime.Year,
+                beginDateTime.Month,
+                beginDateTime.Day
+                );
+
+            TimeOnly time = TimeOnly.MinValue; //一天时间的零点
+            Begin_time = time.Add(beginDateTime.TimeOfDay);
+            End_time = time.Add(endDateTime.TimeOfDay);
+
         }
     }
 

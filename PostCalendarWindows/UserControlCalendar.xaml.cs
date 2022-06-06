@@ -30,14 +30,14 @@ namespace PostCalendarWindows
         private Binding AreaHeightBindingObj = new Binding("ActualHeight");
 
         private Calendar.CalendarManager calendar;
-        private DataModel.Database db;
         private ColumnTimeData ctd;
+        private readonly DataModel.CalendarItemContext _context =
+            new DataModel.CalendarItemContext();
 
-        public UserControlCalendar(DataModel.Database database)
+        public UserControlCalendar()
         {
             InitializeComponent();
-            calendar = new Calendar.CalendarManager(database);
-            db = database;
+            calendar = new Calendar.CalendarManager();
 
             //这里的代码让我觉得我是傻逼
             canva_list.Add(SunCanva);
@@ -181,7 +181,8 @@ namespace PostCalendarWindows
             CalendarEvent? _event = e.OriginalSource as CalendarEvent;
             if(_event != null)
             {
-                db.CreateCalendarItem(_event);
+                _context.CreateCalendarItem(_event);
+                _context.SaveChanges();
             }
             calendar.Refresh();
             clearCanva();
@@ -196,7 +197,8 @@ namespace PostCalendarWindows
             CalendarEvent? _event = e.OriginalSource as CalendarEvent;
             if(_event != null)
             {
-                db.UpdateCalendarItem(_event);
+                _context.UpdateCalendarItem(_event);
+                _context.SaveChanges();
             }
             calendar.Refresh();
             clearCanva();
@@ -211,7 +213,8 @@ namespace PostCalendarWindows
             int? id = e.OriginalSource as int?;
             if(id != null)
             {
-                _ = db.DeleteCalendarItem((int)id);
+                _context.DeleteCalendarItem((int)id);
+                _context.SaveChanges();
             }
             calendar.Refresh();
             clearCanva();
@@ -226,7 +229,7 @@ namespace PostCalendarWindows
             int? id = e.OriginalSource as int?;
             if(id != null)
             {
-                CalendarEvent? _event = db.ReadCalendarItem((int)id);
+                CalendarEvent? _event = _context.ReadCalendarItem((int)id);
                 if(_event != null)
                 {
                     UCCalendarDetail calendarDetail = new UCCalendarDetail(_event);

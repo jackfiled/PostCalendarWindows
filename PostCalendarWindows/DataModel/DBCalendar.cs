@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 using PostCalendarWindows.Calendar;
@@ -29,6 +31,18 @@ namespace PostCalendarWindows.DataModel
             Place = _event.Place;
             Detail = _event.Details;
 
+            // 处理时间的转换
+            DateTime date = new DateTime(
+                _event.Date.Year,
+                _event.Date.Month,
+                _event.Date.Day
+                );
+
+            DateTime beginDateTime = date.Add(_event.Begin_time - TimeOnly.MinValue);
+            DateTime endDateTime = date.Add(_event.End_time - TimeOnly.MinValue);
+
+            BeginDataString = beginDateTime.ToString();
+            EndDataString = endDateTime.ToString();
         }
     }
 
@@ -36,8 +50,7 @@ namespace PostCalendarWindows.DataModel
     {
         public DbSet<CalendarItem> CalendarItems { get; set; }
 
-        protected override void OnConfiguring(
-            DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(
                 "Data Source=calendarItems.db");
@@ -105,6 +118,30 @@ namespace PostCalendarWindows.DataModel
                 this.SaveChanges();
                 return true;
             }
+        }
+
+        /// <summary>
+        /// 在数据库中查询一周的日程
+        /// </summary>
+        /// <param name="sunday">一周第一天的日期，也就是周日</param>
+        /// <returns>这一周事件的列表</returns>
+        public List<CalendarEvent> LoadDataFromDb(DateOnly sunday)
+        {
+            List<CalendarEvent> event_list = new List<CalendarEvent>();
+            DateOnly monday = sunday.AddDays(6);
+
+            foreach(var item in this.CalendarItems)
+            {
+                CalendarEvent e = new CalendarEvent();
+                e.SetFromDatabase(item);
+                event_list.Add(e);
+            }
+
+            var query = from item in event_list
+                        where item.Date >= sunday && item.Date <= monday
+                        select item;
+
+            return query.ToList();
         }
     }
 }
