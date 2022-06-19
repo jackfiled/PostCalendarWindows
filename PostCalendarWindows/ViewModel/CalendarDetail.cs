@@ -44,9 +44,9 @@ namespace PostCalendarWindows.ViewModel
             Name = _event.Name;
             Place = _event.Place;
             Details = _event.Details;
-            DateStr = _event.Date_string;
-            BeginTimeStr = _event.Begin_time_string;
-            EndTimeStr = _event.End_time_string;
+            DateStr = _event.DateString;
+            BeginTimeStr = _event.BeginTimeString;
+            EndTimeStr = _event.EndTimeString;
         }
 
         public bool Judge()

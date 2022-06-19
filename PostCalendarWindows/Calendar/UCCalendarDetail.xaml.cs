@@ -59,7 +59,7 @@ namespace PostCalendarWindows.Calendar
 
             if (detailItem.Judge())
             {
-                _event.SetInnar(detailItem.Name, detailItem.Place, detailItem.Details, detailItem.Date, detailItem.BeginTime, detailItem.EndTime);
+                _event.SetInner(detailItem.Name, detailItem.Place, detailItem.Details, detailItem.Date, detailItem.BeginTime, detailItem.EndTime);
                 _event.Id = detailItem.Id;//这里是修改，必须设置id
 
                 if(button != null)

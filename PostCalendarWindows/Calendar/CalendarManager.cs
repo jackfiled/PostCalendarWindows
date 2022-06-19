@@ -9,17 +9,17 @@ namespace PostCalendarWindows.Calendar
 {
     public class CalendarManager
     { 
-        public List<ShowItem> show_items = new List<ShowItem>();
-        public List<CalendarEvent> events = new List<CalendarEvent>();
-        public DateOnly week_first_day;
+        public List<ShowItem> ShowItems = new List<ShowItem>();
+        public DateOnly WeekFirstDay;
 
+        private List<CalendarEvent> events = new List<CalendarEvent>();
         private readonly CalendarItemContext _context = new CalendarItemContext();
 
         public CalendarManager()
         {
             //获得本周的第一天
-            getWeekFitstDay();
-            events.AddRange(_context.LoadDataFromDb(week_first_day));
+            GetWeekFirstDay();
+            events.AddRange(_context.LoadDataFromDb(WeekFirstDay));
             Refresh();
         }
 
@@ -27,30 +27,30 @@ namespace PostCalendarWindows.Calendar
         /// 将excel表格中的数据添加进入数据库中
         /// </summary>
         /// <param name="path">excel文件的位置</param>
-        public void addCurriculumFromExcel(string path)
+        public void AddCurriculumFromExcel(string path)
         {
-            List<CalendarEvent> curr_events = new List<CalendarEvent>();
+            List<CalendarEvent> curriculum_events = new List<CalendarEvent>();
 
-            DataTable dt = readExecl(path);
-            List<Curriculum> currs = Analyse_excel_data(dt);
-            DateOnly semester_first_day = new DateOnly(2022, 2, 27);//这里有大问题
+            DataTable dt = ReadExcel(path);
+            List<Curriculum> currs = AnalyseExcelData(dt);
+            var semester_first_day = new DateOnly(2022, 2, 27);//这里有大问题
             
             foreach(Curriculum cur in currs)
             {
                 for(int week = cur.start_week - 1; week < cur.end_week; week++)
                 {
-                    CalendarEvent e = new CalendarEvent();
-                    e.Name = cur.name;
+                    var e = new CalendarEvent();
+                    e.Name = cur.Name;
                     e.Place = cur.place;
                     e.Details = cur.teacher;
-                    e.Begin_time = cur.last_time.start_time;
-                    e.End_time = cur.last_time.end_time;
+                    e.BeginTime = cur.last_time.start_time;
+                    e.EndTime = cur.last_time.end_time;
                     e.Date = semester_first_day.AddDays(cur.dayOfWeek + 7 * week);
-                    curr_events.Add(e);
+                    curriculum_events.Add(e);
                 }
             }
 
-            foreach(CalendarEvent e in curr_events)
+            foreach(CalendarEvent e in curriculum_events)
             {
                 _context.CreateCalendarItem(e);
             }
@@ -65,11 +65,11 @@ namespace PostCalendarWindows.Calendar
         public void Refresh()
         {
             events.Clear();
-            events.AddRange(_context.LoadDataFromDb(week_first_day));
-            show_items.Clear();
+            events.AddRange(_context.LoadDataFromDb(WeekFirstDay));
+            ShowItems.Clear();
             foreach (CalendarEvent e in events)
             {
-                show_items.Add(new ShowItem(e.Id, e.Name, e.Place, (int)e.DayOfWeek, e.Begin_time, e.End_time));
+                ShowItems.Add(new ShowItem(e.Id, e.Name, e.Place, (int)e.DayOfWeek, e.BeginTime, e.EndTime));
             }
         }
 
@@ -81,18 +81,18 @@ namespace PostCalendarWindows.Calendar
             _context.Dispose();
         }
 
-        void getWeekFitstDay()
+        void GetWeekFirstDay()
         {
             DateOnly now = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             DayOfWeek day = now.DayOfWeek;
-            week_first_day = now.AddDays(-(int)day);
+            WeekFirstDay = now.AddDays(-(int)day);
         }
 
-        static DataTable readExecl(string path)
+        static DataTable ReadExcel(string path)
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
             //不得不说，大微软家的东西可以相互调用就是方便
-            Excel.Application app = new Excel.Application();
+            var app = new Excel.Application();
             Excel.Workbooks wbs = app.Workbooks;
             wbs.Open(path);
             Excel.Worksheet ws = app.Worksheets[1];
@@ -113,14 +113,14 @@ namespace PostCalendarWindows.Calendar
                     //不过，在我这个程序中不会用到列名
                     if (i == 1)
                     {
-                        string colName = app.ActiveCell.Text.ToString();
-                        if (dt.Columns.Contains(colName))
+                        string col_name = app.ActiveCell.Text.ToString();
+                        if (dt.Columns.Contains(col_name))
                         {
-                            dt.Columns.Add(colName + j);
+                            dt.Columns.Add(col_name + j);
                         }
                         else
                         {
-                            dt.Columns.Add(colName);
+                            dt.Columns.Add(col_name);
                         }
                     }
                     dr[j - 1] = app.ActiveCell.Text.ToString();
@@ -140,7 +140,7 @@ namespace PostCalendarWindows.Calendar
         }
 
         //解析读取到的excel数据的方法
-        List<Curriculum> Analyse_excel_data(DataTable dt)
+        List<Curriculum> AnalyseExcelData(DataTable dt)
         {
             List<Curriculum> currs = new List<Curriculum>();
             //北邮作息时间表
@@ -182,15 +182,11 @@ namespace PostCalendarWindows.Calendar
                         if(result.Length == 6 || result.Length == 7)
                         {
                             name = result[1];
-                            if(name == last_curriculum_name)
-                            {
-                                continue;
-                            }
-                            else
+                            if (name != last_curriculum_name)
                             {
                                 last_curriculum_name = name;
                                 //分别匹配两种情况
-                                if(result.Length == 6)
+                                if (result.Length == 6)
                                 {
                                     match_result1 = pattern.Matches(result[3]);
                                     match_result2 = pattern.Matches(result[5]);
@@ -205,7 +201,7 @@ namespace PostCalendarWindows.Calendar
                                     place = result[5];
                                 }
                                 //处理有的课只上一周的问题
-                                if(match_result1.Count == 1)
+                                if (match_result1.Count == 1)
                                 {
                                     start_week = int.Parse(match_result1[0].Value);
                                     end_week = start_week;
@@ -216,7 +212,7 @@ namespace PostCalendarWindows.Calendar
                                     end_week = int.Parse(match_result1[1].Value);
                                 }
                                 //处理上课的节数
-                                foreach(System.Text.RegularExpressions.Match m in match_result2)
+                                foreach (System.Text.RegularExpressions.Match m in match_result2)
                                 {
                                     class_array.Add(int.Parse(m.Value));
                                 }
@@ -249,30 +245,30 @@ namespace PostCalendarWindows.Calendar
         public string Place { get; set; }
         public string Details { get; set; }
         public DateOnly Date { get; set; }
-        public TimeOnly Begin_time { get; set; }
-        public TimeOnly End_time { get; set; }
+        public TimeOnly BeginTime { get; set; }
+        public TimeOnly EndTime { get; set; }
         public DayOfWeek DayOfWeek
         {
             get { return Date.DayOfWeek; }
         }
         public TimeSpan Length
         {
-            get { return End_time - Begin_time; }
+            get { return EndTime - BeginTime; }
         }
 
-        public string Date_string
+        public string DateString
         {
             get { return Date.ToString(); }
         }
 
-        public string Begin_time_string
+        public string BeginTimeString
         {
-            get { return Begin_time.ToString();}
+            get { return BeginTime.ToString();}
         }
 
-        public string End_time_string
+        public string EndTimeString
         {
-            get { return End_time.ToString();}
+            get { return EndTime.ToString();}
         }
 
         /// <summary>
@@ -284,14 +280,14 @@ namespace PostCalendarWindows.Calendar
         /// <param name="_date">事件发生的日期</param>
         /// <param name="_begin_time">事件开始时间</param>
         /// <param name="_end_time">事件结束时间</param>
-        public void SetInnar(string _name, string _place, string _details, DateOnly _date, TimeOnly _begin_time, TimeOnly _end_time)
+        public void SetInner(string _name, string _place, string _details, DateOnly _date, TimeOnly _begin_time, TimeOnly _end_time)
         {
             Name = _name;
             Place = _place;
             Details = _details;
             Date = _date;
-            Begin_time = _begin_time;
-            End_time = _end_time;
+            BeginTime = _begin_time;
+            EndTime = _end_time;
         }
 
         /// <summary>
@@ -306,18 +302,17 @@ namespace PostCalendarWindows.Calendar
             Details = calendar.Detail;
 
             // 处理时间的转换
-            DateTime beginDateTime = DateTime.Parse(calendar.BeginDataString);
-            DateTime endDateTime = DateTime.Parse(calendar.EndDataString);
+            DateTime begin_date_time = DateTime.Parse(calendar.BeginDataString);
+            DateTime end_date_time = DateTime.Parse(calendar.EndDataString);
 
-            Date = new DateOnly(beginDateTime.Year,
-                beginDateTime.Month,
-                beginDateTime.Day
+            Date = new DateOnly(begin_date_time.Year,
+                begin_date_time.Month,
+                begin_date_time.Day
                 );
 
             TimeOnly time = TimeOnly.MinValue; //一天时间的零点
-            Begin_time = time.Add(beginDateTime.TimeOfDay);
-            End_time = time.Add(endDateTime.TimeOfDay);
-
+            BeginTime = time.Add(begin_date_time.TimeOfDay);
+            EndTime = time.Add(end_date_time.TimeOfDay);
         }
     }
 
@@ -332,13 +327,13 @@ namespace PostCalendarWindows.Calendar
             public TimeOnly end_time;
         }
 
-        public string name, teacher, place;
+        public string Name, teacher, place;
         public int start_week, end_week, dayOfWeek;
         public LastLength last_time;
 
         public Curriculum(string event_name, string _teacher, string _place, TimeOnly start, TimeOnly end, int _start_week, int _end_week, int _dayOfWeek)
         {
-            name = event_name;
+            Name = event_name;
             teacher = _teacher;
             place = _place;
             last_time.start_time = start;
@@ -403,7 +398,7 @@ namespace PostCalendarWindows.Calendar
     /// </summary>
     public class CalendarHeightConverter : System.Windows.Data.IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        public object Convert(object value, Type target_type, object parameter, System.Globalization.CultureInfo culture_info)
         {
             double _value = (double)value;
             if(_value > 90)
@@ -416,7 +411,7 @@ namespace PostCalendarWindows.Calendar
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo cultureInfo)
+        public object ConvertBack(object value, Type target_type, object parameter, System.Globalization.CultureInfo culture_info)
         {
             return value;
         }

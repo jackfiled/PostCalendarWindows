@@ -63,7 +63,7 @@ namespace PostCalendarWindows
             AreaWidthBindingObj.Source = this;
 
             //这里显示日历上的日期
-            ctd = new ColumnTimeData(calendar.week_first_day);
+            ctd = new ColumnTimeData(calendar.WeekFirstDay);
 
             var YearBinding = new Binding("Year");
             var SunBinding = new Binding("Sun");
@@ -115,7 +115,7 @@ namespace PostCalendarWindows
         /// </summary>
         public void displayCanva()
         {
-            foreach (ShowItem e in calendar.show_items)
+            foreach (ShowItem e in calendar.ShowItems)
             {
                 var calendarItem = new CalendarItem(e.id, e.name, e.place, e.length);
                 var calendarItemUserControl = new UserControlCalendarItem(calendarItem);
@@ -130,7 +130,7 @@ namespace PostCalendarWindows
         /// </summary>
         private void last_week_click(object sender, RoutedEventArgs e)
         {
-            calendar.week_first_day = calendar.week_first_day.AddDays(-7);
+            calendar.WeekFirstDay = calendar.WeekFirstDay.AddDays(-7);
             ctd.AddDays(-7);
             calendar.Refresh();
             clearCanva();
@@ -142,7 +142,7 @@ namespace PostCalendarWindows
         /// </summary>
         private void next_week_click(object sender, RoutedEventArgs e)
         {
-            calendar.week_first_day = calendar.week_first_day.AddDays(7);
+            calendar.WeekFirstDay = calendar.WeekFirstDay.AddDays(7);
             ctd.AddDays(7);
             calendar.Refresh();
             clearCanva();
@@ -251,7 +251,7 @@ namespace PostCalendarWindows
 
             if (result == true)
             {
-                calendar.addCurriculumFromExcel(openFileDialog.FileName);
+                calendar.AddCurriculumFromExcel(openFileDialog.FileName);
                 clearCanva();
                 displayCanva();
             }

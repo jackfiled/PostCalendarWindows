@@ -41,7 +41,7 @@ namespace PostCalendarWindows.Calendar
             CustomizedButton? button = sender as CustomizedButton;
             CalendarEvent _event = new CalendarEvent();
 
-            _event.SetInnar(name_input.Text, place_input.Text, details_input.Text, DateOnly.Parse(date_input.Text), TimeOnly.Parse(start_time_input.Text), TimeOnly.Parse(end_time_input.Text));
+            _event.SetInner(name_input.Text, place_input.Text, details_input.Text, DateOnly.Parse(date_input.Text), TimeOnly.Parse(start_time_input.Text), TimeOnly.Parse(end_time_input.Text));
             if(button != null)
             {
                 button.RaiseAddEvent(_event);
