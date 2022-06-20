@@ -122,11 +122,17 @@ namespace PostCalendarWindows.DataModel
         /// <returns>ddl时间点对象列表</returns>
         public List<DeadlineEvent> LoadDeadline(DDLType type, DateTime end_time)
         {
+            List<DeadlineEvent> deadline_events = new();
+
+            foreach(var item in this.DeadlineItems)
+            {
+                deadline_events.Add(new DeadlineEvent(item));
+            }
+
             if(type == DDLType.All)
             {
                 // 查询所有类型的DDL
-                var query = from item in this.DeadlineItems
-                            let deadline_event = new DeadlineEvent(item)
+                var query = from deadline_event in deadline_events
                             where deadline_event.ddlType != DDLType.NotDDL 
                                 && deadline_event.EndDateTime < end_time
                             select deadline_event;
@@ -136,8 +142,7 @@ namespace PostCalendarWindows.DataModel
             else
             {
                 // 查询指定类型的DDL
-                var query = from item in this.DeadlineItems
-                            let deadline_event = new DeadlineEvent(item)
+                var query = from deadline_event in deadline_events
                             where deadline_event.ddlType == type
                                 && deadline_event.EndDateTime < end_time
                             select deadline_event;
@@ -154,11 +159,17 @@ namespace PostCalendarWindows.DataModel
         /// <returns></returns>
         public List<DeadlineEvent> LoadDeadline(ActivityType type, DateTime time)
         {
+            List<DeadlineEvent> deadline_events = new();
+
+            foreach (var item in this.DeadlineItems)
+            {
+                deadline_events.Add(new DeadlineEvent(item));
+            }
+
             if (type == ActivityType.All)
             {
                 // 加载所有类型的ddl对象
-                var query = from item in DeadlineItems
-                            let deadline_event = new DeadlineEvent(item)
+                var query = from deadline_event in deadline_events
                             where deadline_event.activityType != ActivityType.NotActivity
                                 && deadline_event.EndDateTime < time
                                 && deadline_event.ddlType == DDLType.NotDDL
@@ -169,8 +180,7 @@ namespace PostCalendarWindows.DataModel
             else
             {
                 // 加载指定类型的ddl对象
-                var query = from item in DeadlineItems
-                            let deadline_event = new DeadlineEvent(item)
+                var query = from deadline_event in deadline_events
                             where deadline_event.activityType == type
                                 && deadline_event.EndDateTime < time
                                 && deadline_event.ddlType == DDLType.NotDDL

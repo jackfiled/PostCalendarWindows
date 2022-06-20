@@ -116,10 +116,16 @@ namespace PostCalendarWindows.DataModel
 
         public List<DeadlineSpanEvent> LoadDeadlineSpan(ActivityType type, DateTime time)
         {
+            List<DeadlineSpanEvent> deadline_span_events = new();
+
+            foreach(var item in this.DeadlineSpanItems)
+            {
+                deadline_span_events.Add(new DeadlineSpanEvent(item));
+            }
+
             if(type == ActivityType.All)
             {
-                var query = from item in this.DeadlineSpanItems
-                            let deadline_span_event = new DeadlineSpanEvent(item)
+                var query = from deadline_span_event in deadline_span_events
                             where deadline_span_event.activityType != ActivityType.NotActivity
                                 && deadline_span_event.EndDateTime < time
                             select deadline_span_event;
@@ -128,14 +134,12 @@ namespace PostCalendarWindows.DataModel
             }
             else
             {
-                var query = from item in this.DeadlineSpanItems
-                            let deadline_span_event = new DeadlineSpanEvent(item)
+                var query = from deadline_span_event in deadline_span_events
                             where deadline_span_event.activityType == type
                                 && deadline_span_event.EndDateTime < time
                             select deadline_span_event;
 
                 return query.ToList();
-
             }
         }
     }
