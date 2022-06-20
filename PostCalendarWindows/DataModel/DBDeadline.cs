@@ -37,11 +37,14 @@ namespace PostCalendarWindows.DataModel
 
     public class DeadlineItemContext : DbContext
     {
+        public DeadlineItemContext()
+        {
+            Database.EnsureCreated();
+        }
+
         public DbSet<DeadlineItem> DeadlineItems { get; set; }
 
-
-        protected override void OnConfiguring(
-            DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(
                 "Data Source=deadlineItems.db");
@@ -110,6 +113,71 @@ namespace PostCalendarWindows.DataModel
                 return true;
             }
         }
-    }
 
+        /// <summary>
+        /// 从数据库加载ddl时间点对象
+        /// </summary>
+        /// <param name="type">加载的对象ddl类型</param>
+        /// <param name="time">截止时间</param>
+        /// <returns>ddl时间点对象列表</returns>
+        public List<DeadlineEvent> LoadDeadline(DDLType type, DateTime end_time)
+        {
+            if(type == DDLType.All)
+            {
+                // 查询所有类型的DDL
+                var query = from item in this.DeadlineItems
+                            let deadline_event = new DeadlineEvent(item)
+                            where deadline_event.ddlType != DDLType.NotDDL 
+                                && deadline_event.EndDateTime < end_time
+                            select deadline_event;
+
+                return query.ToList();
+            }
+            else
+            {
+                // 查询指定类型的DDL
+                var query = from item in this.DeadlineItems
+                            let deadline_event = new DeadlineEvent(item)
+                            where deadline_event.ddlType == type
+                                && deadline_event.EndDateTime < end_time
+                            select deadline_event;
+
+                return query.ToList();
+            }
+        }
+
+        /// <summary>
+        /// 从数据库加载ddl时间点对象
+        /// </summary>
+        /// <param name="type">加载对象的活动类型</param>
+        /// <param name="time">截止时间</param>
+        /// <returns></returns>
+        public List<DeadlineEvent> LoadDeadline(ActivityType type, DateTime time)
+        {
+            if (type == ActivityType.All)
+            {
+                // 加载所有类型的ddl对象
+                var query = from item in DeadlineItems
+                            let deadline_event = new DeadlineEvent(item)
+                            where deadline_event.activityType != ActivityType.NotActivity
+                                && deadline_event.EndDateTime < time
+                                && deadline_event.ddlType == DDLType.NotDDL
+                            select deadline_event;
+
+                return query.ToList();
+            }
+            else
+            {
+                // 加载指定类型的ddl对象
+                var query = from item in DeadlineItems
+                            let deadline_event = new DeadlineEvent(item)
+                            where deadline_event.activityType == type
+                                && deadline_event.EndDateTime < time
+                                && deadline_event.ddlType == DDLType.NotDDL
+                            select deadline_event;
+
+                return query.ToList();
+            }
+        }
+    }
 }

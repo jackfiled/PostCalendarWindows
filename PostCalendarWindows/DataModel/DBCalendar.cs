@@ -38,8 +38,8 @@ namespace PostCalendarWindows.DataModel
                 _event.Date.Day
                 );
 
-            DateTime beginDateTime = date.Add(_event.Begin_time - TimeOnly.MinValue);
-            DateTime endDateTime = date.Add(_event.End_time - TimeOnly.MinValue);
+            DateTime beginDateTime = date.Add(_event.BeginTime - TimeOnly.MinValue);
+            DateTime endDateTime = date.Add(_event.EndTime - TimeOnly.MinValue);
 
             BeginDataString = beginDateTime.ToString();
             EndDataString = endDateTime.ToString();
@@ -48,6 +48,11 @@ namespace PostCalendarWindows.DataModel
 
     public class CalendarItemContext : DbContext
     {
+        public CalendarItemContext()
+        {
+            Database.EnsureCreated();
+        }
+
         public DbSet<CalendarItem> CalendarItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

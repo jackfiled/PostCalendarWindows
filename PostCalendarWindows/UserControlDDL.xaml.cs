@@ -24,8 +24,10 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class UserControlDDL : UserControl
     {
-        public Database database;
         public DeadlineManager manager;
+
+        private DeadlineItemContext deadline_context = new();
+        private DeadlineSpanItemContext deadline_span_context = new();
 
         private List<DDLColumnItem> columnItems = new List<DDLColumnItem>();
         private DDLType selected_type;
@@ -34,12 +36,11 @@ namespace PostCalendarWindows
         private Binding areaWidthBindingObj = new Binding("ActualWidth");
         private Binding areaHeightBindingObj = new Binding("ActualHeight");
 
-        public UserControlDDL(Database db)
+        public UserControlDDL()
         {
             InitializeComponent();
 
-            database = db;
-            manager = new DeadlineManager(db);
+            manager = new DeadlineManager();
 
             //设置滚动条的高度绑定
             ScrollHeightBindingObj.Source = this;
@@ -132,7 +133,7 @@ namespace PostCalendarWindows
         private void ddl_more(object sender, RoutedEventArgs e)
         {
             int id = (int)e.OriginalSource;
-            DeadlineEvent? _event = database.ReadDDLEvent(id);
+            DeadlineEvent? _event = deadline_context.ReadDeadlineEvent(id);
             if(_event != null)
             {
                 UserControlDetail detail = new UserControlDetail();
@@ -146,7 +147,8 @@ namespace PostCalendarWindows
         private void ddl_finish(object sender, RoutedEventArgs e)
         {
             int id = (int)e.OriginalSource;
-            database.DeleteDDLEvent(id);
+            deadline_context.DeleteDeadlineItem(id);
+            deadline_context.SaveChanges();
 
             Refresh();
         }
@@ -154,7 +156,8 @@ namespace PostCalendarWindows
         private void ddl_delete(object sender, RoutedEventArgs e)
         {
             int id = (int)e.OriginalSource;
-            database.DeleteDDLEvent(id);
+            deadline_context.DeleteDeadlineItem(id);
+            deadline_context.SaveChanges();
 
             Refresh();
         }
@@ -164,7 +167,8 @@ namespace PostCalendarWindows
             DeadlineEvent? _event = e.OriginalSource as DeadlineEvent;
             if(_event != null)
             {
-                database.CreateDDLEvent(_event);
+                deadline_context.CreateDeadlineEvent(_event);
+                deadline_context.SaveChanges();
             }
         }
 
@@ -173,7 +177,8 @@ namespace PostCalendarWindows
             DeadlineSpanEvent? _event = e.OriginalSource as DeadlineSpanEvent;
             if(_event != null)
             {
-                database.CreateDDLSpanEvent(_event);
+                deadline_span_context.CreateDeadlineSpanItem(_event);
+                deadline_span_context.SaveChanges();
             }
         }
 
@@ -182,7 +187,8 @@ namespace PostCalendarWindows
             DeadlineEvent? _event = e.OriginalSource as DeadlineEvent;
             if(_event != null)
             {
-                database.UpdateDDLEvent(_event);
+                deadline_context.UpdateDeadlineEvent(_event);
+                deadline_context.SaveChanges();
             }
         }
 
@@ -191,7 +197,8 @@ namespace PostCalendarWindows
             DeadlineSpanEvent? _event = e.OriginalSource as DeadlineSpanEvent;
             if(_event != null)
             {
-                database.UpdateDDLSpanEvent(_event);
+                deadline_span_context.UpdateDeadlineSpanItem(_event);
+                deadline_span_context.SaveChanges();
             }
         }
     }

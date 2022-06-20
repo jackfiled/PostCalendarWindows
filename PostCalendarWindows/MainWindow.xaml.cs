@@ -13,53 +13,40 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class MainWindow : Window
     {
-        Database db;
-        UserControlCalendar calendarUserControl;
-        UserControlDDL ddlUserControl;
-        UserControlActivity activityUserControl;
-
+        UserControlCalendar calendar_user_control;
+        UserControlDDL ddl_user_control;
+        UserControlActivity activity_user_control;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //连接到数据库
-            string database_path = @".\database.db";
-            string connection = $"Data Source={database_path}";
-            if (!System.IO.File.Exists(database_path))
-            {
-                System.IO.FileStream stream = System.IO.File.Create(database_path);
-                stream.Dispose();
-            }
-            db = new Database(connection);
-
-            //将数据库连接赋给相关的管理类
-            calendarUserControl = new UserControlCalendar(db);
-            ddlUserControl = new UserControlDDL(db);
-            activityUserControl = new UserControlActivity(db);
+            calendar_user_control = new UserControlCalendar();
+            ddl_user_control = new UserControlDDL();
+            activity_user_control = new UserControlActivity();
 
             //在这里手动设置高度绑定到StackPanelMain
-            Binding heightBindingObj = new Binding("ActualHeight");
-            heightBindingObj.Source = StackPanelMain;
+            Binding height_binding_obj = new("Actual Height");
+            height_binding_obj.Source = StackPanelMain;
 
-            calendarUserControl.SetBinding(HeightProperty, heightBindingObj);
-            ddlUserControl.SetBinding(HeightProperty, heightBindingObj);
-            activityUserControl.SetBinding(HeightProperty, heightBindingObj);
+            calendar_user_control.SetBinding(HeightProperty, height_binding_obj);
+            ddl_user_control.SetBinding(HeightProperty, height_binding_obj);
+            activity_user_control.SetBinding(HeightProperty, height_binding_obj);
 
             //显示相关的页面
-            var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, calendarUserControl);
-            var ddl_item = new ItemMenu("DDL", PackIconKind.CalendarTextOutline, ddlUserControl);
-            var activity_item = new ItemMenu("活动", PackIconKind.AccountGroupOutline, activityUserControl);
+            var calendar_item = new ItemMenu("日历", PackIconKind.Schedule, calendar_user_control);
+            var ddl_item = new ItemMenu("DDL", PackIconKind.CalendarTextOutline, ddl_user_control);
+            var activity_item = new ItemMenu("活动", PackIconKind.AccountGroupOutline, activity_user_control);
 
             ItemMenuList.Items.Add(new UserControlMenuItem(calendar_item));
             ItemMenuList.Items.Add(new UserControlMenuItem(ddl_item));
             ItemMenuList.Items.Add(new UserControlMenuItem(activity_item));
 
             //展示目前日历事件列表中的事件
-            calendarUserControl.displayCanva();
+            calendar_user_control.displayCanva();
         }
 
-        public void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UserControlMenuItem selected_item = (UserControlMenuItem)((ListView)sender).SelectedItem;
             SwitchScreen(selected_item._item.Screen);
@@ -67,11 +54,10 @@ namespace PostCalendarWindows
 
         private void SwitchScreen(object sender)
         {
-            var screen = (UserControl)sender;
-            if (screen != null)
+            if (sender is UserControl user_control)
             {
                 StackPanelMain.Children.Clear();
-                StackPanelMain.Children.Add(screen);
+                StackPanelMain.Children.Add(user_control);
             }
         }
     }

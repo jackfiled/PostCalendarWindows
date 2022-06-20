@@ -14,6 +14,9 @@ namespace PostCalendarWindows.DDL
 
     public enum DDLType
     {
+        /// <summary>
+        /// 所有的类型
+        /// </summary>
         All = 0,
         /// <summary>
         /// 学习
@@ -32,6 +35,9 @@ namespace PostCalendarWindows.DDL
 
     public enum ActivityType
     {
+        /// <summary>
+        /// 所有的类型
+        /// </summary>
         All = 0,
         /// <summary>
         /// 思政
@@ -78,17 +84,11 @@ namespace PostCalendarWindows.DDL
         public ActivityType activityType { get; set; }
 
         /// <summary>
-        /// 从数据库内部存储对象初始化ddl时间点对象
+        /// 空构造函数
         /// </summary>
-        /// <param name="deadline">数据库内部储存ddl时间点的对象</param>
-        public void SetFromDatabase(DataModel.DeadLine deadline)
+        public DeadlineEvent() 
         {
-            Id= deadline.Id;
-            Name= deadline.Name;
-            Details= deadline.Details;
-            EndDateTime = DateTime.Parse(deadline.EndDateTimeStr);
-            ddlType = (DDLType)deadline.Type;
-            activityType = (ActivityType)deadline.ActivityType;
+            
         }
 
         /// <summary>
@@ -99,13 +99,27 @@ namespace PostCalendarWindows.DDL
         /// <param name="endDateTime">事件的结束时间</param>
         /// <param name="ddlType">事件的ddl分类</param>
         /// <param name="activityType">事件的活动分类</param>
-        public void SetInner(string name, string details, DateTime endDateTime, DDLType ddlType, ActivityType activityType)
+        public DeadlineEvent(string name, string details, DateTime endDateTime, DDLType ddlType, ActivityType activityType)
         {
             Name = name;
             Details = details;
             EndDateTime = endDateTime;
             this.ddlType = ddlType;
             this.activityType = activityType;
+        }
+
+        /// <summary>
+        /// 从数据库内部存储对象初始化ddl时间点对象
+        /// </summary>
+        /// <param name="item">数据库中存储ddl时间点的对象</param>
+        public DeadlineEvent(DataModel.DeadlineItem item)
+        {
+            Id = item.Id;
+            Name = item.Name;
+            Details = item.Detail;
+            EndDateTime = DateTime.Parse(item.EndDateTimeString);
+            ddlType = (DDLType)item.Type;
+            activityType = (ActivityType)item.ActivityType;
         }
 
         public int CompareTo(DeadlineEvent? e)
@@ -130,23 +144,39 @@ namespace PostCalendarWindows.DDL
         public DateTime EndDateTime { get; set; }
         public ActivityType activityType { get; set; }
 
-        public void SetFromDatabase(DataModel.DeadLineSpan deadline)
+        /// <summary>
+        /// 空构造函数
+        /// </summary>
+        public DeadlineSpanEvent()
         {
-            Id = deadline.Id;
-            Name = deadline.Name;
-            Details = deadline.Details;
-            StartDateTime = DateTime.Parse(deadline.StartDateTimeStr);
-            EndDateTime = DateTime.Parse(deadline.EndDateTimeStr);
-            activityType = (ActivityType)deadline.ActivityType;
+
         }
 
-        public void SetInner(string name, string details, DateTime startDateTime, DateTime endDateTime, ActivityType activityType)
+        /// <summary>
+        /// 程序内部初始化ddl时间段对象
+        /// </summary>
+        /// <param name="name">事件的名称</param>
+        /// <param name="details">事件的详情</param>
+        /// <param name="startDateTime">事件的开始时间</param>
+        /// <param name="endDateTime">事件的结束时间</param>
+        /// <param name="activityType">事件的活动类型</param>
+        public DeadlineSpanEvent(string name, string details, DateTime startDateTime, DateTime endDateTime, ActivityType activityType)
         {
             Name = name;
             Details = details;
             StartDateTime = startDateTime;
             EndDateTime = endDateTime;
             this.activityType = activityType;
+        }
+        
+        public DeadlineSpanEvent(DataModel.DeadlineSpanItem item)
+        {
+            Id = item.Id;
+            Name = item.Name;
+            Details = item.Detail;
+            StartDateTime = DateTime.Parse(item.StartDateTimeString);
+            EndDateTime = DateTime.Parse(item.EndDateTimeString);
+            activityType = (ActivityType)item.ActivityType;
         }
 
         public int CompareTo(DeadlineSpanEvent? e)

@@ -24,8 +24,11 @@ namespace PostCalendarWindows
     /// </summary>
     public partial class UserControlActivity : UserControl
     {
-        public Database database;
         public DeadlineManager manager;
+
+        private CalendarItemContext calendar_context = new();
+        private DeadlineItemContext deadline_context = new();
+        private DeadlineSpanItemContext deadline_span_context = new();
 
         private List<DDLColumnItem> columnItems = new List<DDLColumnItem>();
         private ActivityType select_type;
@@ -34,12 +37,11 @@ namespace PostCalendarWindows
         private Binding areaHeightBindingObj = new Binding("ActualHeight");
         private Binding areaWidthBindingObj = new Binding("ActualWidth");
 
-        public UserControlActivity(Database db)
+        public UserControlActivity()
         {
             InitializeComponent();
 
-            database = db;
-            manager = new DeadlineManager(database);
+            manager = new DeadlineManager();
 
             //设置滚动条的高度绑定
             ScrollHeightBindingObj.Source = this;
@@ -116,7 +118,7 @@ namespace PostCalendarWindows
         private void add_2_calendar(object sender, RoutedEventArgs e)
         {
             int id = (int)e.OriginalSource;
-            DeadlineSpanEvent? _event = database.ReadDDLSpanEvent(id);
+            DeadlineSpanEvent? _event = deadline_span_context.ReadDeadlineSpanItem(id);
 
             if(_event != null)
             {
@@ -133,12 +135,13 @@ namespace PostCalendarWindows
         private void add_2_ddl(object sender, RoutedEventArgs e)
         {
             int id = (int)e.OriginalSource;
-            DeadlineEvent? _event = database.ReadDDLEvent(id);
+            DeadlineEvent? _event = deadline_context.ReadDeadlineEvent(id);
             if( _event != null)
             {
                 _event.ddlType = DDLType.Personal;
                 _event.activityType = ActivityType.NotActivity;
-                database.CreateDDLEvent(_event);
+                deadline_context.CreateDeadlineEvent(_event);
+                deadline_context.SaveChanges();
             }
         }
 
@@ -148,7 +151,8 @@ namespace PostCalendarWindows
 
             if( _event != null)
             {
-                database.CreateCalendarItem(_event);
+                calendar_context.CreateCalendarItem(_event);
+                calendar_context.SaveChanges();
             }
 
             area.Children.Clear();

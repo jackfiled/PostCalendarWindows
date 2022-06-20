@@ -22,14 +22,10 @@ namespace PostCalendarWindows.Setting
     /// </summary>
     public partial class setting : Window
     {
-        Database db;
 
-        public setting(Database _db)
+        public setting()
         {
             InitializeComponent();
-
-            //从数据库中查询一些常量数据
-            db = _db;
 
             var CalendarSettingItem = new ItemMenu("日历设置", PackIconKind.Settings, new UserControlCalendarSetting());
             var DDLSettingItem = new ItemMenu("DDL设置", PackIconKind.SettingsApplications, new UserControlDDLSetting());

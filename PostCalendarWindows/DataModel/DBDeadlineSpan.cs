@@ -37,10 +37,14 @@ namespace PostCalendarWindows.DataModel
 
     public class DeadlineSpanItemContext : DbContext
     {
+        public DeadlineSpanItemContext()
+        {
+            Database.EnsureCreated();
+        }
+
         public DbSet<DeadlineSpanItem> DeadlineSpanItems { get; set; }
 
-        protected override void OnConfiguring(
-            DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(
                 "Data Source=deadlineSpanItems.db");
@@ -107,6 +111,31 @@ namespace PostCalendarWindows.DataModel
                 this.DeadlineSpanItems.Remove(item);
                 this.SaveChanges();
                 return true;
+            }
+        }
+
+        public List<DeadlineSpanEvent> LoadDeadlineSpan(ActivityType type, DateTime time)
+        {
+            if(type == ActivityType.All)
+            {
+                var query = from item in this.DeadlineSpanItems
+                            let deadline_span_event = new DeadlineSpanEvent(item)
+                            where deadline_span_event.activityType != ActivityType.NotActivity
+                                && deadline_span_event.EndDateTime < time
+                            select deadline_span_event;
+
+                return query.ToList();
+            }
+            else
+            {
+                var query = from item in this.DeadlineSpanItems
+                            let deadline_span_event = new DeadlineSpanEvent(item)
+                            where deadline_span_event.activityType == type
+                                && deadline_span_event.EndDateTime < time
+                            select deadline_span_event;
+
+                return query.ToList();
+
             }
         }
     }

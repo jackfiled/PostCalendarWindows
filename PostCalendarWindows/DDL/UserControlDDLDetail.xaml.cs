@@ -100,33 +100,38 @@ namespace PostCalendarWindows.DDL
         private void confirm_button_Click(object sender, RoutedEventArgs e)
         {
             DetailButton? button = sender as DetailButton;
-            if (_item.isUpdate)
+
+            if(_item.isDDL)
             {
-                DeadlineEvent _event = new DeadlineEvent();
-                _event.Id = _item.Id;//由于是更改事件，需要设置事件的id
-                if (_item.isDDL)
+                DeadlineEvent _event = new(_item.Name,
+                        _item.Detail,
+                        _item.EndDateTime,
+                        (DDLType)(ddl_type_input.SelectedIndex + 1),
+                        ActivityType.NotActivity);
+
+                if(_item.isUpdate)
                 {
-                    _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, (DDLType)(ddl_type_input.SelectedIndex + 1), ActivityType.NotActivity);
-                }
-                else
-                {
-                    _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, DDLType.NotDDL, (ActivityType)(activity_type_input.SelectedIndex + 1));
+                    //修改对象需要设置对象的Id
+                    _event.Id = _item.Id;
                 }
                 button?.RaiseDDLUpdateEvent(_event);
             }
             else
             {
-                DeadlineEvent _event = new DeadlineEvent();
-                if (_item.isDDL)
+                DeadlineEvent _event = new(_item.Name,
+                        _item.Detail,
+                        _item.EndDateTime,
+                        DDLType.NotDDL,
+                        (ActivityType)(activity_type_input.SelectedIndex + 1));
+
+                if (_item.isUpdate)
                 {
-                    _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, (DDLType)(ddl_type_input.SelectedIndex + 1), ActivityType.NotActivity);
+                    //修改对象需要设置对象的Id
+                    _event.Id = _item.Id;
                 }
-                else
-                {
-                    _event.SetInner(_item.Name, _item.Detail, _item.EndDateTime, DDLType.NotDDL, (ActivityType)(activity_type_input.SelectedIndex + 1));
-                }
-                button?.RaiseDDLAddEvent(_event);
+                button?.RaiseDDLUpdateEvent(_event);
             }
+
             button?.RaiseRefreshEvent();
         }
 

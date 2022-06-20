@@ -84,15 +84,23 @@ namespace PostCalendarWindows.DDL
 
             if (spanItem.isUpdate)
             {
-                DeadlineSpanEvent _event = new DeadlineSpanEvent();
-                _event.SetInner(spanItem.Name, spanItem.Detail, spanItem.StartDateTime, spanItem.EndDateTime, (ActivityType)activity_type_input.SelectedIndex);
+                DeadlineSpanEvent _event = new DeadlineSpanEvent(
+                    spanItem.Name, 
+                    spanItem.Detail, 
+                    spanItem.StartDateTime, 
+                    spanItem.EndDateTime, 
+                    (ActivityType)activity_type_input.SelectedIndex);
                 _event.Id = spanItem.Id;
                 button?.RaiseDDLSpanUpdateEvent(_event);
             }
             else
             {
-                DeadlineSpanEvent _event = new DeadlineSpanEvent();
-                _event.SetInner(spanItem.Name, spanItem.Detail, spanItem.StartDateTime, spanItem.EndDateTime, (ActivityType)activity_type_input.SelectedIndex);
+                DeadlineSpanEvent _event = new DeadlineSpanEvent(
+                    spanItem.Name, 
+                    spanItem.Detail, 
+                    spanItem.StartDateTime, 
+                    spanItem.EndDateTime, 
+                    (ActivityType)activity_type_input.SelectedIndex);
                 button?.RaiseDDLSpanAddEvent(_event);
             }
             button?.RaiseRefreshEvent();

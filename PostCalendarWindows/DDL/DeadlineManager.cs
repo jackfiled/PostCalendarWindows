@@ -13,17 +13,18 @@ namespace PostCalendarWindows.DDL
         public List<DDLItem> ddlShowItems = new List<DDLItem>();
         public  List<ActivityItem> activityItems = new List<ActivityItem>();
 
-        private Database database;
+        private DeadlineItemContext deadline_context = new();
+        private DeadlineSpanItemContext deadline_span_context = new();
 
-        public DeadlineManager(Database db)
+        public DeadlineManager()
         {
-            database = db;
+
         }
 
         public void LoadDeadlineFromDB(DDLType type)
         {
             ddlShowItems.Clear();
-             List<DeadlineEvent> events = database.LoadDeadline(type, DateTime.Now.AddDays(60));
+            List<DeadlineEvent> events = deadline_context.LoadDeadline(type, DateTime.Now.AddDays(60));
             events.Sort();
             foreach(DeadlineEvent e in events)
             {
@@ -35,8 +36,8 @@ namespace PostCalendarWindows.DDL
         {
             activityItems.Clear();
 
-            List<DeadlineEvent> deadline_event_list = database.LoadDeadline(type, DateTime.Now.AddDays(60));
-            List<DeadlineSpanEvent> deadlineSpan_event_list = database.LoadDeadlineSpan(type, DateTime.Now.AddDays(60));
+            List<DeadlineEvent> deadline_event_list = deadline_context.LoadDeadline(type, DateTime.Now.AddDays(60));
+            List<DeadlineSpanEvent> deadlineSpan_event_list = deadline_span_context.LoadDeadlineSpan(type, DateTime.Now.AddDays(60));
 
             foreach(DeadlineEvent e in deadline_event_list)
             {
